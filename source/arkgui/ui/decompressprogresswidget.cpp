@@ -81,12 +81,14 @@ void DecompressProgressWidget::toggleShowErrorInfo()
 {
     //만약 오류 내용이 숨김 상태라면
     if ( ui->infoBrowser->isHidden() ){
+        ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Ignored, QSizePolicy::Ignored);
         ui->infoBrowser->show();
         ui->toggleShowErrorInfo->setIcon(arrowUp);
         ui->toggleShowErrorInfo->setText(trUtf8("작업 내역 숨기기"));
     }
     //만약 오류 내용이 보기 상태라면
     else {
+        ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding);
         ui->infoBrowser->hide();
         ui->toggleShowErrorInfo->setIcon(arrowDown);
         ui->toggleShowErrorInfo->setText(trUtf8("작업 내역 보이기"));

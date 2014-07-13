@@ -11,6 +11,7 @@ Release/
 moc/
 uic/
 ArkLibrary/*.hpp.gch
+/*.deb
 
 #특정 파일 무시
 Makefile
