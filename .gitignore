@@ -1,0 +1,20 @@
+#github에 추가되지 않을 파일 목록
+
+# 특정 확장자 파일들을 무시
+*.pro.user
+*.sdf
+
+# 특정 디렉토리 내 파일들을 무시
+Debug/
+Release/
+moc/
+uic/
+ArkLibrary/*.hpp.gch
+
+#특정 파일 무시
+Makefile
+/sync
+/memo.txt
+
+#특정 파일들을 무시하지 않음.
+!.gitignore

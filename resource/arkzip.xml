@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+	<mime-type type="application/arkzip-egg">
+		<comment>알집 압축 파일</comment>
+		<glob pattern="*.egg"/>
+		<magic priority="50">
+			<match value="EGGA" type="string" offset="0"/>
+		</magic>
+	</mime-type>
+	<mime-type type="application/arkzip-alz">
+		<comment>알집 압축 파일</comment>
+		<glob pattern="*.alz"/>
+		<magic priority="50">
+			<match value="ALZ" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-zip">
+		<comment>ZIP 압축 파일</comment>
+		<glob pattern="*.zip"/>
+		<magic priority="40">
+			<match value="PK\003\004" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-tar">
+		<comment>TAR 묶음 파일</comment>
+		<glob pattern="*.tar"/>
+		<magic priority="50">
+			<match value="ustar\0" type="string" offset="257"/>
+			<match value="ustar\040\040\0" type="string" offset="257"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-bh">
+		<comment>BlakHole 압축 파일</comment>
+		<glob pattern="*.bh"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-7z">
+		<comment>7z 압축 파일</comment>
+		<glob pattern="*.7z"/>
+		<glob pattern="*.7z.001"/>
+		<magic priority="50">
+			<match value="7z\274\257\047\034" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-wim">
+		<comment>윈도우 이미지 포맷 디스크 이미지</comment>
+		<glob pattern="*.wim"/>
+		<magic priority="50">
+			<match value="MSWIM\000\000\000" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-rar">
+		<comment>RAR 압축 파일</comment>
+		<glob pattern="*.rar"/>
+		<magic priority="50">
+			<match value="Rar!" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-arj">
+		<comment>ARJ 압축 파일</comment>
+		<glob pattern="*.arj"/>
+		<magic priority="50">
+			<match value="0xea60" type="little16" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-ace">
+		<comment>ACE 묶음 파일</comment>
+		<glob pattern="*.ace"/>
+		<magic priority="50">
+			<match value="**ACE**" type="string" offset="7"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-acb">
+		<comment>ACB 압축 파일</comment>
+		<glob pattern="*.acb"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-lzh">
+		<comment>LHA 압축 파일</comment>
+		<glob pattern="*.lzh"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-gz">
+		<comment>gzip 압축파일</comment>
+		<glob pattern="*.gz"/>
+		<magic priority="50">
+			<match value="\037\213" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-bz2">
+		<comment>bzip2 압축파일</comment>
+		<glob pattern="*.bz2"/>
+		<magic priority="50">
+			<match value="BZh" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-iso">
+		<comment>ISO-9660 image</comment>
+		<glob pattern="*.iso"/>
+		<glob pattern="*.iso9660"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-udf">
+		<comment>Universal Disk Format 파일</comment>
+		<glob pattern="*.udf"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-img">
+		<comment>raw disk image file format</comment>
+		<glob pattern="*.img"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-xz">
+		<comment>XZ 압축 파일</comment>
+		<glob pattern="*.xz"/>
+		<magic priority="50">
+			<match value="\xfd\x37\x7a\x58\x5a\x00" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-z">
+		<comment>유닉스 압축 파일</comment>
+		<glob pattern="*.z"/>
+		<magic priority="50">
+			<match value="\037\235" type="string" offset="0"/>
+		</magic>
+	</mime-type>	
+	<mime-type type="application/arkzip-lzma">
+		<comment>lzma 압축 파일</comment>
+		<glob pattern="*.lzma"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-j2j">
+		<comment>j2j로 변조된 파일</comment>
+		<glob pattern="*.j2j"/>
+	</mime-type>	
+	<mime-type type="application/arkzip-nsis">
+		<comment>Nullsoft Scriptable Install System 파일</comment>
+		<glob pattern="*.nsis"/>
+	</mime-type>	
+</mime-info>

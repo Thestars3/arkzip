@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=arkzip
+Type=Application
+Comment=지정된 대상을 gui로 압축해제합니다.
+NoDisplay=false
+Exec=arkzip -i gui -s --link -- %F
+StartupNotify=false
+Icon=arkzip
+Terminal=false
+Categories=Application;
+MimeType=application/arkzip-7z;application/arkzip-acb;application/arkzip-ace;application/arkzip-alz;application/arkzip-arj;application/arkzip-bh;application/arkzip-bz2;application/arkzip-egg;application/arkzip-gz;application/arkzip-img;application/arkzip-iso;application/arkzip-j2j;application/arkzip-lzh;application/arkzip-lzma;application/arkzip-nsjs;application/arkzip-rar;application/arkzip-tar;application/arkzip-udf;application/arkzip-wim;application/arkzip-xz;application/arkzip-z;application/arkzip-zip;
