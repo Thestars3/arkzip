@@ -35,9 +35,6 @@ private:
     Ui::DecompressProgressWidget *ui;   ///< ui 정보
     class TrayIcon *tray;               ///< 트레이 아이콘
 
-protected:
-    virtual void closeEvent(QCloseEvent *event);
-
 public:
     QIcon pauseIcon;   ///< 일시정지 아이콘
     QString pauseText; ///< 일시정지 텍스트
@@ -53,8 +50,6 @@ public slots:
     void toggleShow();
     void toggleShowErrorInfo();
     void shrink();
-
-signals:
-    void closed();
+    void finished(int);
 
 };

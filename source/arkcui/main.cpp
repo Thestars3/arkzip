@@ -31,7 +31,7 @@ int main(
     DecompressCui decompress(argc, argv, &application);
 
     //decompress 객체의 finished 시그널이 발생했을떄, 어플리케이션이 종료되도록 합니다.
-    QObject::connect(&decompress, SIGNAL(finished()), &application, SLOT(quit()));
+    QObject::connect(&decompress, SIGNAL(finished(int)), &application, SLOT(quit()));
 
     //어플리케이션 이벤트 루프에서 decompress가 실행되도록 합니다.
     QTimer::singleShot(0, &decompress, SLOT(start()));

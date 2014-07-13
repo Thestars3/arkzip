@@ -53,14 +53,14 @@ int main(
     //decompress의 부모를 어플리케이션으로 지정하여 어플리케이션이 종료되었을때, 삭제되도록 합니다.
     DecompressGui decompress(argc, argv, &application);
 
-    //decompress 객체의 finished 시그널이 발생했을떄, 어플리케이션이 종료되도록 합니다.
-    QObject::connect(&decompress, SIGNAL(finished()), &application, SLOT(quit()));
+    qDebug("%s", "DecompressProgressWidget 객체 생성");
+    DecompressProgressWidget w;
+
+    //decompress 객체의 finished 시그널이 발생했을떄, 진행창 위젯의 finished 메소드를 호출하도록 합니다.
+    QObject::connect(&decompress, SIGNAL(finished(int)), &w, SLOT(finished(int)));
 
     //어플리케이션 이벤트 루프에서 decompress가 실행되도록 합니다.
     QTimer::singleShot(0, &decompress, SLOT(start()));
-
-    qDebug("%s", "DecompressProgressWidget 객체 생성");
-    DecompressProgressWidget w;
 
     qDebug("%s", "어플리케이션 이벤트 루프에서 DecompressProgressWidget이 보여지도록 합니다.");
     QTimer::singleShot(0, &w, SLOT(show()));

@@ -359,7 +359,7 @@ void Decompress::run()
 
     qDebug("%s", "모든 압축 해제 작업이 완료되었습니다.");
     isWorkEnd_ = true;
-    emit finished();
+    emit finished(exitcode);
 }
 
 /** 압축 해제 옵션을 설정합니다.

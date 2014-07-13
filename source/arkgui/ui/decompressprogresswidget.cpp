@@ -141,14 +141,22 @@ void DecompressProgressWidget::togglePause()
     }
 }
 
-/** 창 닫김 이벤트.
+/** 압축 해제가 종료되면 호출되는 메소드.
   */
-void DecompressProgressWidget::closeEvent(
-        QCloseEvent *event  ///< 창 닫김 이벤트
+void DecompressProgressWidget::finished(
+        int exitCode   ///< 종료 코드
         )
 {
-    emit closed();
-    event->accept();
+    if ( exitCode == 0 ) {
+        close();
+    }
+    else {
+        ui->pauseBtn->hide();
+        tray->actionPauseToggle->setVisible(false);
+        if ( ui->infoBrowser->isHidden() ) {
+            toggleShowErrorInfo();
+        }
+    }
 }
 
 /** 소멸자.

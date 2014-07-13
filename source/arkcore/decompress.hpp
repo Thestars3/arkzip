@@ -69,7 +69,7 @@ protected:
     void run();
 
 signals:
-    void finished();
+    void finished(int);
 
 };
 

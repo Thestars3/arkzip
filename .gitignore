@@ -3,6 +3,7 @@
 # 특정 확장자 파일들을 무시
 *.pro.user
 *.sdf
+*.kate-swp
 
 # 특정 디렉토리 내 파일들을 무시
 Debug/
