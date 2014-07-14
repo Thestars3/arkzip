@@ -1,0 +1,5 @@
+#!/bin/sh
+ldconfig /usr/lib/arkzip/arkcore
+update-mime-database /usr/share/mime
+update-desktop-database /usr/share/applications
+update-icon-caches /usr/share/icons/hicolor

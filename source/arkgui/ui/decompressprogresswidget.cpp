@@ -1,11 +1,9 @@
 #include "decompressprogresswidget.hpp"
 #include "ui_DecompressProgressWidget.h"
-#include <QDesktopWidget>
 #include <QSystemTrayIcon>
 #include "reportgui.hpp"
 #include "pause.hpp"
 #include "trayicon.hpp"
-#include <QCloseEvent>
 #include <QTimer>
 
 /** 생성자.
@@ -67,11 +65,15 @@ DecompressProgressWidget::DecompressProgressWidget(
 }
 
 /** 위젯 크기를 재조정합니다.
-  @note 이 함수가 호출되면 기존 수직 크기에 대한 정보는 소실됩니다.
   */
 void DecompressProgressWidget::shrink()
 {
-    resize(this->geometry().width(), minimumHeight());
+    if ( ui->infoBrowser->isHidden() ){
+        resize(this->geometry().width(), minimumHeight());
+    }
+    else {
+        resize(this->geometry().width(), oldWinHeight);
+    }
     //adjustSize();
 }
 
@@ -81,18 +83,27 @@ void DecompressProgressWidget::toggleShowErrorInfo()
 {
     //만약 오류 내용이 숨김 상태라면
     if ( ui->infoBrowser->isHidden() ){
+        {
+            int h = height();
+            if ( h != minimumHeight() ) {
+                oldWinHeight = h;
+            }
+        }
         ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Ignored, QSizePolicy::Ignored);
         ui->infoBrowser->show();
         ui->toggleShowErrorInfo->setIcon(arrowUp);
         ui->toggleShowErrorInfo->setText(trUtf8("작업 내역 숨기기"));
+        QTimer::singleShot(0, this, SLOT(shrink()));
     }
     //만약 오류 내용이 보기 상태라면
     else {
+        oldWinHeight = size().height();
         ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding);
         ui->infoBrowser->hide();
         ui->toggleShowErrorInfo->setIcon(arrowDown);
         ui->toggleShowErrorInfo->setText(trUtf8("작업 내역 보이기"));
     }
+
     QTimer::singleShot(0, this, SLOT(shrink()));
 }
 

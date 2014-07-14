@@ -45,7 +45,6 @@ int main(
         icon.addFile(QString::fromUtf8("/usr/share/icons/hicolor/128x128/apps/arkzip.png"), QSize(128, 128));
         icon.addFile(QString::fromUtf8("/usr/share/icons/hicolor/192x192/apps/arkzip.png"), QSize(192, 192));
         icon.addFile(QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/arkzip.png"), QSize(256, 256));
-        icon.addFile(QString::fromUtf8("/usr/share/icons/hicolor/512x512/apps/arkzip.png"), QSize(512, 512));
         icon.addFile(QString::fromUtf8("/usr/share/icons/hicolor/scalable/apps/arkzip.svg"));
         application.setWindowIcon(icon);
     }

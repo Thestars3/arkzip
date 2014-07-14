@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 소스 파일로 부터 패키지 파일을 생성합니다. 소스 파일은 Release로 빌드되어 있어야 합니다. testMode, develop모드가 아닌 일반 모드로 빌드된 것이어야 정상적으로 작동합니다.
+# 소스 파일로 부터 패키지 파일을 생성합니다. 소스 파일은 Release로 빌드되어 있어야 합니다. testMode모드가 아닌 일반 모드로 빌드된 것이어야 정상적으로 작동합니다.
 
 #전역 변수 설정
 VERSION=$(<.version_control)
@@ -58,36 +58,19 @@ function copyFiles(){
 #설치후 작업 설정
 function setPostInstWork(){
 	mkdir -p dist/DEBIAN
-	#xdg-mime install --novendor --mode system /usr/share/arkzip/arkzip-mime.xml
-	#xdg-mime default --novendor --mode system /usr/share/applications/arkzip.desktop application/arkzip
-	cat > dist/DEBIAN/postinst <<-EOF
-	#!/bin/sh
-	ldconfig /usr/lib/arkzip/arkcore
-	update-icon-caches /usr/share/icons/hicolor
-	update-mime-database /usr/share/mime
-	update-desktop-database /usr/share/applications
-	EOF
+	cp DEBIAN/postinst dist/DEBIAN
 }
 
-# #삭제전 작업 설정
-# function setPreRmWork(){
-# 	mkdir -p dist/DEBIAN
-# 	#xdg-mime uninstall --novendor --mode system /usr/share/arkzip/arkzip-mime.xml
-# 	cat > dist/DEBIAN/prerm <<-EOF
-# 	#!/bin/sh
-# 	EOF
-# }
+#삭제전 작업 설정
+function setPreRmWork(){
+	mkdir -p dist/DEBIAN
+	cp DEBIAN/prerm dist/DEBIAN
+}
 
 #삭제후 작업 설정
 function setPostRmWork(){
 	mkdir -p dist/DEBIAN
-	cat > dist/DEBIAN/postrm <<-EOF
-	#!/bin/sh
-	ldconfig /usr/lib/arkzip/arkcore
-	update-mime-database /usr/share/mime
-	update-desktop-database /usr/share/applications
-	update-icon-caches /usr/share/icons/hicolor
-	EOF
+	cp DEBIAN/postrm dist/DEBIAN
 }
 
 #체크섬 기록
@@ -107,6 +90,7 @@ function makeControlFile(){
 	Installed-Size: $(du -sBKB dist | grep -oE '^[0-9]+')
 	Section: utils
 	Priority: optional
+	Pre-Depends: xdg-utils
 	depends: libqt4-core(>=4:4.8.1), libboost-program-options-dev, libstdc++6
 	breaks: arkzip
 	Architecture: amd64
@@ -138,6 +122,7 @@ function main(){
 	copyFiles
 	setPostInstWork
 	setPostRmWork
+	setPreRmWork
 	makeChecksumFile
 	makeControlFile
 	makePackageFile
