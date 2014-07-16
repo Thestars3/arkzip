@@ -1,8 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-07-01T11:19:11
-#
-#-------------------------------------------------
 
 include( ../common.pri )
 
@@ -33,21 +28,10 @@ INCLUDEPATH += ../../ArkLibrary
 DEPENDPATH += ../../ArkLibrary
 
 DEFINES += \
+	_FILE_OFFSET_BITS=64 \
+	_LARGEFILE_SOURCE \
 	DF_AA58F9E2C6BF94D18A1FE812398CE2233=\\\"$$join(ARK_LIBRARY_PATH, \\\x20)\\\"
 
-unix:!symbian {
-    maemo5 {
-        target.path = /opt/usr/lib
-    } else {
-        target.path = /usr/lib
-    }
-    INSTALLS += target
-}
+QMAKE_CXXFLAGS += -std=c++0x
 
 LIBS += -ldl -lboost_program_options
-
-QMAKE_CXXFLAGS += -fPIC -std=c++0x
-
-DEFINES += \
-	_FILE_OFFSET_BITS=64 \
-	_LARGEFILE_SOURCE

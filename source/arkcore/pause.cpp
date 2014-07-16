@@ -18,10 +18,6 @@ bool Pause::isPaused()
     return pauseStatus;
 }
 
-/** 객체를 할당 해제합니다.
-  */
-Pause::~Pause(){}
-
 Pause *Pause::singleton = new Pause(); ///< 싱글톤 객체
 
 /** 전역 객체를 얻습니다.

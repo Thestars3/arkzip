@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "ui/decompressprogresswidget.hpp"
 #include "decompressgui.hpp"
 #include <QIcon>
+#include "reportgui.hpp"
 
 /** 프로그램을 시작합니다.
   @return 종료코드. 문제가 있다면 0이 아닌 값을 반환하게 됩니다.
@@ -53,16 +54,19 @@ int main(
     DecompressGui decompress(argc, argv, &application);
 
     qDebug("%s", "DecompressProgressWidget 객체 생성");
-    DecompressProgressWidget w;
+    DecompressProgressWidget progressWidget;
+
+    //암호 설정 시그널이 발생되면 진행창에서 암호 입력 창을 띄우도록 한다.
+    QObject::connect((ReportGui*)Report::getInstance(), SIGNAL(getPasswordSignal(QString*)), &progressWidget, SLOT(getPassword(QString*)));
 
     //decompress 객체의 finished 시그널이 발생했을떄, 진행창 위젯의 finished 메소드를 호출하도록 합니다.
-    QObject::connect(&decompress, SIGNAL(finished(int)), &w, SLOT(finished(int)));
+    QObject::connect(&decompress, SIGNAL(finished(int)), &progressWidget, SLOT(finished(int)));
 
     //어플리케이션 이벤트 루프에서 decompress가 실행되도록 합니다.
     QTimer::singleShot(0, &decompress, SLOT(start()));
 
     qDebug("%s", "어플리케이션 이벤트 루프에서 DecompressProgressWidget이 보여지도록 합니다.");
-    QTimer::singleShot(0, &w, SLOT(show()));
+    QTimer::singleShot(0, &progressWidget, SLOT(show()));
 
     //qt 어플리케이션의 이벤트 루프가 시작됩니다.
     application.exec();

@@ -5,6 +5,7 @@
 #include "pause.hpp"
 #include "trayicon.hpp"
 #include <QTimer>
+#include <QInputDialog>
 
 /** 생성자.
   */
@@ -62,6 +63,39 @@ DecompressProgressWidget::DecompressProgressWidget(
     }
 
     qDebug("%s", "DecompressProgressWidget 객체 생성완료");
+}
+
+void DecompressProgressWidget::getPassword(
+        QString *password   ///< 설정된 암호가 입력되어야 할 변수
+        )
+{
+    QInputDialog inputDialog;
+
+    //입력 대화창 설정
+    {
+        inputDialog.setInputMode(QInputDialog::TextInput);
+        inputDialog.setTextEchoMode(QLineEdit::PasswordEchoOnEdit);
+        inputDialog.setWindowTitle( trUtf8("암호가 필요합니다.") );
+        inputDialog.setLabelText( trUtf8("암호는?") );
+        inputDialog.setModal(true);
+    }
+
+    //모달 대화창을 띄움.
+    int s = inputDialog.exec();
+
+    //입력 대화창 종료 상태에 따른 암호 설정
+    switch(s){
+    case QDialog::Accepted:
+        *password = inputDialog.textValue();
+        break;
+
+    case QDialog::Rejected:
+        *password = QString::null;
+        break;
+    }
+
+    //압축 해제 쓰레드 재개.
+    Pause::getInstance()->resume();
 }
 
 /** 위젯 크기를 재조정합니다.

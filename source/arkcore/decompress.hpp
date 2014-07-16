@@ -44,7 +44,6 @@ private:
     std::function<QString(const QString &filePath)> getSaveDirPath_;   ///< 저장할 경로를 얻습니다.
     std::function<void(QString)> setSeperatedExtractPath;              ///< 분할된 저장 경로를 설정합니다. --sperate
     std::function<void()> setExtractPath;                              ///< 기본 저장 경로를 설정합니다. --out-dir
-    QString password;                                                  ///< 패스워드
     QString currentFilePath_;                                          ///< 현재 압축 해제중인 파일의 경로
     int totalFileCount_;                                               ///< 전체 압축 파일의 수
     int exitcode;                                                      ///< 종료코드

@@ -36,7 +36,6 @@ private:
 private:
     explicit Pause(QObject *parent = 0);
     static Pause *singleton;
-    ~Pause();
 
 public:
 	static Pause* getInstance();

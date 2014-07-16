@@ -1,6 +1,6 @@
-#include <QInputDialog>
 #include "reportgui.hpp"
 #include "decompress.hpp"
+#include "pause.hpp"
 
 ReportGui::~ReportGui(){}
 
@@ -73,23 +73,18 @@ ReportGui::ReportGui(
   */
 QString ReportGui::getPassword()
 {
-    QInputDialog d;
-    d.setInputMode(QInputDialog::TextInput);
-    d.setTextEchoMode(QLineEdit::PasswordEchoOnEdit);
-    d.setWindowTitle( trUtf8("암호가 필요합니다.") );
-    d.setLabelText( trUtf8("암호") );
-    d.setModal(true);
-    int c = d.exec();
+    //정시 설정
+    Pause::getInstance()->pause();
 
-    switch(c){
-    case (QDialog::Accepted):
-        return d.textValue();
+    //암호 입력 받기.
+    QString p;
+    emit getPasswordSignal(&p);
 
-    case (QDialog::Rejected):
-        return QString::null;
-    }
+    //정지 지점
+    Pause::getInstance()->setPausePoint();
 
-    return QString::null;
+    //입력값 반환
+    return p;
 }
 
 /** 경고 메시지를 등록합니다.

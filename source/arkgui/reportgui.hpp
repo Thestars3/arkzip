@@ -49,6 +49,7 @@ public:
     virtual QString getPassword();
 
 signals:
+    void getPasswordSignal(QString*);         ///< 암호 입력 대화창을 띄우는 신호.
     void changeTotalPercent(int);             ///< 전체 진행율
     void changeCurrentPercent(int);           ///< 부분 진행율
     void setArchiveInfoSignal(QString);       ///< 압축 파일 명

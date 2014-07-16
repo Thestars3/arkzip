@@ -52,5 +52,6 @@ public slots:
     void toggleShowErrorInfo();
     void shrink();
     void finished(int);
+    void getPassword(QString*);
 
 };

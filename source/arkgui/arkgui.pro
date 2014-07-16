@@ -1,8 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-06-27T22:29:42
-#
-#-------------------------------------------------
 
 include( ../common.pri )
 
@@ -21,13 +16,13 @@ SOURCES += \
 	decompressgui.cpp \
     ui/decompressprogresswidget.cpp
 
-HEADERS  += \
+HEADERS += \
 	ui/trayicon.hpp \
 	reportgui.hpp \
 	decompressgui.hpp \
     ui/decompressprogresswidget.hpp
 
-FORMS    += \
+FORMS += \
     ui/DecompressProgressWidget.ui
 
 QMAKE_CXXFLAGS += -std=c++0x

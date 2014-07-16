@@ -1,9 +1,10 @@
+
 TEMPLATE = subdirs
 
 SUBDIRS = \
+		arkzip \
 		arkcore \
 		arkcui \
-        arkgui \
-        arkzip
+		arkgui
 
 CONFIG += ordered

@@ -48,7 +48,4 @@ contains(buildMode, test) {
 
 	# arkgui 프로그램 경로
 	ARK_GUI_PROGRAM_PATH = /usr/share/arkzip/arkgui
-
-	# 프로그램 아이콘 경로
-	ARKZIP_PROGRAM_ICON = /usr/share/arkzip/arkzip.svg
 }

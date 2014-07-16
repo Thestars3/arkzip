@@ -9,6 +9,7 @@
 #include "ufp/ufp.hpp"
 #include "arkerrconverter.hpp"
 #include "pause.hpp"
+#include <QDebug>
 
 // 네임스페이스 재정의
 namespace po = boost::program_options;
@@ -21,7 +22,7 @@ void Decompress::setPassword(
         const QString &password    ///< 설정할 암호
         )
 {
-    this->password = password;
+    qDebug() << QString::fromUtf8("Decompress::setPassword : 암호 `%1'가 설정되었습니다.").arg(password);
     arkLib->SetPassword( password.toStdWString().c_str() );
 }
 
@@ -165,13 +166,16 @@ void Decompress::processOption()
 
     if ( optionVm.count("key") ){
         qDebug("%s", "암호 옵션을 처리합니다.");
-        setPassword(QString::fromUtf8(optionVm["key"].as<std::string>().c_str()));
+        QString s = QString::fromUtf8( optionVm["key"].as<std::string>().c_str() );
+        setPassword(s);
     }
 
     //HEX 인코딩 된 암호를 입력받음. ex) -K 0a1F2A71
     if ( optionVm.count("hex-key") ){
         qDebug("%s", "HEX 암호 옵션을 처리합니다.");
-        setPassword(QString::fromUtf8(QByteArray::fromHex(optionVm["hex-key"].as<std::string>().c_str())));
+        QByteArray b = QByteArray::fromHex( optionVm["hex-key"].as<std::string>().c_str() );
+        QString s = QString::fromUtf8(b);
+        setPassword(s);
     }
 
     qDebug("%s", "코드 페이지 옵션을 처리합니다.");
