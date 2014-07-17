@@ -73,14 +73,14 @@ ReportGui::ReportGui(
   */
 QString ReportGui::getPassword()
 {
-    //정시 설정
+    //정지 설정
     Pause::getInstance()->pause();
 
     //암호 입력 받기.
     QString p;
     emit getPasswordSignal(&p);
 
-    //정지 지점
+    //정지 지점 설정
     Pause::getInstance()->setPausePoint();
 
     //입력값 반환
@@ -93,7 +93,7 @@ void ReportGui::setWarning(
         QString mesg  ///< 메시지
         )
 {
-    QString s = trUtf8("<font color=\"yellow\">%1</font>").arg(mesg);
+    QString s = trUtf8("<font color=\"#FFD901\">%1</font>").arg(mesg);
     emit appendMessage(s);
 }
 

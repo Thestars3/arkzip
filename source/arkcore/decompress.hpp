@@ -48,6 +48,7 @@ private:
     int totalFileCount_;                                               ///< 전체 압축 파일의 수
     int exitcode;                                                      ///< 종료코드
     bool isWorkEnd_;                                                   ///< 모든 압축 해제 작업이 완료되었다.
+    QString password_;                                                 ///< 설정된 암호
     const static char *ARK_LIBRARY_PATH;
 
     //옵션 처리

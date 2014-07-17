@@ -3,7 +3,7 @@
 # 소스 파일로 부터 패키지 파일을 생성합니다. 소스 파일은 Release로 빌드되어 있어야 합니다. testMode모드가 아닌 일반 모드로 빌드된 것이어야 정상적으로 작동합니다.
 
 #전역 변수 설정
-VERSION=$(<.version_control)
+VERSION=$(<version)
 
 #작업 환경 초기화
 function initWorkSpace(){
@@ -87,7 +87,7 @@ function makeControlFile(){
 	Installed-Size: $(du -sBKB dist | grep -oE '^[0-9]+')
 	Section: utils
 	Priority: optional
-	depends: libqt4-core(>=4:4.8.1), libstdc++6
+	depends: libqt4-core(>=4:4.8.1), libstdc++6, libboost-program-options1.46.1
 	Architecture: amd64
 	Maintainer: 별님 <w7dn1ng75r@gmail.com>
 	Homepage: https://github.com/Thestars3/arkzip/

@@ -81,6 +81,7 @@ Option::Option(
             passwordOptionDesc.add_options()
                     ("key,k", po::value<std::string>(), trUtf8("압축 해제에 사용할 암호를 지정합니다.").toUtf8().constData())
                     ("hex-key,K", po::value<std::string>(), trUtf8("HEX로 인코딩된 암호를 입력 받습니다.").toUtf8().constData())
+                    ("skip-pass", trUtf8("암호를 물어보지 않게 합니다.").toUtf8().constData())
                     ;
             desc.add(passwordOptionDesc);
             visibleDesc.add(passwordOptionDesc);
@@ -266,6 +267,10 @@ void Option::process()
         stderr << trUtf8("--key와 --hex-key를 함께 사용할수 없습니다.") << endl
                << flush;
         exit(8);
+    }
+
+    if ( vm.count("skip-pass") ) {
+        args.push_back("--skip-pass");
     }
 
     QVector<std::string> files;

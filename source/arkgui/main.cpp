@@ -71,5 +71,8 @@ int main(
     //qt 어플리케이션의 이벤트 루프가 시작됩니다.
     application.exec();
 
+    //압축 해제 쓰레드가 끝날때가 까지 대기.
+    decompress.wait();
+
     return decompress.getExitcode();
 }

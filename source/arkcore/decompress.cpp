@@ -1,7 +1,6 @@
 #include "carkevent.hpp"
 #include "ArkLibrary.hpp"
 #include "decompress.hpp"
-#include <getopt.h>
 #include <QCoreApplication>
 #include <QFile>
 #include "report.hpp"
@@ -23,7 +22,10 @@ void Decompress::setPassword(
         )
 {
     qDebug() << QString::fromUtf8("Decompress::setPassword : 암호 `%1'가 설정되었습니다.").arg(password);
-    arkLib->SetPassword( password.toStdWString().c_str() );
+    password_ = password;
+    if ( arkLib->IsOpened() == TRUE ) {
+        arkLib->SetPassword( password.toStdWString().c_str() );
+    }
 }
 
 /** arkEvent 객체를 반환한다.
@@ -93,6 +95,7 @@ void Decompress::defineOption()
             ("link", "")
             ("key", po::value<std::string>())
             ("hex-key", po::value<std::string>())
+            ("skip-pass", "")
             ;
     optionPositional.add("files", -1);
 }
@@ -176,6 +179,10 @@ void Decompress::processOption()
         QByteArray b = QByteArray::fromHex( optionVm["hex-key"].as<std::string>().c_str() );
         QString s = QString::fromUtf8(b);
         setPassword(s);
+    }
+
+    if ( optionVm.count("skip-pass") ) {
+        arkEvent->setSkipAskPassword(true);
     }
 
     qDebug("%s", "코드 페이지 옵션을 처리합니다.");
@@ -344,6 +351,9 @@ void Decompress::run()
             Report::getInstance()->setWarning(trUtf8("파일을 여는데 문제가 생겼습니다. 작업을 건너 뜁니다."));
             continue;
         }
+
+        //설정된 암호를 압축 해제할 파일에 적용
+        arkLib->SetPassword( password_.toStdWString().c_str() );
 
         //압축 해제 작업 수행.
         currentFilePath_ = file->fileName();

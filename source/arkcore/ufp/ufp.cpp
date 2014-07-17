@@ -1,7 +1,6 @@
 #include "ufp.hpp"
 #include <QDir>
 #include <QFileInfo>
-#include <QtAlgorithms>
 #include <QTextStream>
 #include <QRegExp>
 #include "failmakedirexception.hpp"

@@ -17,6 +17,9 @@ CArkEvent::CArkEvent(
 {
     //Decompress 객체를 설정.
     decompress = (Decompress*)parent;
+
+    //암호 얻기 작업 수행시 무시하지 않게 한다.
+    setSkipAskPassword(false);
 }
 
 /** @brief IArk::Open()(section 3.2.2) 메쏘드를 호출하여 파일의 목록을 읽어오고 있을때 호출됩니다.
@@ -158,6 +161,30 @@ void CArkEvent::OnAskOverwrite(
     copy(pathName2Rename, ARK_MAX_PATH, newFullPath);
 }
 
+/** 암호를 묻을지 묻지 않을지 여부를 설정한다.
+  */
+void CArkEvent::setSkipAskPassword(
+        bool isSkip ///< 건너뛸지의 여부. true 건너뜀. false 건너뛰지 않음.
+        )
+{
+    //건너뛰게 한다.
+    if ( isSkip ) {
+        getPassword =
+                []() -> QString
+            {
+                return QString::null;
+            };
+    }
+    //건너뛰게 하지 않는다.
+    else {
+        getPassword =
+                []() -> QString
+            {
+                return Report::getInstance()->getPassword();
+            };
+    }
+}
+
 /** @brief 압축해제중 암호걸린 파일이 있을경우 사용자에게 암호를 물어보기 위해서 호출됩니다.\n
   @warning 암호가 틀린경우 ZIP 포맷은 체크섬을 통해서 암호가 틀린것을 알 수 있지만, RAR 포맷은 체크섬이 없기 때문에 askType 이 ARK_PASSWORD_ASKTYPE_INVALIDPASSWD 로 넘어오지 않습니다.
   */
@@ -181,7 +208,7 @@ void CArkEvent::OnAskPassword(
     }
 
     qDebug("%s", "암호를 입력받음.");
-    QString password = Report::getInstance()->getPassword();
+    QString password = getPassword();
     //임력된 암호가 비어있다면 암호를 지정을 하지 않겠다는 의도로 간주함.
     if ( password.isEmpty() ) {
         qDebug("%s", "암호 설정을 건너뜁니다.");
