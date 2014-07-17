@@ -249,7 +249,7 @@ void Decompress::processOption()
     //테스트 모드
     if ( optionVm.count("test") ){
         decompress =
-                [arkLib] (
+                [this] (
                     const QString &/*filePath*/ //파일 경로
                     )
                 {
@@ -271,7 +271,7 @@ void Decompress::processOption()
         }
 
         decompress =
-                [this, getSaveDirPath_] (
+                [this] (
                     const QString &filePath //파일 경로
                     )
                 {
