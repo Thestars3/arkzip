@@ -1,5 +1,4 @@
 #include "carkevent.hpp"
-#include <QTextStream>
 #include <QFileInfo>
 #include <QFile>
 #include <QDir>

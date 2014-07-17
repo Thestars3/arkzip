@@ -56,9 +56,6 @@ int main(
     qDebug("%s", "DecompressProgressWidget 객체 생성");
     DecompressProgressWidget progressWidget;
 
-    //암호 설정 시그널이 발생되면 진행창에서 암호 입력 창을 띄우도록 한다.
-    QObject::connect((ReportGui*)Report::getInstance(), SIGNAL(getPasswordSignal(QString*)), &progressWidget, SLOT(getPassword(QString*)));
-
     //decompress 객체의 finished 시그널이 발생했을떄, 진행창 위젯의 finished 메소드를 호출하도록 합니다.
     QObject::connect(&decompress, SIGNAL(finished(int)), &progressWidget, SLOT(finished(int)));
 
@@ -71,8 +68,10 @@ int main(
     //qt 어플리케이션의 이벤트 루프가 시작됩니다.
     application.exec();
 
-    //압축 해제 쓰레드가 끝날때가 까지 대기.
-    decompress.wait();
+    if ( decompress.isWorkEnd() && decompress.isRunning() ) {
+        //압축 해제 쓰레드가 끝날때가 까지 대기.
+        decompress.wait();
+    }
 
     return decompress.getExitcode();
 }

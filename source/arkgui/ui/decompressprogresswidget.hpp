@@ -34,7 +34,10 @@ public:
 private:
     Ui::DecompressProgressWidget *ui;   ///< ui 정보
     class TrayIcon *tray;               ///< 트레이 아이콘
-    int oldWinHeight;  ///< 작업 로그 보이기를 수행할시, 복구될 창의 높이
+    int oldWinHeight;                   ///< 작업 로그 보이기를 수행할시, 복구될 창의 높이
+
+private:
+    void closeEvent(QCloseEvent*);
 
 public:
     QIcon pauseIcon;   ///< 일시정지 아이콘

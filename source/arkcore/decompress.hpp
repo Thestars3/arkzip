@@ -35,6 +35,7 @@ public:
     QString getCurrentFilePath() const;
     class CArkEvent* getArkEvent();
     int getExitcode();
+    bool isWorkEnd();
 
 private:
     class CArkLib *arkLib;                                             ///< 압축 해제 처리 객체(전방 선언됨)

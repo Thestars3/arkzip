@@ -5,6 +5,7 @@
 #include "pause.hpp"
 #include "trayicon.hpp"
 #include <QTimer>
+#include <QCloseEvent>
 #include <QInputDialog>
 
 /** 생성자.
@@ -18,6 +19,9 @@ DecompressProgressWidget::DecompressProgressWidget(
     ui->setupUi(this);
 
     //이곳에 추가적인 초기화 명령을 입력합니다.
+
+    //암호 설정 시그널이 발생되면 진행창에서 암호 입력 창을 띄우도록 한다.
+    QObject::connect((ReportGui*)Report::getInstance(), SIGNAL(getPasswordSignal(QString*)), this, SLOT(getPassword(QString*)));
 
     pauseIcon = QIcon::fromTheme(QString::fromUtf8("media-playback-pause"));
     pauseText = trUtf8("일시정지");
@@ -71,6 +75,12 @@ void DecompressProgressWidget::getPassword(
 {
     QInputDialog inputDialog;
 
+    //트레이 아이콘 일부 기능을 비활성화 시킴.
+    {
+        tray->actionShow->setEnabled(false);
+        tray->actionPauseToggle->setEnabled(false);
+    }
+
     //입력 대화창 설정
     {
         inputDialog.setInputMode(QInputDialog::TextInput);
@@ -92,6 +102,12 @@ void DecompressProgressWidget::getPassword(
     case QDialog::Rejected:
         *password = QString::null;
         break;
+    }
+
+    //트레이 아이콘 일부 기능을 활성화 시킴.
+    {
+        tray->actionShow->setEnabled(true);
+        tray->actionPauseToggle->setEnabled(true);
     }
 
     //압축 해제 쓰레드 재개.
@@ -146,6 +162,7 @@ void DecompressProgressWidget::toggleShowErrorInfo()
 void DecompressProgressWidget::toggleShow()
 {
     qDebug("%s", "창 숨김 상태를 토글합니다.");
+
     //숨김 상태인 경우
     if ( this->isHidden() ){
         this->show();
@@ -186,6 +203,16 @@ void DecompressProgressWidget::togglePause()
         ui->pauseBtn->setText(playText);
         ui->pauseBtn->setIcon(playIcon);
     }
+}
+
+/** 창 닫김 이벤트를 처리합니다.
+  */
+void DecompressProgressWidget::closeEvent(
+        QCloseEvent *e ///< 종료 이벤트
+        )
+{
+    e->accept();
+    QTimer::singleShot(0, QApplication::instance(), SLOT(quit()));
 }
 
 /** 압축 해제가 종료되면 호출되는 메소드.

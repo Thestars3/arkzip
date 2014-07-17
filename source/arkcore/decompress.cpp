@@ -376,6 +376,14 @@ void Decompress::run()
     emit finished(exitcode);
 }
 
+/** 작업이 완료되었는지 확인합니다.
+  @return 작업 완료 여부. true 완료됨. false 완료되지 않음.
+  */
+bool Decompress::isWorkEnd()
+{
+    return isWorkEnd_;
+}
+
 /** 압축 해제 옵션을 설정합니다.
   */
 void Decompress::setOption()
