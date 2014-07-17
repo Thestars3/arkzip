@@ -203,3 +203,7 @@
 *2.2.3*
 
 + 컴파일 시 발생하는 In lambda function capture of non-variable error를 수정.
+
+*2.2.4*
+
++ boost-program-options 라이브러리를 멀티 쓰레드용으로 변경.

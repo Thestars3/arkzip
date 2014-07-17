@@ -34,4 +34,4 @@ DEFINES += \
 
 QMAKE_CXXFLAGS += -std=c++0x
 
-LIBS += -ldl -lboost_program_options
+LIBS += -ldl -lboost_program_options-mt

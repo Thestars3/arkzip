@@ -20,7 +20,7 @@ HEADERS += \
 
 QMAKE_CXXFLAGS += -std=c++0x
 
-LIBS += -lboost_program_options
+LIBS += -l:libboost_program_options-mt.a
 
 DEFINES += \
 	DF_020C2DC2A183E03DEBCECB21F1B1DB380=\\\"$$join(ARK_CUI_PROGRAM_PATH, \\\x20)\\\" \
