@@ -214,12 +214,7 @@ void CArkEvent::OnAskPassword(
         qDebug("%s", "암호 설정을 건너뜁니다.");
 
         //오류 메시지를 설정
-        {
-            QString errorMessage = trUtf8("`%1'압축파일의 `%2'파일의 암호 설정을 건너뜁니다.");
-            errorMessage = errorMessage.arg( decompress->getCurrentFilePath() );
-            errorMessage = errorMessage.arg( QString::fromWCharArray(pFileItem->fileNameW) );
-            Report::getInstance()->setWarning(errorMessage);
-        }
+        Report::getInstance()->reportSkipLockFile( QString::fromWCharArray(pFileItem->fileNameW) );
 
         //암호 설정을 하지 않음.
         ret = ARK_PASSWORD_RET_CANCEL;

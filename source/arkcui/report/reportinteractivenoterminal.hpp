@@ -44,6 +44,7 @@ public:
     virtual void setSeperatedExtractPath(QString);
     virtual void setCritical(QString);
     virtual void setEndFile();
+    virtual void reportSkipLockFile(QString);
     virtual void setPartEnd();
     virtual void setNewName(QString);
     virtual QString getPassword();

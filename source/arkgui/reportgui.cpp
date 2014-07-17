@@ -87,6 +87,16 @@ QString ReportGui::getPassword()
     return p;
 }
 
+/** 암호가 걸린 파일을 건너뜀을 알립니다.
+  */
+void ReportGui::reportSkipLockFile(
+        QString fileName ///< 파일명
+        )
+{
+    QString m = trUtf8("<B>%1</B>에 포함된 <B>%2</B>의 암호 설정을 건너뜁니다.").arg(currentFileName, fileName);
+    setWarning(m);
+}
+
 /** 경고 메시지를 등록합니다.
   */
 void ReportGui::setWarning(
@@ -124,7 +134,6 @@ void ReportGui::customSetStartFile(
         QString fileName    ///< 압축 해제 중인 파일 명
         )
 {
-    currentFileName = fileName;
     QString s = QString::fromUtf8("[%1/%2] %3").arg(index + 1).arg( getTotalArchiveCount() ).arg(fileName);
     emit setArchiveInfoSignal(s);
 }

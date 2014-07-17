@@ -19,6 +19,8 @@ void Report::setInstance(
 
 void Report::setSeperatedExtractPath(QString){}
 
+void Report::reportSkipLockFile(QString){}
+
 Report *Report::singleton = new Report(); ///< 싱글톤
 
 /** 전역 객체를 얻습니다.
@@ -133,6 +135,7 @@ void Report::setStartFile(
         )
 {
     totalTimer.start();
+    currentFileName = fileName;
     customSetStartFile(index, fileName);
 }
 

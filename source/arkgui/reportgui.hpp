@@ -31,7 +31,6 @@ public:
     virtual ~ReportGui();
 
 private:
-    QString currentFileName;      ///< 압축 파일명
     QString decompressFileName;   ///< 압축 해제 중인 부분 파일 명
 
 public:
@@ -45,6 +44,7 @@ public:
     virtual void setCritical(QString);
     virtual void setEndFile();
     virtual void setPartEnd();
+    virtual void reportSkipLockFile(QString);
     virtual void setNewName(QString);
     virtual QString getPassword();
 

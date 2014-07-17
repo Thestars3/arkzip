@@ -30,9 +30,12 @@ protected:
     void setTotalTimerInterval(int);
     void setPartTimerInterval(int);
 
+protected:
+    QString currentFileName;      ///< 압축 파일명
+
 private:
     static Report *singleton;
-    int totalArchiveCount_;
+    int totalArchiveCount_;     ///< 전체 압축 파일 갯수
     QTimer partTimer;           ///< 압축 파일에서 압축 해제 중인 파일에 대한 압축해제 진행율을 표시하는 간격을 제어합니다.
     QTimer totalTimer;          ///< 압축 파일에서의 전체 압축 해제 진행율 표시 간격 제어.
 
@@ -59,6 +62,7 @@ public:
     virtual void setCritical(QString);
     virtual void setEndFile();
     virtual void setPartEnd();
+    virtual void reportSkipLockFile(QString);
 
 };
 

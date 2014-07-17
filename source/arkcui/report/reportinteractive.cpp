@@ -88,6 +88,16 @@ QString ReportInteractive::getPassword()
     return password;
 }
 
+/** 암호가 걸린 파일을 건너뜀을 알립니다.
+  */
+void ReportInteractive::reportSkipLockFile(
+        QString fileName ///< 파일명
+        )
+{
+    QString m = trUtf8("`%1'에 포함된 `%2'의 암호 설정을 건너뜁니다.").arg(currentFileName, fileName);
+    setWarning(m);
+}
+
 /** 경고 메시지를 등록합니다.
   */
 void ReportInteractive::setWarning(

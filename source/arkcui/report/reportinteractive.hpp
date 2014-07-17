@@ -64,6 +64,7 @@ public:
     virtual void setWarning(QString);
     virtual void setCritical(QString);
     virtual void setEndFile();
+    virtual void reportSkipLockFile(QString);
     virtual void setSeperatedExtractPath(QString);
     virtual void setPartEnd();
     virtual void setNewName(QString);
