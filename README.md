@@ -8,6 +8,8 @@ arkzip
 * alz, egg 압축 포멧을 비롯하여, 다양한 확장자를 손쉽게 압축 해제 할 수 있습니다.
 * 인코딩이 CPC949(EUC-KR)인 경우를 비롯하여 다양한 인코딩으로 인코딩된 압축 파일을 정상적으로 압축해제 할 수 있습니다.
 
+*지원 확장자 :* zip, alz, egg, tar, bh, 7z, wim, rar, arj, ace, cab, lzh, gz, bz2, iso, udf, img, xz, z, lzma, j2j, nsis.
+
 *사용 환경 :* ubuntu/64bit
 
 *지원 인터페이스 :* 이 프로그램은 gui, cui, 출력 없음 등의 형식으로 사용자에게 작업 수행을 보고할수 있습니다.
@@ -23,8 +25,6 @@ arkzip
 + none
 
 ![none](screenshot/none.png)
-
-*지원 확장자 :* zip, alz, egg, tar, bh, 7z, wim, rar, arj, ace, cab, lzh, gz, bz2, iso, udf, img, xz, z, lzma, j2j, nsis.
 
 *사용예 :*
 

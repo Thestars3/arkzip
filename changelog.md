@@ -207,3 +207,7 @@
 *2.2.4*
 
 + boost-program-options 라이브러리를 멀티 쓰레드용으로 변경.
+
+*2.2.5*
+
++ 의존 패키지 libboost-program-options1.46.1를 libboost-program-options-dev로 수정.

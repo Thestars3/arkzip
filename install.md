@@ -1,12 +1,14 @@
 설치 방법
 =============
 **패키지 파일을 사용하여 설치하기**
-github의 저장소에서 relrease된 패키지 파일을 다운받아 설치하면 됩니다.
-혹은 소스폴더에 존재하는 deb파일을 다운받아 설치하면 됩니다.
+
+github의 저장소에서 relrease된 패키지 파일을 다운받아 설치하면 됩니다. relrease 목록은 <https://github.com/Thestars3/arkzip/releases>에서 찾아 볼 수 있습니다.
+
 터미널에서 설치하기 : `sudo pdkg -i *.deb`
 
 ---------------------------------------
 **직접 컴파일하기**
+
 1. *컴파일에 필요한 패키지를 설치.*
 
 	`sudo apt-get install libqt4-dev libboost-program-options-dev fakeroot`

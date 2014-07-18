@@ -24,6 +24,6 @@ HEADERS += \
 
 QMAKE_CXXFLAGS += -std=c++0x
 
-LIBS += -l:libboost_program_options-mt.a
+LIBS += -l:libboost_program_options-mt.so
 
 include( ../arkcore.pri )

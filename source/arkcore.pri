@@ -3,4 +3,4 @@
 INCLUDEPATH += ../arkcore
 DEPENDPATH += ../arkcore
 
-LIBS += -L../arkcore/Release -larkcore
+LIBS += -L../arkcore/Release -l:libarkcore.so

@@ -26,6 +26,7 @@ function copyFiles(){
 	
 	mkdir -p dist/usr/lib/arkzip/arkcore
 	cp source/arkcore/Release/libarkcore.so.1.0.0 dist/usr/lib/arkzip/arkcore/libarkcore.so
+	ln -s libarkcore.so dist/usr/lib/arkzip/arkcore/libarkcore.so.1
 	
 	mkdir -p dist/usr/share/doc/arkzip
 	cp License.txt AUTHORS COPYING changelog.md dist/usr/share/doc/arkzip
@@ -72,10 +73,7 @@ function setPostRmWork(){
 
 #체크섬 기록
 function makeChecksumFile(){
-	local i
-	for i in $(find dist -type f | grep -v '^\./dist/DEBIAN/'); do 
-		md5sum "$i";
-	done | sed 's/\.\///' > dist/DEBIAN/md5sums
+	find dist -type f -not -path 'dist/DEBIAN/*' -exec md5sum {} \; | sed 's#  dist/#  #' > dist/DEBIAN/md5sums
 }
 
 #컨트롤 정보 생성
@@ -87,6 +85,7 @@ function makeControlFile(){
 	Installed-Size: $(du -sBKB dist | grep -oE '^[0-9]+')
 	Section: utils
 	Priority: optional
+	breaks: arkzip
 	depends: libqt4-core(>=4:4.8.1), libstdc++6, libboost-program-options1.46.1
 	Architecture: amd64
 	Maintainer: 별님 <w7dn1ng75r@gmail.com>
