@@ -211,3 +211,7 @@
 *2.2.5*
 
 + 의존 패키지 libboost-program-options1.46.1를 libboost-program-options-dev로 수정.
+
+*2.2.6*
+
++ 패키지 설치 파일에서 의존 패키지가 갱신되지 않았던 점 수정.
