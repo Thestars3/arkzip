@@ -1,14 +1,30 @@
+#-------------------------------------------------
+#
+# arkcore 정적 라이브러리 프로젝트
+#
+#-------------------------------------------------
 
 include( ../common.pri )
 
-QT       -= gui
-
-TARGET = arkcore
 TEMPLATE = lib
 
-VERSION = 1.0.0 #arkcore 라이브러리의 버전은 의미가 없습니다.
+TARGET   = arkcore
 
-SOURCES += pause.cpp \
+QT       -= gui
+
+CONFIG   += staticlib
+
+HEADERS  += \
+	pause.hpp \
+	report.hpp \
+	carkevent.hpp \
+	decompress.hpp \
+	ufp/ufp.hpp \
+	ufp/failmakedirexception.hpp \
+	arkerrconverter.hpp
+
+SOURCES  += \
+	pause.cpp \
 	report.cpp \
 	carkevent.cpp \
 	decompress.cpp \
@@ -16,24 +32,13 @@ SOURCES += pause.cpp \
 	ufp/failmakedirexception.cpp \
     arkerrconverter.cpp
 
-HEADERS += pause.hpp \
-	report.hpp \
-	carkevent.hpp \
-	decompress.hpp \
-	ufp/ufp.hpp \
-	ufp/failmakedirexception.hpp \
-    arkerrconverter.hpp
-
-INCLUDEPATH += ../../ArkLibrary
-DEPENDPATH += ../../ArkLibrary
-
-DEFINES += \
+DEFINES  += \
 	_FILE_OFFSET_BITS=64 \
 	_LARGEFILE_SOURCE \
 	DF_AA58F9E2C6BF94D18A1FE812398CE2233=\\\"$$join(ARK_LIBRARY_PATH, \\\x20)\\\"
 
-QMAKE_CXXFLAGS += -std=c++0x
+INCLUDEPATH += ../../ArkLibrary
 
-LIBS += \
-	-ldl \
-	-l:libboost_program_options-mt.so
+DEPENDPATH  += ../../ArkLibrary
+
+QMAKE_CXXFLAGS += -std=c++0x

@@ -1,5 +1,4 @@
 #include "option.hpp"
-#include <unistd.h>
 #include <QVector>
 #include <QDir>
 
@@ -88,19 +87,11 @@ Option::Option(
         }
     }
 
-    //test 모드에서의 arkcore 경로 설정
-    if ( ! ARKCORE_LIBRARY_PATH->isEmpty() ) {
-        const char *LIBRARY_PATH_ENV_NAME = "LD_LIBRARY_PATH";
-        QByteArray d = qgetenv(LIBRARY_PATH_ENV_NAME) + ":" + (*ARKCORE_LIBRARY_PATH);
-        qputenv(LIBRARY_PATH_ENV_NAME, d);
-    }
 }
 
 const std::string Option::ARKZIP_CUI_PATH = DF_020C2DC2A183E03DEBCECB21F1B1DB380; ///< arkcui 실행 파일 경로
 
 const std::string Option::ARKZIP_GUI_PATH = DF_48887DE835299C0AD335491A223436213; ///< arkgui 실행 파일 경로
-
-const QByteArray *Option::ARKCORE_LIBRARY_PATH = new QByteArray(DF_9C94F15C05DD6E0139925E6A392893FFC); ///< arkcore 라이브러리 경로
 
 /** 명령행 옵션 분석.
   @return 변수 맵

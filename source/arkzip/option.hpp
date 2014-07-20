@@ -16,9 +16,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #ifndef OPTION_HPP
 #define OPTION_HPP
 
-#include <boost/program_options.hpp>
 #include <QObject>
 #include <QTextStream>
+#include <boost/program_options.hpp>
 
 /** 옵션을 처리합니다.
   */
@@ -38,7 +38,6 @@ private:
     QTextStream stderr;                                                   ///< 표준 에러
     const static std::string ARKZIP_CUI_PATH;
     const static std::string ARKZIP_GUI_PATH;
-    const static class QByteArray *ARKCORE_LIBRARY_PATH;
 
 private:
     boost::program_options::variables_map analyze();

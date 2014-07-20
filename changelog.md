@@ -215,3 +215,10 @@
 *2.2.6*
 
 + 패키지 설치 파일에서 의존 패키지가 갱신되지 않았던 점 수정.
+
+*2.2.7*
+
++ 패키지 설치 파일의 의존 패키지 목록에서 libboost-program-options-dev를 제거.
++ libboost-program-options를 정적으로 링크하도록 수정.
++ arkcore 라이브러리를 공유 라이브러리에서 정적 라이브러리로 수정하여 링크.
++ 소스에서 test mode용 arkcore 라이브러리 경로 설정 코드를 제거함.

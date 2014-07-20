@@ -5,10 +5,10 @@ arkzip
 *특징 :*
 
 * 암호가 걸린 파일을 압축해제 할 수 있습니다.
-* alz, egg 압축 포멧을 비롯하여, 다양한 확장자를 손쉽게 압축 해제 할 수 있습니다.
+* alz, egg 압축 포멧을 비롯하여, 다양한 압축 포멧의 파일을 손쉽게 압축 해제 할 수 있습니다.
 * 인코딩이 CPC949(EUC-KR)인 경우를 비롯하여 다양한 인코딩으로 인코딩된 압축 파일을 정상적으로 압축해제 할 수 있습니다.
 
-*지원 확장자 :* zip, alz, egg, tar, bh, 7z, wim, rar, arj, ace, cab, lzh, gz, bz2, iso, udf, img, xz, z, lzma, j2j, nsis.
+*압축 해제가 가능한 포멧 :* zip, alz, egg, tar, bh, 7z, wim, rar, arj, ace, cab, lzh, gz, bz2, iso, udf, img, xz, z, lzma, j2j, nsis.
 
 *사용 환경 :* ubuntu/64bit
 

@@ -1,10 +1,15 @@
+#-------------------------------------------------
+#
+# arkzip 프로젝트
+#
+#-------------------------------------------------
 
 TEMPLATE = subdirs
 
-SUBDIRS = \
+SUBDIRS  = \
 		arkzip \
 		arkcore \
 		arkcui \
 		arkgui
 
-CONFIG += ordered
+CONFIG   += ordered

@@ -5,6 +5,8 @@
 #include <QRegExp>
 #include "failmakedirexception.hpp"
 
+using namespace ufp;
+
 /** 해당 경로에서 유일한 디렉토리를 생성합니다.
   @return 생성된 디렉토리의 이름
   @throw 디렉토리 생성이 실패한다면 FailMakeDirException을 던집니다.
@@ -17,7 +19,7 @@ QString ufp::makeUniqueDir(
     QString path = dir.dir().path();
 
     //유일한 디렉토리 생성
-    QString generatedDirName = ufp::generateUniqueName(dir.fileName(), path);
+    QString generatedDirName = generateUniqueName(dir.fileName(), path);
 
     //디렉토리 생성 성공시 폴더 명 반환
     if ( Q_LIKELY(QDir(path).mkdir(generatedDirName)) ){

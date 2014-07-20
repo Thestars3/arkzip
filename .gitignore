@@ -4,6 +4,7 @@
 *.pro.user
 *.sdf
 *.kate-swp
+*.autosave
 
 # 특정 디렉토리 내 파일들을 무시
 Debug/

@@ -24,10 +24,6 @@ function copyFiles(){
 	mkdir -p dist/usr/lib/arkzip/ArkLibrary
 	cp ArkLibrary/{ArkLicense.txt,ArkLibrary64.so} dist/usr/lib/arkzip/ArkLibrary
 	
-	mkdir -p dist/usr/lib/arkzip/arkcore
-	cp source/arkcore/Release/libarkcore.so.1.0.0 dist/usr/lib/arkzip/arkcore/libarkcore.so
-	ln -s libarkcore.so dist/usr/lib/arkzip/arkcore/libarkcore.so.1
-	
 	mkdir -p dist/usr/share/doc/arkzip
 	cp License.txt AUTHORS COPYING changelog.md dist/usr/share/doc/arkzip
 	
@@ -86,7 +82,7 @@ function makeControlFile(){
 	Section: utils
 	Priority: optional
 	breaks: arkzip
-	depends: libqt4-core(>=4:4.8.1), libstdc++6, libboost-program-options-dev
+	depends: libqt4-core(>=4:4.8.1), libstdc++6
 	Architecture: amd64
 	Maintainer: 별님 <w7dn1ng75r@gmail.com>
 	Homepage: https://github.com/Thestars3/arkzip/
