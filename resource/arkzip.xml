@@ -25,12 +25,7 @@
 		<comment>ACB 압축 파일</comment>
 		<glob pattern="*.acb"/>
 		<icon name="arkzip-acb"/>
-	</mime-type>	
-	<mime-type type="application/x-udf">
-		<comment>Universal Disk Format 파일</comment>
-		<glob pattern="*.udf"/>
-		<icon name="arkzip-udf"/>
-	</mime-type>	
+	</mime-type>
 	<mime-type type="application/x-img">
 		<comment>raw disk image file format</comment>
 		<glob pattern="*.img"/>
@@ -40,10 +35,13 @@
 		<comment>j2j로 변조된 파일</comment>
 		<glob pattern="*.j2j"/>
 		<icon name="arkzip-j2j"/>
-	</mime-type>	
-	<mime-type type="application/x-nsis">
-		<comment>Nullsoft Scriptable Install System 파일</comment>
-		<glob pattern="*.nsis"/>
-		<icon name="arkzip-nsis"/>
-	</mime-type>	
+	</mime-type>
+	<mime-type type="application/x-7z-part">
+		<comment>7z 분할 압축 파일</comment>
+		<glob pattern="*.7z.001"/>
+		<magic priority="50">
+			<match value="7z\xBC\xAF'\x1C\x00\x03" type="string" offset="0"/>
+		</magic>
+		<icon name="arkzip-7z-part"/>
+	</mime-type>
 </mime-info>

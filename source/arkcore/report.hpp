@@ -51,6 +51,7 @@ public:
     //사용자에게 보고하는 모든 작업을 처리하는 가상 메소드.
 public:
     virtual void setNewName(QString);
+    virtual void setDecompressError(QString archiveFilePath, QString partFilePath, QString errorMessage);
     virtual void reportTotalPercent(float);
     virtual void customSetExtractFileStart(QString);
     virtual void customSetStartFile(int, QString);

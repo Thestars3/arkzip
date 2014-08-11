@@ -43,6 +43,7 @@ public:
     virtual void setWarning(QString);
     virtual void setSeperatedExtractPath(QString);
     virtual void setCritical(QString);
+    virtual void setDecompressError(QString archiveFilePath, QString partFilePath, QString errorMessage);
     virtual void setEndFile();
     virtual void reportSkipLockFile(QString);
     virtual void setPartEnd();

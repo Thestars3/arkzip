@@ -112,24 +112,12 @@ void CArkEvent::OnError(
         break;
     }
 
-    //오류 메시지를 설정
-    QString errorMessage;
-    {
-        if ( pFileItem != nullptr ) {
-            errorMessage = trUtf8("`%1'파일의 `%2'파일을 압축해제 하던 중 오류가 발생했습니다. %3");
-        }
-        else {
-            errorMessage = trUtf8("`%1'파일을 압축해제 하던 중 오류가 발생했습니다. %3");
-        }
-        errorMessage = errorMessage.arg( decompress->getCurrentFilePath() );
-        if ( pFileItem != nullptr ) {
-            errorMessage = errorMessage.arg( QString::fromWCharArray(pFileItem->fileNameW) );
-        }
-        errorMessage = errorMessage.arg( ArkErrConverter::getInstance()->getMessage(nErr) );
-    }
-
     //기타 오류는 critical 메시지를 발생시킵니다.
-    Report::getInstance()->setCritical(errorMessage);
+    Report::getInstance()->setDecompressError(
+                decompress->getCurrentFilePath(),
+                QString::fromWCharArray(pFileItem->fileNameW),
+                ArkErrConverter::getInstance()->getMessage(nErr)
+                );
 }
 
 /** @brief 로컬 드라이브에 압축해제시 로컬 파일에 동일한 이름의 파일이 이미 있을경우, 이를 덮어쓸것인지 말것인지 여부를 확인할때 호출됩니다.
@@ -194,23 +182,23 @@ void CArkEvent::OnAskPassword(
         WCHAR passwordW[ARK_MAX_PASS]    ///< [out] 사용자가 입력한 암호를 저장합니다.
         )
 {
-    qDebug("%s", "OnAskPassword 메쏘드가 호출되는 상황에 따른 처리 시작");
+    //OnAskPassword 메쏘드가 호출되는 상황에 따른 처리 시작
 
     switch(askType){
     case ARK_PASSWORD_ASKTYPE_PASSWDNOTSET:
-        qDebug("%s", "기존에 지정된 암호가 틀린 경우");
+        //기존에 지정된 암호가 틀린 경우
         break;
 
     case ARK_PASSWORD_ASKTYPE_INVALIDPASSWD:
-        qDebug("%s", "기존에 암호가 지정되지 않은 경우");
+        //기존에 암호가 지정되지 않은 경우
         break;
     }
 
-    qDebug("%s", "암호를 입력받음.");
+    //암호를 입력받음.
     QString password = getPassword();
     //임력된 암호가 비어있다면 암호를 지정을 하지 않겠다는 의도로 간주함.
     if ( password.isEmpty() ) {
-        qDebug("%s", "암호 설정을 건너뜁니다.");
+        //암호 설정을 건너뜁니다.
 
         //오류 메시지를 설정
         Report::getInstance()->reportSkipLockFile( QString::fromWCharArray(pFileItem->fileNameW) );
@@ -221,7 +209,7 @@ void CArkEvent::OnAskPassword(
     }
     //암호가 존재한다면 입력받은 암호를 설정함.
     else {
-        qDebug("%s", "암호를 설정합니다.");
+        //암호를 설정합니다.
         decompress->setPassword(password);
         copy(passwordW, ARK_MAX_PASS, password);
         ret = ARK_PASSWORD_RET_OK;

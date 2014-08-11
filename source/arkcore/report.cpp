@@ -111,6 +111,16 @@ void Report::setTotalPercent(
     }
 }
 
+/** 압축 해제 중 오류를 설정한다.
+  */
+void Report::setDecompressError(
+        QString /*archiveFilePath*/,
+        QString /*partFilePath*/,
+        QString /*errorMessage*/
+        )
+{
+}
+
 /** 압축 파일에서 압축 해제 중인 파일의 압축 해제율을 설정한다.
   */
 void Report::setCurrentPercent(

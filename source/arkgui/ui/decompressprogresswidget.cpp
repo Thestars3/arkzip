@@ -66,7 +66,7 @@ DecompressProgressWidget::DecompressProgressWidget(
         tray->show();
     }
 
-    qDebug("%s", "DecompressProgressWidget 객체 생성완료");
+    //DecompressProgressWidget 객체 생성완료
 }
 
 void DecompressProgressWidget::getPassword(
@@ -161,7 +161,7 @@ void DecompressProgressWidget::toggleShowErrorInfo()
   */
 void DecompressProgressWidget::toggleShow()
 {
-    qDebug("%s", "창 숨김 상태를 토글합니다.");
+    //창 숨김 상태를 토글합니다.
 
     //숨김 상태인 경우
     if ( this->isHidden() ){

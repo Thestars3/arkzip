@@ -19,6 +19,27 @@ void ReportGui::setPartEnd()
     emit changeCurrentPercent(1000);
 }
 
+/** 압축 해제 중 오류를 설정한다.
+  */
+void ReportGui::setDecompressError(
+        QString archiveFilePath,
+        QString partFilePath,
+        QString errorMessage
+        )
+{
+    //오류 메시지를 설정
+    QString m;
+
+    if ( partFilePath.isNull() ) {
+        m = trUtf8("<B>%1</B>파일을 압축해제 하던 중 오류가 발생했습니다. <B>%3</B>").arg(archiveFilePath, errorMessage);
+    }
+    else {
+        m = trUtf8("<B>%1</B>파일의 <B>%2</B>파일을 압축해제 하던 중 오류가 발생했습니다. <B>%3</B>").arg(archiveFilePath, partFilePath, errorMessage);
+    }
+
+    setCritical(m);
+}
+
 void ReportGui::setCritical(
         QString message
         )

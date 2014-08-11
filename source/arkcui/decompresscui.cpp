@@ -11,9 +11,9 @@ DecompressCui::DecompressCui(
         ) :
     Decompress(parent)
 {
-    qDebug("%s", "DecompressCui 객체를 생성합니다.");
+    //DecompressCui 객체를 생성합니다.
 
-    qDebug("%s", "프로그램 인자를 파싱합니다.");
+    //프로그램 인자를 파싱합니다
     parseArgument(argc, argv);
 }
 
@@ -30,7 +30,7 @@ void DecompressCui::defineOption()
   */
 void DecompressCui::processOption()
 {
-    qDebug("%s", "processOption 재정의.");
+    //processOption 재정의.
 
     //상호 작용 여부에 따른 보고 설정; 사용자와 상호작용이 요구되는 과정은 모두 건너뜁니다. 예를 들어, 암호가 요구되는 파일은 암호가 설정되지 않았다면 건너뜁니다. 기존 암호가 적용되지 않는 경우도 건너뜁니다.
     if ( ! optionVm.count("no-interactive") ){

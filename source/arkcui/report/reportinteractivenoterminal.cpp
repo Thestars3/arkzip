@@ -25,6 +25,27 @@ void ReportInteractiveNoTerminal::reportSkipLockFile(
     setWarning(m);
 }
 
+/** 압축 해제 중 오류를 설정한다.
+  */
+void ReportInteractiveNoTerminal::setDecompressError(
+        QString archiveFilePath,
+        QString partFilePath,
+        QString errorMessage
+        )
+{
+    //오류 메시지를 설정
+    QString s;
+
+    if ( partFilePath.isNull() ) {
+        s = trUtf8("`%1'파일을 압축해제 하던 중 오류가 발생했습니다. %3").arg(archiveFilePath, errorMessage);
+    }
+    else {
+        s = trUtf8("`%1'파일의 `%2'파일을 압축해제 하던 중 오류가 발생했습니다. %3").arg(archiveFilePath, partFilePath, errorMessage);
+    }
+
+    setCritical(s);
+}
+
 /** 현재 총 압축 해제율을 설정합니다.
   */
 void ReportInteractiveNoTerminal::setTotalPercent(float){}
@@ -56,7 +77,7 @@ ReportInteractiveNoTerminal::ReportInteractiveNoTerminal(
     stdin(::stdin),
     stderr(::stderr)
 {
-    qDebug("%s", "ReportInteractiveNoTerminal 객체를 생성합니다.");
+    //ReportInteractiveNoTerminal 객체를 생성합니다.
 }
 
 /** 빈 암호를 반환합니다.

@@ -111,22 +111,22 @@ po::variables_map Option::analyze()
     // 없는 옵션을 사용한 경우
     catch(po::unknown_option &e) {
         std::cout << e.what() << std::endl;
-        exit(10);
+        exit(1);
     }
     // 옵션 값의 오류가 발생한 경우
     catch(po::invalid_option_value &e) {
         std::cout << e.what() << std::endl;
-        exit(11);
+        exit(2);
     }
     // 옵션 값이 없을 경우
     catch(po::invalid_command_line_syntax &e) {
         std::cout << e.what() << std::endl;
-        exit(12);
+        exit(3);
     }
     // 이외의 예외 발생
     catch(std::exception &e) {
         std::cout << e.what() << std::endl;
-        exit(20);
+        exit(4);
     }
 
     return vm;
@@ -138,7 +138,7 @@ void Option::printHelp()
 {
     QTextStream stdout(::stdout);
     stdout << trUtf8("사용법 : %1 [옵션...] [대상...]").arg(QString::fromUtf8(argv[0])) << endl
-           << trUtf8("  Ark Library를 사용한 압축파일 압축해제 프로그램. 이 프로그램은 다음 형식을 압축해제할수 있습니다.") << QString::fromUtf8(" zip, alz, egg, tar, bh, 7z, wim, rar, arj, ace, cab, lzh, gz, bz2, iso, udf, img, xz, z, lzma, j2j, nsis.") << endl
+           << trUtf8("  Ark Library를 사용한 압축파일 압축해제 프로그램. 이 프로그램은 다음 형식을 압축해제할수 있습니다.") << QString::fromUtf8(" zip, alz, egg, tar, bh, 7z, wim, rar, arj, cab, lzh, gz, bz2, iso, img, xz, z, lzma, j2j.") << endl
            << trUtf8("  중복 파일이 발견되면 사용자에게 묻지 않고 새로운 이름을 지정합니다.") << endl
            << flush;
     visibleDesc.print(std::cout);
@@ -149,32 +149,32 @@ void Option::printHelp()
   */
 void Option::process()
 {
-    qDebug("%s", "옵션 처리를 시작합니다.");
+    //옵션 처리를 시작합니다
 
     po::variables_map vm = analyze();
     QVector<std::string> args; // 실행될 프로그램의 인자 목록
     std::string program; // 실행될 프로그램
 
-    qDebug("%s", "코드 페이지 옵션을 처리합니다.");
+    //코드 페이지 옵션을 처리합니다.
     {
         args.push_back("--codepage");
-        std::string t = QString::fromUtf8(vm["codepage"].as<std::string>().c_str()).toLower().toUtf8().constData();
-        if ( t != "kor" && t != "jpn" && t != "utf8" && t != "auto" ){
+        QString t = QString::fromUtf8(vm["codepage"].as<std::string>().c_str()).toLower();
+        if ( t != QString::fromUtf8("kor") && t != QString::fromUtf8("jpn") && t != QString::fromUtf8("utf8") && t != QString::fromUtf8("auto") ){
             stderr << trUtf8("정의되지 않은 코드 페이지입니다.") << endl
                    << flush;
             exit(5);
         }
-        args.push_back(t);
+        args.push_back(t.toUtf8().constData());
     }
 
     if ( vm.count("interface") ) {
-        qDebug("%s", "인터페이스 옵션을 처리합니다.");
+        //인터페이스 옵션을 처리합니다
 
         // 옵션의 값을 가져온다. 이 값은 인터페이스 종류를 의미한다.
-        std::string t = QString::fromUtf8(vm["interface"].as<std::string>().c_str()).toLower().toUtf8().constData();
+        QString t = QString::fromUtf8(vm["interface"].as<std::string>().c_str()).toLower();
 
         //만약 콘솔 유저 인터페이스 모드라면
-        if ( t == "cui" ){
+        if ( t == QString::fromUtf8("cui") ){
             // 사용될 프로그램의 경로를 지정한다.
             program = ARKZIP_CUI_PATH;
 
@@ -190,12 +190,12 @@ void Option::process()
             }
         }
         //만약 그래픽 유저 인터페이스 모드라면
-        else if ( t == "gui" ){
+        else if ( t == QString::fromUtf8("gui") ){
             // 사용될 프로그램의 경로를 지정한다.
             program = ARKZIP_GUI_PATH;
         }
         //만약 비상호작용 모드라면
-        else if ( t == "none" ){
+        else if ( t == QString::fromUtf8("none") ){
             // 사용될 프로그램의 경로를 지정한다.
             program = ARKZIP_CUI_PATH;
 
@@ -211,34 +211,34 @@ void Option::process()
     }
 
     if ( vm.count("test") ) {
-        qDebug("%s", "테스트 옵션을 처리합니다.");
+        //테스트 옵션을 처리합니다
         args.push_back("--test");
     }
 
     if ( vm.count("separate") ) {
-        qDebug("%s", "분할 저장 옵션을 처리합니다.");
+        //분할 저장 옵션을 처리합니다.
         args.push_back("--separate");
     }
 
     if ( vm.count("link") ) {
-        qDebug("%s", "링크 옵션을 처리합니다.");
+        //링크 옵션을 처리합니다.
         args.push_back("--link");
     }
     else {
-        qDebug("%s", "저장 경로 옵션을 처리합니다.");
+        //저장 경로 옵션을 처리합니다
         args.push_back("--output-dir");
         std::string saveDir = vm["output-dir"].as<std::string>();
         if ( ! QDir(QString::fromUtf8(saveDir.c_str())).exists() ){
             stderr << trUtf8("압축을 풀 경로에 문제가 있습니다.") << endl
                    << flush;
-            exit(9);
+            exit(7);
         }
         args.push_back(saveDir);
     }
 
     bool setKey = false;
     if ( vm.count("key") ){
-        qDebug("%s", "암호 옵션을 처리합니다.");
+        //암호 옵션을 처리합니다.
         args.push_back("--key");
         args.push_back(vm["key"].as<std::string>());
         setKey = true;
@@ -247,14 +247,13 @@ void Option::process()
     //HEX 인코딩 된 암호를 입력받음. ex) -K 0a1F2A71
     bool setHexKey = false;
     if ( vm.count("hex-key") ){
-        qDebug("%s", "HEX 암호 옵션을 처리합니다.");
         args.push_back("--hex-key");
         args.push_back(vm["hex-key"].as<std::string>());
         setHexKey = true;
     }
 
     if ( setHexKey && setKey ){
-        qDebug("%s", "--key 옵션과 --hex-key 옵션의 충돌을 처리합니다.");
+        //--key 옵션과 --hex-key 옵션의 충돌을 처리합니다.
         stderr << trUtf8("--key와 --hex-key를 함께 사용할수 없습니다.") << endl
                << flush;
         exit(8);
@@ -266,7 +265,7 @@ void Option::process()
 
     QVector<std::string> files;
     if( vm.count("files") ) {
-        qDebug("%s", "파일 목록을 처리합니다.");
+        //파일 목록을 처리합니다.
         files = QVector<std::string>::fromStdVector( vm["files"].as< std::vector<std::string> >() );
         foreach (std::string file, files) {
             QString fileQstr = QString::fromUtf8(file.c_str());
@@ -274,12 +273,12 @@ void Option::process()
             if ( ! fileInfo.exists() ){
                 stderr << trUtf8("압축 해제 대상으로 지정된 `%1' 파일을 찾을수 없습니다!").arg(fileQstr) << endl
                        << flush;
-                exit(54);
+                exit(9);
             }
             if ( ! fileInfo.isFile() ) {
                 stderr << trUtf8("압축 해제 대상으로 지정된 `%1'는 파일이 아닙니다.").arg(fileQstr) << endl
                        << flush;
-                exit(53);
+                exit(10);
             }
         }
         args.push_back("--");
@@ -287,7 +286,6 @@ void Option::process()
     }
 
     if( files.size() == 0 || vm.count("help") ) {
-        qDebug("%s", "도움말 옵션을 처리합니다.");
         printHelp();
         exit(0);
     }
@@ -302,8 +300,6 @@ void Option::exec(
         QVector<std::string> args     ///< 프로그램 인자
         )
 {
-    qDebug("%s", "프로그램을 실행합니다.");
-
     //프로그램 인자 설정
     args.push_front(program);
     int argc = args.size();
@@ -311,17 +307,15 @@ void Option::exec(
     argv[argc] = NULL;
     for(int i = 0; i < argc; i++){
         argv[i] = (char*)args[i].c_str();
-        qDebug("%d : %s", i, argv[i]);
     }
 
     //프로세서 대치
-    qDebug("%s", argv[0]);
     int e = execv(argv[0], argv);
 
     //오류 처리
     if ( e == -1 ){
         stderr << trUtf8("프로세서를 대치하던 중 오류가 발생했습니다.") << endl
                << flush;
-        exit(52);
+        exit(11);
     }
 }

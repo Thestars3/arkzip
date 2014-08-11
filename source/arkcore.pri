@@ -6,9 +6,9 @@
 
 LIBS        += \
 #	-ldl \ #ArkLibrary를 위해 포함시켜야 함. qt는 이미 포함되어 제외함.
-	-L../arkcore/Release -l:libarkcore.a \
+	-L../arkcore/$$DESTDIR -l:libarkcore.a \
 	-l:libboost_program_options-mt.a
 
-INCLUDEPATH += ../arkcore
-
 DEPENDPATH  += ../arkcore
+
+INCLUDEPATH += ../arkcore

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 소스 파일로 부터 패키지 파일을 생성합니다. 소스 파일은 Release로 빌드되어 있어야 합니다. testMode모드가 아닌 일반 모드로 빌드된 것이어야 정상적으로 작동합니다.
+# 소스 파일로 부터 패키지 파일을 생성합니다. 소스 파일은 Release로 빌드되어 있어야 합니다.
 
 #전역 변수 설정
 VERSION=$(<version)
@@ -88,7 +88,7 @@ function makeControlFile(){
 	Homepage: https://github.com/Thestars3/arkzip/
 	Description: ArkLibrary를 이용한 압축해제 프로그램.
 	 alz, egg를 비롯한 다양한 압축 형식을 압축 해제 할 수 있습니다. 다음은 이 프로그램이 지원하는 압축 해제 가능 형식의 목록입니다.
-	 zip, alz, egg, tar, bh, 7z, wim, rar, arj, ace, cab, lzh, gz, bz2, iso, udf, img, xz, z, lzma, j2j, nsis.
+	 zip, alz, egg, tar, bh, 7z, wim, rar, arj, cab, lzh, gz, bz2, iso, img, xz, z, lzma, j2j.
 	 이 프로그램은 또한 한국어로 인코딩된 압축 파일을 압축 해제 할 수 있습니다.
 	EOF
 }

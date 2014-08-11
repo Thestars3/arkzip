@@ -10,7 +10,7 @@ DecompressGui::DecompressGui(
         ) :
     Decompress(parent)
 {
-    qDebug("%s", "프로그램 인자를 파싱합니다.");
+    //프로그램 인자를 파싱합니다.
     parseArgument(argc, argv);
 }
 
@@ -18,7 +18,7 @@ DecompressGui::DecompressGui(
   */
 void DecompressGui::processOption()
 {
-    qDebug("%s", "processOption 재정의.");
+    //processOption 재정의
 
     Report::setInstance( new ReportGui() );
 

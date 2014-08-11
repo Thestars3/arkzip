@@ -8,7 +8,6 @@
 #include "ufp/ufp.hpp"
 #include "arkerrconverter.hpp"
 #include "pause.hpp"
-#include <QDebug>
 
 // 네임스페이스 재정의
 namespace po = boost::program_options;
@@ -21,7 +20,6 @@ void Decompress::setPassword(
         const QString &password    ///< 설정할 암호
         )
 {
-    qDebug() << QString::fromUtf8("Decompress::setPassword : 암호 `%1'가 설정되었습니다.").arg(password);
     password_ = password;
     if ( arkLib->IsOpened() == TRUE ) {
         arkLib->SetPassword( password.toStdWString().c_str() );
@@ -43,30 +41,32 @@ Decompress::Decompress(
         ) :
     QThread(parent)
 {
-    qDebug("%s", "Decompress 객체를 생성합니다.");
+    //Decompress 객체를 생성합니다
 
     isWorkEnd_ = false;
 
-    qDebug("%s", "초기 종료코드 설정.");
+    //초기 종료코드 설정
     exitcode = 0;
 
-    qDebug("%s", "ark 라이브러리 객체 초기화");
+    //ark 라이브러리 객체 초기화
     arkLib = new CArkLib();
 
-    qDebug("%s", "파일 배열 초기화");
+    //파일 배열 초기화
     files = new QVector<QFile*>();
 
     //ark 라이브러리 불러오기
-    qDebug("%s", "ark 라이브러리 불러오기");
     this->loadLibrary();
 
-    qDebug("%s", "옵션 설정");
+    //현재 경로 설정
+    homePath = QDir::currentPath();
+
+    //옵션 설정
     this->setOption();
 
-    qDebug("%s", "압축 해제 콜백 클래스를 초기화");
+    //압축 해제 콜백 클래스를 초기화
     arkEvent = new CArkEvent(this);
 
-    qDebug("%s", "압축해제 이벤트를 등록합니다.");
+    //압축해제 이벤트를 등록합니다
     arkLib->SetEvent(arkEvent);
 }
 
@@ -76,7 +76,7 @@ Decompress::Decompress(
 int Decompress::getExitcode()
 {
     if ( ! isWorkEnd_ ) {
-        return 15;
+        return 12;
     }
     return exitcode;
 }
@@ -139,7 +139,7 @@ void Decompress::processOption()
 {
     std::function<QString(const QString &filePath)> getParentDir;
     if ( optionVm.count("link") ) {
-        qDebug("%s", "링크 옵션을 처리합니다.");
+        //링크 옵션을 처리합니다.
         getParentDir =
                 [](
                     const QString &filePath // 파일 경로
@@ -150,7 +150,7 @@ void Decompress::processOption()
         setExtractPath = nullptr;
     }
     else {
-        qDebug("%s", "저장 경로 옵션을 처리합니다.");
+        //저장 경로 옵션을 처리합니다
         const char *s = optionVm["output-dir"].as<std::string>().c_str();
         QString saveDir = QString::fromUtf8(s);
         getParentDir =
@@ -168,14 +168,14 @@ void Decompress::processOption()
     }
 
     if ( optionVm.count("key") ){
-        qDebug("%s", "암호 옵션을 처리합니다.");
+        //암호 옵션을 처리합니다.
         QString s = QString::fromUtf8( optionVm["key"].as<std::string>().c_str() );
         setPassword(s);
     }
 
     //HEX 인코딩 된 암호를 입력받음. ex) -K 0a1F2A71
     if ( optionVm.count("hex-key") ){
-        qDebug("%s", "HEX 암호 옵션을 처리합니다.");
+        //HEX 암호 옵션을 처리합니다.
         QByteArray b = QByteArray::fromHex( optionVm["hex-key"].as<std::string>().c_str() );
         QString s = QString::fromUtf8(b);
         setPassword(s);
@@ -185,7 +185,7 @@ void Decompress::processOption()
         arkEvent->setSkipAskPassword(true);
     }
 
-    qDebug("%s", "코드 페이지 옵션을 처리합니다.");
+    //코드 페이지 옵션을 처리합니다.
     {
         std::string codePage = optionVm["codepage"].as<std::string>();
         struct SArkCodepage arkCodepage;
@@ -211,7 +211,6 @@ void Decompress::processOption()
     }
 
     //분할 모드
-    qDebug("%s", "분할 저장 옵션을 처리합니다.");
     if ( optionVm.count("separate") ){
         QString errorMesg = trUtf8("압축 파일 `%1'에 대한 분할된 폴더를 생성하는데 실패했습니다. 기본 위치(%2)에 저장합니다.");
         getSaveDirPath_ =
@@ -227,7 +226,7 @@ void Decompress::processOption()
                     }
                     catch(ufp::FailMakeDirException &e) {
                         Report::getInstance()->setWarning(errorMesg.arg(currentFilePath_, parentDir));
-                        exitcode = 17;
+                        exitcode = 14;
                         return parentDir;
                     }
                     return QString::fromUtf8("%1/%2").arg(parentDir, uniqueDirName);
@@ -245,7 +244,6 @@ void Decompress::processOption()
                 };
     }
 
-    qDebug("%s", "테스트 옵션을 처리합니다.");
     //테스트 모드
     if ( optionVm.count("test") ){
         decompress =
@@ -277,7 +275,18 @@ void Decompress::processOption()
                 {
                     QString dirPath = getSaveDirPath_(filePath);
                     setSeperatedExtractPath(dirPath);
-                    arkLib->ExtractAllTo( dirPath.toUtf8().constData() );
+                    int e = chdir(dirPath.toUtf8().constData());
+                    if ( e == -1 ) {
+                        Report::getInstance()->setWarning(trUtf8("압축 파일의 경로에 문제가 있습니다."));
+                        exitcode = 96;
+                        return;
+                    }
+                    arkLib->ExtractAllTo(".");
+                    e = chdir(homePath.toUtf8().constData());
+                    if ( e == -1 ) {
+                        Report::getInstance()->setWarning(trUtf8("현재 경로에 문제가 있습니다."));
+                        exitcode = 97;
+                    }
                 };
     }
 
@@ -337,18 +346,13 @@ void Decompress::run()
         //작업할 압축 파일을 보여줍니다.
         Report::getInstance()->setStartFile(i, file->fileName());
 
-        //압축 파일이 존재하지 않는다면
-        if ( ! file->exists() ){
-            Report::getInstance()->setWarning(trUtf8("파일이 존재하지 않습니다. 작업을 건너 뜁니다."));
-            continue;
-        }
-
         //압축 파일 열기
         bool b = arkLib->Open( file->fileName().toStdWString().c_str() );
 
         //압축 파일을 열수 없다면
         if( b == false ){
             Report::getInstance()->setWarning(trUtf8("파일을 여는데 문제가 생겼습니다. 작업을 건너 뜁니다."));
+            exitcode = 15;
             continue;
         }
 
@@ -366,14 +370,261 @@ void Decompress::run()
         Report::getInstance()->setEndFile();
 
         //오류 코드 설정
-        if ( Q_UNLIKELY(arkLib->GetLastError() != ARKERR_NOERR) ) {
-            exitcode = 56;
+        ARKERR arkerr = arkLib->GetLastError();
+        if ( Q_UNLIKELY(arkerr != ARKERR_NOERR) ) {
+            exitcode = convertArkerrToExitcode(arkerr);
         }
     }
 
-    qDebug("%s", "모든 압축 해제 작업이 완료되었습니다.");
+    //모든 압축 해제 작업이 완료되었습니다.
     isWorkEnd_ = true;
     emit finished(exitcode);
+}
+
+int Decompress::convertArkerrToExitcode(
+        int arkerr
+        )
+{
+    int exitcode;
+    switch((ARKERR)arkerr){
+    case ARKERR_CANT_OPEN_FILE:
+        exitcode = 17;
+        break;
+    case ARKERR_CANT_READ_SIG:
+        exitcode = 18;
+        break;
+    case ARKERR_AT_READ_CONTAINER_HEADER:
+        exitcode = 19;
+        break;
+    case ARKERR_INVALID_FILENAME_LENGTH:
+        exitcode = 20;
+        break;
+    case ARKERR_READ_FILE_NAME_FAILED:
+        exitcode = 21;
+        break;
+    case ARKERR_INVALID_EXTRAFIELD_LENGTH:
+        exitcode = 22;
+        break;
+    case ARKERR_READ_EXTRAFILED_FAILED:
+        exitcode = 23;
+        break;
+    case ARKERR_CANT_READ_CENTRAL_DIRECTORY_STRUCTURE:
+        exitcode = 24;
+        break;
+    case ARKERR_INVALID_FILENAME_SIZE:
+        exitcode = 25;
+        break;
+    case ARKERR_INVALID_EXTRAFIELD_SIZE:
+        exitcode = 26;
+        break;
+    case ARKERR_INVALID_FILECOMMENT_SIZE:
+        exitcode = 27;
+        break;
+    case ARKERR_CANT_READ_CONTAINER_HEADER:
+        exitcode = 28;
+        break;
+    case ARKERR_MEM_ALLOC_FAILED:
+        exitcode = 29;
+        break;
+    case ARKERR_CANT_READ_DATA:
+        exitcode = 30;
+        break;
+    case ARKERR_INFLATE_FAILED:
+        exitcode = 31;
+        break;
+    case ARKERR_USER_ABORTED:
+        exitcode = 32;
+        break;
+    case ARKERR_INVALID_FILE_CRC:
+        exitcode = 33;
+        break;
+    case ARKERR_UNKNOWN_COMPRESSION_METHOD:
+        exitcode = 34;
+        break;
+    case ARKERR_PASSWD_NOT_SET:
+        exitcode = 35;
+        break;
+    case ARKERR_INVALID_PASSWD:
+        exitcode = 36;
+        break;
+    case ARKERR_WRITE_FAIL:
+        exitcode = 37;
+        break;
+    case ARKERR_CANT_OPEN_DEST_FILE:
+        exitcode = 38;
+        break;
+    case ARKERR_BZIP2_ERROR:
+        exitcode = 39;
+        break;
+    case ARKERR_INVALID_DEST_PATH:
+        exitcode = 40;
+        break;
+    case ARKERR_CANT_CREATE_FOLDER:
+        exitcode = 41;
+        break;
+    case ARKERR_DATA_CORRUPTED:
+        exitcode = 42;
+        break;
+    case ARKERR_CANT_OPEN_FILE_TO_WRITE:
+        exitcode = 43;
+        break;
+    case ARKERR_INVALID_INDEX:
+        exitcode = 44;
+        break;
+    case ARKERR_CANT_READ_CODEC_HEADER:
+        exitcode = 45;
+        break;
+    case ARKERR_CANT_INITIALIZE_CODEC:
+        exitcode = 46;
+        break;
+    case ARKERR_LZMA_ERROR:
+        exitcode = 47;
+        break;
+    case ARKERR_PPMD_ERROR:
+        exitcode = 48;
+        break;
+    case ARKERR_CANT_SET_OUT_FILE_SIZE:
+        exitcode = 49;
+        break;
+    case ARKERR_NOT_MATCH_FILE_SIZE:
+        exitcode = 50;
+        break;
+    case ARKERR_NOT_A_FIRST_VOLUME_FILE:
+        exitcode = 51;
+        break;
+    case ARKERR_NOT_OPENED:
+        exitcode = 52;
+        break;
+    case ARKERR_NOT_SUPPORTED_ENCRYPTION_METHOD:
+        exitcode = 53;
+        break;
+    case ARKERR_INTERNAL:
+        exitcode = 54;
+        break;
+    case ARKERR_NOT_SUPPORTED_FILEFORMAT:
+        exitcode = 55;
+        break;
+    case ARKERR_UNKNOWN_FILEFORMAT:
+        exitcode = 56;
+        break;
+    case ARKERR_FILENAME_EXCED_RANGE:
+        exitcode = 57;
+        break;
+    case ARKERR_LZ_ERROR:
+        exitcode = 58;
+        break;
+    case ARKERR_NOTIMPL:
+        exitcode = 59;
+        break;
+    case ARKERR_DISK_FULL:
+        exitcode = 60;
+        break;
+    case ARKERR_FILE_TRUNCATED:
+        exitcode = 61;
+        break;
+    case ARKERR_CANT_DO_THAT_WHILE_WORKING:
+        exitcode = 62;
+        break;
+    case ARKERR_CANNOT_FIND_NEXT_VOLUME:
+        exitcode = 63;
+        break;
+    case ARKERR_NOT_ARCHIVE_FILE:
+        exitcode = 64;
+        break;
+    case ARKERR_USER_SKIP:
+        exitcode = 65;
+        break;
+    case ARKERR_INVALID_PASSWD_OR_BROKEN_ARCHIVE:
+        exitcode = 66;
+        break;
+    case ARKERR_ZIP_LAST_VOL_ONLY:
+        exitcode = 67;
+        break;
+    case ARKERR_ACCESS_DENIED_TO_DEST_PATH:
+        exitcode = 68;
+        break;
+    case ARKERR_NOT_ENOUGH_MEMORY:
+        exitcode = 69;
+        break;
+    case ARKERR_NOT_ENOUGH_MEMORY_LZMA_ENCODE:
+        exitcode = 70;
+        break;
+    case ARKERR_NOT_SUPPORTED_OPERATION:
+        exitcode = 71;
+        break;
+    case ARKERR_CANT_CONVERT_FILENAME:
+        exitcode = 72;
+        break;
+    case ARKERR_TOO_LONG_FILE_NAME:
+        exitcode = 73;
+        break;
+    case ARKERR_TOO_LONG_FILE_NAME_AND_TRUNCATED:
+        exitcode = 74;
+        break;
+    case ARKERR_TOO_MANY_FILE_COUNT:
+        exitcode = 75;
+        break;
+    case ARKERR_CORRUPTED_FILE:
+        exitcode = 76;
+        break;
+    case ARKERR_INVALID_FILE:
+        exitcode = 77;
+        break;
+    case ARKERR_CANT_READ_FILE:
+        exitcode = 78;
+        break;
+    case ARKERR_INVALID_VERSION:
+        exitcode = 79;
+        break;
+    case ARKERR_ENCRYPTED_BOND_FILE:
+        exitcode = 80;
+        break;
+    case ARKERR_7ZERR_BROKEN_ARCHIVE:
+        exitcode = 81;
+        break;
+    case ARKERR_LOAD_7Z_DLL_FAILED:
+        exitcode = 82;
+        break;
+    case ARKERR_CANT_CREATE_FILE:
+        exitcode = 83;
+        break;
+    case ARKERR_INIT_NOT_CALLED:
+        exitcode = 84;
+        break;
+    case ARKERR_INVALID_PARAM:
+        exitcode = 85;
+        break;
+    case ARKERR_CANT_OPEN_INPUT_SFX:
+        exitcode = 86;
+        break;
+    case ARKERR_SFX_SIZE_OVER_4GB:
+        exitcode = 87;
+        break;
+    case ARKERR_CANT_LOAD_ARKLGPL:
+        exitcode = 88;
+        break;
+    case ARKERR_CANT_STORE_FILE_SIZE_OVER_4GB:
+        exitcode = 89;
+        break;
+    case ARKERR_ALREADY_DLL_CREATED:
+        exitcode = 90;
+        break;
+    case ARKERR_LOADLIBRARY_FAILED:
+        exitcode = 91;
+        break;
+    case ARKERR_GETPROCADDRESS_FAILED:
+        exitcode = 92;
+        break;
+    case ARKERR_UNSUPPORTED_OS:
+        exitcode = 93;
+        break;
+    case ARKERR_LIBRARY_NOT_LOADED:
+        exitcode = 94;
+        break;
+    default:
+        exitcode = 95;
+    }
+    return exitcode;
 }
 
 /** 작업이 완료되었는지 확인합니다.
@@ -398,21 +649,21 @@ void Decompress::setOption()
   */
 void Decompress::loadLibrary()
 {
-    qDebug("%s", "Ark 라이브러리를 불러옵니다.");
+    //Ark 라이브러리를 불러옵니다.
     ARKERR nErr = arkLib->Create(ARK_LIBRARY_PATH);
 
     //오류가 없으면
     if ( nErr == ARKERR_NOERR ){
-        qDebug("%s", "Ark 라이브러리를 로드하는데 성공하였습니다.");
+        //Ark 라이브러리를 로드하는데 성공하였습니다.
         return;
     }
     //오류가 있다면
     else {
         //오류 보고
         QString m = ArkErrConverter::getInstance()->getMessage(nErr);
-        qWarning() << m;
+        qWarning("Error : %s", qPrintable(m));
 
-        exit(2);
+        exit(16);
     }
 }
 
@@ -420,18 +671,18 @@ void Decompress::loadLibrary()
   */
 Decompress::~Decompress()
 {
-    qDebug("%s", "압축 파일을 닫습니다.");
+    //압축 파일을 닫습니다
     arkLib->Close();
 
-    qDebug("%s", "사용중인 IArk 객체를 해제하고, 로드된 DLL을 언로드합니다.");
+    //사용중인 IArk 객체를 해제하고, 로드된 DLL을 언로드합니다.
     arkLib->Destroy();
 
-    qDebug("%s", "파일 목록 할당 해제");
+    //파일 목록 할당 해제
     foreach (QFile *var, *files) {
         delete var;
     }
     delete files;
 
-    qDebug("%s", "압축 해제 이벤트 객체 할당 해제");
+    //압축 해제 이벤트 객체 할당 해제
     delete arkEvent;
 }

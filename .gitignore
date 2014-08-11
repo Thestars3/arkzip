@@ -9,8 +9,6 @@
 # 특정 디렉토리 내 파일들을 무시
 Debug/
 Release/
-moc/
-uic/
 ArkLibrary/*.hpp.gch
 ArkLibrary/*.chm
 /*.deb

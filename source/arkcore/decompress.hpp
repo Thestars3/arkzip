@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #define DECOMPRESS_HPP
 
 #include <QThread>
+#include <QString>
 #include <functional>
 #include <boost/program_options.hpp>
 
@@ -50,6 +51,7 @@ private:
     int exitcode;                                                      ///< 종료코드
     bool isWorkEnd_;                                                   ///< 모든 압축 해제 작업이 완료되었다.
     QString password_;                                                 ///< 설정된 암호
+    QString homePath;                                                  ///< 프로그램 시작시의 PWD 경로
     const static char *ARK_LIBRARY_PATH;
 
     //옵션 처리
@@ -65,6 +67,7 @@ protected:
 private:
     void loadLibrary();
     void setOption();
+    int convertArkerrToExitcode(int);
 
 protected:
     void run();
