@@ -16,9 +16,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #ifndef OPTION_HPP
 #define OPTION_HPP
 
+#include <QList>
 #include <QObject>
 #include <QTextStream>
 #include <boost/program_options.hpp>
+#include "codepagelist.hpp"
 
 /** 옵션을 처리합니다.
   */
@@ -36,6 +38,7 @@ private:
     boost::program_options::options_description visibleDesc;              ///< 보여줄 옵션들
     boost::program_options::positional_options_description positional;    ///< 옵션 위치
     QTextStream stderr;                                                   ///< 표준 에러
+    CodepageList codepageList;                                            ///< 코드 페이지 목록
     const static std::string ARKZIP_CUI_PATH;
     const static std::string ARKZIP_GUI_PATH;
 

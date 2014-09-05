@@ -55,6 +55,7 @@ public:
     virtual void reportTotalPercent(float);
     virtual void customSetExtractFileStart(QString);
     virtual void customSetStartFile(int, QString);
+    virtual void setOpenFileError(QString);
     virtual void setExtractPath(QString);
     virtual void setWarning(QString);
     virtual void setSeperatedExtractPath(QString);

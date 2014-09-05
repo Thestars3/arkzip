@@ -187,25 +187,14 @@ void Decompress::processOption()
 
     //코드 페이지 옵션을 처리합니다.
     {
-        std::string codePage = optionVm["codepage"].as<std::string>();
+        QString codepage = QString::fromStdString(optionVm["codepage"].as<std::string>());
         struct SArkCodepage arkCodepage;
-        if ( codePage == "utf8" ){
-            arkCodepage.fileName = ARK_CP_UTF8;
-            arkCodepage.comment = ARK_CP_UTF8;
-            arkCodepage.password = ARK_CP_UTF8;
-        }
-        else if ( codePage == "jpn" ){
-            arkCodepage.fileName = ARK_CP_JPN;
-            arkCodepage.comment = ARK_CP_JPN;
-            arkCodepage.password = ARK_CP_JPN;
-        }
-        else if ( codePage == "kor" ){
-            arkCodepage.fileName = ARK_CP_KOR;
-            arkCodepage.comment = ARK_CP_KOR;
-            arkCodepage.password = ARK_CP_KOR;
-        }
-        else {
-            //auto의 경우 SArkCodepage가 초기화되면서 설정된 값을 사용하므로, 따로 설정할 필요가 없음.
+        //auto의 경우 SArkCodepage가 초기화되면서 설정된 값을 사용하므로, 따로 설정할 필요가 없음.
+        if ( codepage != "auto" ) {
+            int n = codepage.toInt();
+            arkCodepage.fileName = n;
+            arkCodepage.comment = n;
+            //arkCodepage.password = n;
         }
         arkLib->SetCodePage(arkCodepage);
     }
@@ -351,7 +340,7 @@ void Decompress::run()
 
         //압축 파일을 열수 없다면
         if( b == false ){
-            Report::getInstance()->setWarning(trUtf8("파일을 여는데 문제가 생겼습니다. 작업을 건너 뜁니다."));
+            Report::getInstance()->setOpenFileError(file->fileName());
             exitcode = 15;
             continue;
         }
@@ -381,8 +370,11 @@ void Decompress::run()
     emit finished(exitcode);
 }
 
+/** ARKERR 오류코드에 따른 종료코드를 반환합니다.
+  @return 종료시 반환될 오류코드
+  */
 int Decompress::convertArkerrToExitcode(
-        int arkerr
+        int arkerr ///< ARKERR 열거자형 변수
         )
 {
     int exitcode;
@@ -642,6 +634,7 @@ void Decompress::setOption()
     struct SArkGlobalOpt arkGlobalOpt; // Ark 옵션 설정
     arkGlobalOpt.bAzoSupport = true; // azo 알고리즘 지원
     arkGlobalOpt.bPrintAssert = false; // ASSERT 발생시 stdout에 출력 하지 않음
+    arkGlobalOpt.bTreatUnixZipFileNameAsUTF8 = false; // zip 파일이 unix 에서 압축된 경우 무조건 utf8 코드페이지 처리하지 않게 함.
     arkLib->SetGlobalOpt(arkGlobalOpt);
 }
 

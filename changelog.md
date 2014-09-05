@@ -239,3 +239,176 @@
 	+ 확장자 정보 추가.
 	+ 확장자를 arkzip과 연결함.
 + alz, j2j 아이콘을 수정함.
+
+**2.3.0**
+
++ GUI 모드에서 기본으로 보여질 작업 내역 박스 크기를 조정.
++ GUI 모드에서 창의 가로 길이를 최소한으로 줄일수 있도록 수정.
++ man 페이지에서 종료 코드에 대한 설명을 다듬음.
++ hv3 확장자에 대한 설명, 아이콘, 확장자 정보를 추가하고 arkzip 연결 프로그램에 등록함.
++ 일부 오류 메시지에서 다음 문구를 수정. `에러' -> '오류가'
++ 코드 페이지 지정 옵션을 수정.
+	+ man 페이지의 설명을 수정함.
+	+ 다음 코드 페이지를 지정하는 이름이 추가되었습니다. 쉼표로 구분된 각 별명은 CP949과 UHC와 같은 동일한 대상임의 의미합니다.
+		+ jpn -> CP932, shift_jis, Shift-JIS, jpn
+		+ kor -> CP949, UHC, kor
+	+ 다음 코드 페이지가 추가되었습니다. 각 줄에 쉼표로 구분된 이름은 해당 코드 페이지에 대한 별칭입니다.
+		+ CP0, acp
+		+ CP1, oemcp
+		+ CP2, maccp
+		+ CP37, ibm037
+		+ CP437, ibm437
+		+ CP500, ibm500
+		+ CP708, asmo-708
+		+ CP709
+		+ CP710
+		+ CP720, dos-720
+		+ CP737, ibm737
+		+ CP775, ibm775
+		+ CP850, ibm850
+		+ CP852, ibm852
+		+ CP855, ibm855
+		+ CP857, ibm857
+		+ CP858, ibm00858
+		+ CP860, ibm860
+		+ CP861, ibm861
+		+ CP862, dos-862
+		+ CP863, ibm863
+		+ CP864, ibm864
+		+ CP865, ibm865
+		+ CP866, cp866
+		+ CP869, ibm869
+		+ CP870, ibm870
+		+ CP874, windows-874
+		+ CP875, cp875
+		+ CP936, gb2312
+		+ CP950, big5
+		+ CP1026, ibm1026
+		+ CP1047, ibm01047
+		+ CP1140, ibm01140
+		+ CP1141, ibm01141
+		+ CP1142, ibm01142
+		+ CP1143, ibm01143
+		+ CP1144, ibm01144
+		+ CP1145, ibm01145
+		+ CP1146, ibm01146
+		+ CP1147, ibm01147
+		+ CP1148, ibm01148
+		+ CP1149, ibm01149
+		+ CP1200, utf-16, utf16, utf-16le, utf16le
+		+ CP1201, unicodefffe, utf-16be, utf16be
+		+ CP1250, windows-1250
+		+ CP1251, windows-1251
+		+ CP1252, windows-1252
+		+ CP1253, windows-1253
+		+ CP1254, windows-1254
+		+ CP1255, windows-1255
+		+ CP1256, windows-1256
+		+ CP1257, windows-1257
+		+ CP1258, windows-1258
+		+ CP1361, johab
+		+ CP10000, macintosh
+		+ CP10001, x-mac-japanese
+		+ CP10002, x-mac-chinesetrad
+		+ CP10003, x-mac-korean
+		+ CP10004, x-mac-arabic
+		+ CP10005, x-mac-hebrew
+		+ CP10006, x-mac-greek
+		+ CP10007, x-mac-cyrillic
+		+ CP10008, x-mac-chinesesimp
+		+ CP10010, x-mac-romanian
+		+ CP10017, x-mac-ukrainian
+		+ CP10021, x-mac-thai
+		+ CP10029, x-mac-ce
+		+ CP10079, x-mac-icelandic
+		+ CP10081, x-mac-turkish
+		+ CP10082, x-mac-croatian
+		+ CP12000, utf-32, utf32, utf32le, utf-32le
+		+ CP12001, utf-32be, utf32be
+		+ CP20000, x-chinese_cns
+		+ CP20001, x-cp20001
+		+ CP20002, x_chinese-eten
+		+ CP20003, x-cp20003
+		+ CP20004, x-cp20004
+		+ CP20005, x-cp20005
+		+ CP20105, x-ia5
+		+ CP20106, x-ia5-german
+		+ CP20107, x-ia5-swedish
+		+ CP20108, x-ia5-norwegian
+		+ CP20127, us-ascii
+		+ CP20261, x-cp20261
+		+ CP20269, x-cp20269
+		+ CP20273, ibm273
+		+ CP20277, ibm277
+		+ CP20278, ibm278
+		+ CP20280, ibm280
+		+ CP20284, ibm284
+		+ CP20285, ibm285
+		+ CP20290, ibm290
+		+ CP20297, ibm297
+		+ CP20420, ibm420
+		+ CP20423, ibm423
+		+ CP20424, ibm424
+		+ CP20833, x-ebcdic-koreanextended
+		+ CP20838, ibm-thai
+		+ CP20866, koi8-r
+		+ CP20871, ibm871
+		+ CP20880, ibm880
+		+ CP20905, ibm905
+		+ CP20924, ibm00924
+		+ CP20932, euc-jp
+		+ CP20936, x-cp20936
+		+ CP20949, x-cp20949
+		+ CP21025, cp1025
+		+ CP21027
+		+ CP21866, koi8-u
+		+ CP28591, iso-8859-1
+		+ CP28592, iso-8859-2
+		+ CP28593, iso-8859-3
+		+ CP28594, iso-8859-4
+		+ CP28595, iso-8859-5
+		+ CP28596, iso-8859-6
+		+ CP28597, iso-8859-7
+		+ CP28598, iso-8859-8
+		+ CP28599, iso-8859-9
+		+ CP28603, iso-8859-13
+		+ CP28605, iso-8859-15
+		+ CP29001, x-europa
+		+ CP38598, iso-8859-8-i
+		+ CP50220, iso-2022-jp
+		+ CP50221, csiso2022jp
+		+ CP50222, iso-2022-jp
+		+ CP50225, iso-2022-kr
+		+ CP50227, x-cp50227
+		+ CP50229
+		+ CP50930
+		+ CP50931
+		+ CP50933
+		+ CP50935
+		+ CP50936
+		+ CP50937
+		+ CP50939
+		+ CP51932, euc-jp
+		+ CP51936, euc-cn
+		+ CP51949, euc-kr
+		+ CP51950
+		+ CP52936, hz-gb-2312
+		+ CP54936, gb18030
+		+ CP57002, x-iscii-de
+		+ CP57003, x-iscii-be
+		+ CP57004, x-iscii-ta
+		+ CP57005, x-iscii-te
+		+ CP57006, x-iscii-as
+		+ CP57007, x-iscii-or
+		+ CP57008, x-iscii-ka
+		+ CP57009, x-iscii-ma
+		+ CP57010, x-iscii-gu
+		+ CP57011, x-iscii-pa
+		+ CP65000, utf-7, utf7
+		+ CP65001, utf-8, utf8
+	+ 코드페이지 수동 지정 기능이 추가되었습니다. `CP + 코드페이지 번호'로 코드 페이지를 수동으로 지정 할 수 있습니다.
+	+ codepage-list 옵션을 추가함. 사용가능한 코드 페이지를 확인 할 수 있음.
+	+ man 페이지에 사용 가능한 코드 페이지 목록을 추가함.
++ 코드 페이지 지정시 파일 목록에 대해서만 적용되도록 수정. (사용자가 지정한 코드페이지를 암호에 적용하지 않게 함.)
++ 파일 열기에 실패했을 경우 출력되는 오류 메시지에 파일 경로도 함께 표시하도록 수정함.
++ UNIX 에서 압축한 ZIP 파일의 코드페이지를 무조건 UTF8로 처리하지 않게 함.

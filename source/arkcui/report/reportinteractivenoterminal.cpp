@@ -25,6 +25,14 @@ void ReportInteractiveNoTerminal::reportSkipLockFile(
     setWarning(m);
 }
 
+void ReportInteractiveNoTerminal::setOpenFileError(
+        QString fileName ///< 압축 파일명
+        )
+{
+    QString m = trUtf8("`%1' 파일을 여는데 문제가 생겼습니다. 작업을 건너 뜁니다.").arg(fileName);
+    setWarning(m);
+}
+
 /** 압축 해제 중 오류를 설정한다.
   */
 void ReportInteractiveNoTerminal::setDecompressError(

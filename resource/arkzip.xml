@@ -26,6 +26,11 @@
 		<glob pattern="*.acb"/>
 		<icon name="arkzip-acb"/>
 	</mime-type>
+	<mime-type type="application/x-hv3">
+		<comment>꿀뷰 전용 포멧</comment>
+		<glob pattern="*.hv3"/>
+		<icon name="arkzip-hv3"/>
+	</mime-type>
 	<mime-type type="application/x-img">
 		<comment>raw disk image file format</comment>
 		<glob pattern="*.img"/>

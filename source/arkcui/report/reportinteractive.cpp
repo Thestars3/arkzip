@@ -25,6 +25,14 @@ void ReportInteractive::setNewName(
            << flush;
 }
 
+void ReportInteractive::setOpenFileError(
+        QString fileName ///< 압축 파일명
+        )
+{
+    QString m = trUtf8("`%1' 파일을 여는데 문제가 생겼습니다. 작업을 건너 뜁니다.").arg(fileName);
+    setWarning(m);
+}
+
 /** 현재 총 압축 해제율을 설정합니다.
   */
 void ReportInteractive::setTotalPercent(

@@ -1,6 +1,6 @@
-#include "option.hpp"
-#include <QVector>
 #include <QDir>
+#include <QVector>
+#include "option.hpp"
 
 // 네임스페이스 재정의
 namespace po = boost::program_options;
@@ -35,13 +35,13 @@ Option::Option(
 
         //일반 옵션 그룹
         {
-            po::options_description generalOptionDesc(trUtf8("일반 옵션들").toUtf8().constData());
+            po::options_description generalOptionDesc(qPrintable(trUtf8("일반 옵션들")));
             generalOptionDesc.add_options()
-                    ("help,h", trUtf8("이 페이지를 출력하고 끝냅니다.").toUtf8().constData())
-                    ("interface,i", po::value<std::string>()->default_value("cui"), trUtf8("인터페이스를 지정합니다.\n"
+                    ("help,h", qPrintable(trUtf8("이 페이지를 출력하고 끝냅니다.")))
+                    ("interface,i", po::value<std::string>()->default_value("cui"), qPrintable(trUtf8("인터페이스를 지정합니다.\n"
                                                                                            "gui : \tGUI로 사용자와 상호 작용합니다.\n"
                                                                                            "cui : \tCUI로 사용자와 상호 작용합니다.\n"
-                                                                                           "none : \t사용자와 상호 작용하지 않습니다. 사용자의 응답이 필요한 작업은 건너뜁니다.").toUtf8().constData())
+                                                                                           "none : \t사용자와 상호 작용하지 않습니다. 사용자의 응답이 필요한 작업은 건너뜁니다.")))
                     ;
             desc.add(generalOptionDesc);
             visibleDesc.add(generalOptionDesc);
@@ -49,14 +49,11 @@ Option::Option(
 
         //압축 해제 옵션 그룹
         {
-            po::options_description decompressOptionDesc(trUtf8("압축 해제 옵션들").toUtf8().constData());
+            po::options_description decompressOptionDesc(qPrintable(trUtf8("압축 해제 옵션들")));
             decompressOptionDesc.add_options()
-                    ("codepage,c", po::value<std::string>()->default_value("auto"), trUtf8("압축 해제 및 암호 지정에 사용할 코드 페이지를 지정합니다.\n"
-                                                                                           "utf8 : \tUTF-8인 경우\n"
-                                                                                           "kor : \t한글인 경우\n"
-                                                                                           "jpn : \t일본어인 경우\n"
-                                                                                           "auto : \t자동으로 인코딩을 파악해서 처리합니다.").toUtf8().constData())
-                    ("test,t", trUtf8("압축파일을 메모리에서 검사합니다. 이 옵션을 사용할 때는 목적지 주소를 적지 않습니다.").toUtf8().constData())
+                    ("codepage,c", po::value<std::string>()->default_value("auto"), qPrintable(trUtf8("압축 해제 및 암호 지정에 사용할 코드 페이지를 지정합니다.")))
+                    ("codepage-list", qPrintable(trUtf8("사용 가능한 코드 페이지의 목록을 출력합니다.")))
+                    ("test,t", qPrintable(trUtf8("압축파일을 메모리에서 검사합니다. 이 옵션을 사용할 때는 목적지 주소를 적지 않습니다.")))
                     ;
             desc.add(decompressOptionDesc);
             visibleDesc.add(decompressOptionDesc);
@@ -64,11 +61,11 @@ Option::Option(
 
         //저장 경로 옵션 그룹
         {
-            po::options_description saveOptionDesc(trUtf8("저장 경로 옵션들").toUtf8().constData());
+            po::options_description saveOptionDesc(qPrintable(trUtf8("저장 경로 옵션들")));
             saveOptionDesc.add_options()
-                    ("separate,s", trUtf8("각각의 파일을 파일 명으로 만들어진 폴더에 저장합니다.").toUtf8().constData())
-                    ("output-dir,O", po::value<std::string>()->default_value("."), trUtf8("저장할 경로를 설정합니다.").toUtf8().constData())
-                    ("link", trUtf8("각 압축 파일이 위치한 디렉토리에 압축 해제합니다. 만약 이 옵션이 지정된다면, --output-dir옵션은 무시됩니다.").toUtf8().constData())
+                    ("separate,s", qPrintable(trUtf8("각각의 파일을 파일 명으로 만들어진 폴더에 저장합니다.")))
+                    ("output-dir,O", po::value<std::string>()->default_value("."), qPrintable(trUtf8("저장할 경로를 설정합니다.")))
+                    ("link", qPrintable(trUtf8("각 압축 파일이 위치한 디렉토리에 압축 해제합니다. 만약 이 옵션이 지정된다면, --output-dir옵션은 무시됩니다.")))
                     ;
             desc.add(saveOptionDesc);
             visibleDesc.add(saveOptionDesc);
@@ -76,11 +73,11 @@ Option::Option(
 
         //암호 옵션 그룹
         {
-            po::options_description passwordOptionDesc(trUtf8("암호 옵션들").toUtf8().constData());
+            po::options_description passwordOptionDesc(qPrintable(trUtf8("암호 옵션들")));
             passwordOptionDesc.add_options()
-                    ("key,k", po::value<std::string>(), trUtf8("압축 해제에 사용할 암호를 지정합니다.").toUtf8().constData())
-                    ("hex-key,K", po::value<std::string>(), trUtf8("HEX로 인코딩된 암호를 입력 받습니다.").toUtf8().constData())
-                    ("skip-pass", trUtf8("암호를 물어보지 않게 합니다.").toUtf8().constData())
+                    ("key,k", po::value<std::string>(), qPrintable(trUtf8("압축 해제에 사용할 암호를 지정합니다.")))
+                    ("hex-key,K", po::value<std::string>(), qPrintable(trUtf8("HEX로 인코딩된 암호를 입력 받습니다.")))
+                    ("skip-pass", qPrintable(trUtf8("암호를 물어보지 않게 합니다.")))
                     ;
             desc.add(passwordOptionDesc);
             visibleDesc.add(passwordOptionDesc);
@@ -138,7 +135,7 @@ void Option::printHelp()
 {
     QTextStream stdout(::stdout);
     stdout << trUtf8("사용법 : %1 [옵션...] [대상...]").arg(QString::fromUtf8(argv[0])) << endl
-           << trUtf8("  Ark Library를 사용한 압축파일 압축해제 프로그램. 이 프로그램은 다음 형식을 압축해제할수 있습니다.") << QString::fromUtf8(" zip, alz, egg, tar, bh, 7z, wim, rar, arj, cab, lzh, gz, bz2, iso, img, xz, z, lzma, j2j.") << endl
+           << trUtf8("  Ark Library를 사용한 압축파일 압축해제 프로그램. 이 프로그램은 다음 형식을 압축해제할수 있습니다.") << QString::fromUtf8(" zip, alz, egg, tar, bh, 7z, wim, rar, arj, cab, lzh, gz, bz2, iso, img, xz, z, lzma, j2j, hv3.") << endl
            << trUtf8("  중복 파일이 발견되면 사용자에게 묻지 않고 새로운 이름을 지정합니다.") << endl
            << flush;
     visibleDesc.print(std::cout);
@@ -155,16 +152,40 @@ void Option::process()
     QVector<std::string> args; // 실행될 프로그램의 인자 목록
     std::string program; // 실행될 프로그램
 
+    //사용 가능한 코드 페이지 옵션 목록 보기
+    if ( vm.count("codepage-list") ) {
+        codepageList.print();
+        return;
+        exit(0);
+    }
+
     //코드 페이지 옵션을 처리합니다.
     {
         args.push_back("--codepage");
         QString t = QString::fromUtf8(vm["codepage"].as<std::string>().c_str()).toLower();
-        if ( t != QString::fromUtf8("kor") && t != QString::fromUtf8("jpn") && t != QString::fromUtf8("utf8") && t != QString::fromUtf8("auto") ){
+        QString codepage;
+        QRegExp rx(QString::fromUtf8("CP([0-9]+)"), Qt::CaseInsensitive);
+
+        //특별히 지정하지 않은 경우
+        if ( t == QString::fromUtf8("auto") ) {
+            codepage = t;
+        }
+        //별칭
+        else if ( codepageList.contains(t) ) {
+            codepage = QString::number(codepageList.find(t));
+        }
+        //cp + 코드페이지 번호
+        else if ( rx.exactMatch(t) ) {
+            rx.indexIn(t);
+            codepage = rx.cap(1);
+        }
+        //지원하지 않는 코드 페이지인 경우
+        else {
             stderr << trUtf8("정의되지 않은 코드 페이지입니다.") << endl
                    << flush;
             exit(5);
         }
-        args.push_back(t.toUtf8().constData());
+        args.push_back(codepage.toUtf8().constData()); // 코드 페이지 번호만 넘겨주도록 함. auto는 예외.
     }
 
     if ( vm.count("interface") ) {

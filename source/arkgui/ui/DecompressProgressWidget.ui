@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>615</width>
-    <height>325</height>
+    <height>326</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,7 +26,7 @@
    <item>
     <widget class="QLabel" name="archaiveFileName">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -58,7 +58,7 @@
    <item>
     <widget class="QLabel" name="extractFileName">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -92,7 +92,12 @@
      <item>
       <widget class="QPushButton" name="toggleShowErrorInfo">
        <property name="text">
-        <string>오류 내역 보이기</string>
+        <string>작업 내역 보이기</string>
+       </property>
+       <property name="icon">
+        <iconset theme="go-up">
+         <normaloff/>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -172,6 +177,11 @@
        <property name="text">
         <string>일시정지</string>
        </property>
+       <property name="icon">
+        <iconset theme="media-playback-pause">
+         <normaloff/>
+        </iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -190,6 +200,11 @@
        </property>
        <property name="text">
         <string>닫기</string>
+       </property>
+       <property name="icon">
+        <iconset theme="window-close">
+         <normaloff/>
+        </iconset>
        </property>
       </widget>
      </item>

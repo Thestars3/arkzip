@@ -21,6 +21,8 @@ void Report::setSeperatedExtractPath(QString){}
 
 void Report::reportSkipLockFile(QString){}
 
+void Report::setOpenFileError(QString){}
+
 Report *Report::singleton = new Report(); ///< 싱글톤
 
 /** 전역 객체를 얻습니다.

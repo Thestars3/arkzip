@@ -24,22 +24,22 @@ ArkErrConverter::ArkErrConverter()
     arkErrHash.insert(ARKERR_READ_FILE_NAME_FAILED, QObject::trUtf8("파일이름을 읽는데 실패 했습니다."));
     arkErrHash.insert(ARKERR_INVALID_EXTRAFIELD_LENGTH, QObject::trUtf8("확장 필드의 길이를 알 수 없습니다."));
     arkErrHash.insert(ARKERR_READ_EXTRAFILED_FAILED, QObject::trUtf8("확장 필드를 읽는데 실패했습니다."));
-    arkErrHash.insert(ARKERR_CANT_READ_CENTRAL_DIRECTORY_STRUCTURE, QObject::trUtf8("중앙 디렉토리 정보를 읽는데 실패하였습니다.")); // zip 포멧
+    arkErrHash.insert(ARKERR_CANT_READ_CENTRAL_DIRECTORY_STRUCTURE, QObject::trUtf8("중앙 디렉토리 정보를 읽는데 실패하였습니다. (zip 포멧)"));
     arkErrHash.insert(ARKERR_INVALID_FILENAME_SIZE, QObject::trUtf8("파일명 길이 정보가 잘못되었습니다."));
-    arkErrHash.insert(ARKERR_INVALID_EXTRAFIELD_SIZE, QObject::trUtf8("확장 필드 정보 길이가 잘못되었습니다.")); // zip 포멧
+    arkErrHash.insert(ARKERR_INVALID_EXTRAFIELD_SIZE, QObject::trUtf8("확장 필드 정보 길이가 잘못되었습니다. (zip 포멧)"));
     arkErrHash.insert(ARKERR_INVALID_FILECOMMENT_SIZE, QObject::trUtf8("Comment 정보 길이가 잘못되었습니다."));
     arkErrHash.insert(ARKERR_CANT_READ_CONTAINER_HEADER, QObject::trUtf8("컨테이너의 헤더에 문제가 있습니다."));
     arkErrHash.insert(ARKERR_MEM_ALLOC_FAILED, QObject::trUtf8("메모리 할당에 실패했습니다."));
     arkErrHash.insert(ARKERR_CANT_READ_DATA, QObject::trUtf8("압축 데이타 읽기에 실패했습니다."));
-    arkErrHash.insert(ARKERR_INFLATE_FAILED, QObject::trUtf8("Inflate 함수 호출중 에러 발생했습니다."));
+    arkErrHash.insert(ARKERR_INFLATE_FAILED, QObject::trUtf8("Inflate 함수 호출중 오류가 발생했습니다."));
     arkErrHash.insert(ARKERR_USER_ABORTED, QObject::trUtf8("사용자가 작업을 중단하였습니다.")); //사용자 중지
-    arkErrHash.insert(ARKERR_INVALID_FILE_CRC, QObject::trUtf8("압축 해제후 CRC 에러 발생하였습니다."));
+    arkErrHash.insert(ARKERR_INVALID_FILE_CRC, QObject::trUtf8("압축 해제후 CRC 오류가 발생하였습니다."));
     arkErrHash.insert(ARKERR_UNKNOWN_COMPRESSION_METHOD, QObject::trUtf8("모르는(혹은 지원하지 않는) 압축방식입니다."));
     arkErrHash.insert(ARKERR_PASSWD_NOT_SET, QObject::trUtf8("암호걸린 파일인데 암호가 지정되지 않았습니다."));
     arkErrHash.insert(ARKERR_INVALID_PASSWD, QObject::trUtf8("암호가 틀렸습니다."));
     arkErrHash.insert(ARKERR_WRITE_FAIL, QObject::trUtf8("파일 쓰다가 실패했습니다."));
     arkErrHash.insert(ARKERR_CANT_OPEN_DEST_FILE, QObject::trUtf8("대상 파일을 만들 수 없습니다."));
-    arkErrHash.insert(ARKERR_BZIP2_ERROR, QObject::trUtf8("BZIP2 압축해제중 에러 발생했습니다."));
+    arkErrHash.insert(ARKERR_BZIP2_ERROR, QObject::trUtf8("BZIP2 압축해제중 오류가 발생했습니다."));
     arkErrHash.insert(ARKERR_INVALID_DEST_PATH, QObject::trUtf8("목적지 경로를 알수 없습니다. 경로명에 ../ 이 포함된 경우, 대상 경로에 접근이 불가능한 경우에 이러한 문제가 발생합니다."));
     arkErrHash.insert(ARKERR_CANT_CREATE_FOLDER, QObject::trUtf8("경로 생성에 실패했습니다."));
     arkErrHash.insert(ARKERR_DATA_CORRUPTED, QObject::trUtf8("압축푸는데 데이타가 손상되었거나 RAR 분할 압축파일의 뒷부분이 없습니다."));
@@ -66,12 +66,12 @@ ArkErrConverter::ArkErrConverter()
     arkErrHash.insert(ARKERR_CANNOT_FIND_NEXT_VOLUME, QObject::trUtf8("분할 압축된 파일의 다음 파일을 찾을 수 없습니다."));
     arkErrHash.insert(ARKERR_NOT_ARCHIVE_FILE, QObject::trUtf8("압축파일이 아닙니다.")); //Open() 호출시 명백히 압축파일이 아닌 경우 발생
     arkErrHash.insert(ARKERR_USER_SKIP, QObject::trUtf8("사용자가 건너띄기 했습니다."));
-    arkErrHash.insert(ARKERR_INVALID_PASSWD_OR_BROKEN_ARCHIVE, QObject::trUtf8("암호가 틀리거나 파일이 손상되었습니다.")); // rar 포멧
+    arkErrHash.insert(ARKERR_INVALID_PASSWD_OR_BROKEN_ARCHIVE, QObject::trUtf8("암호가 틀리거나 파일이 손상되었습니다. (rar 포멧)"));
     arkErrHash.insert(ARKERR_ZIP_LAST_VOL_ONLY, QObject::trUtf8("분할 zip 인데 마지막 zip 파일만 열려고 했습니다."));
     arkErrHash.insert(ARKERR_ACCESS_DENIED_TO_DEST_PATH, QObject::trUtf8("대상 폴더에 대해서 쓰기 권한이 없습니다."));
     arkErrHash.insert(ARKERR_NOT_ENOUGH_MEMORY, QObject::trUtf8("메모리가 부족합니다."));
     arkErrHash.insert(ARKERR_NOT_ENOUGH_MEMORY_LZMA_ENCODE, QObject::trUtf8("LZMA 압축중 메모리가 부족합니다."));
-    arkErrHash.insert(ARKERR_NOT_SUPPORTED_OPERATION, QObject::trUtf8("지원하지 않는 작동입니다.")); //ACE 파일을 IArkSimpleOutStream 를 이용해 압축해제할 경우 발생
+    arkErrHash.insert(ARKERR_NOT_SUPPORTED_OPERATION, QObject::trUtf8("지원하지 않는 작동입니다. ACE 파일을 IArkSimpleOutStream 를 이용해 압축해제할 경우 발생합니다."));
     arkErrHash.insert(ARKERR_CANT_CONVERT_FILENAME, QObject::trUtf8("파일명이 잘못되어서 유니코드 파일명으로 바꿀 수 없습니다. 이 오류는 posix 환경에서 iconv 사용시 코드페이지가 잘못된 경우 사용할 수 없는 문자 때문에 발생합니다."));
     arkErrHash.insert(ARKERR_TOO_LONG_FILE_NAME, QObject::trUtf8("파일명이 너무 길어서 처리할 수 없습니다."));
     arkErrHash.insert(ARKERR_TOO_LONG_FILE_NAME_AND_TRUNCATED, QObject::trUtf8("파일명이 너무 길어서 뒷부분이 잘렸습니다."));

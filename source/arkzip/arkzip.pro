@@ -19,11 +19,15 @@ CONFIG   += console
 CONFIG   -= app_bundle
 
 HEADERS  += \
-	option.hpp
+	option.hpp \
+    codepagegroup.hpp \
+    codepagelist.hpp
 
 SOURCES  += \
 	main.cpp \
-    option.cpp
+    option.cpp \
+    codepagegroup.cpp \
+    codepagelist.cpp
 
 LIBS     += -l:libboost_program_options-mt.a
 
