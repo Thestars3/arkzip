@@ -1,5 +1,5 @@
 ." ============================== 헤더 ==============================
-.TH arkzip 1 "7월 2014" "version $VERSION"
+.TH arkzip 1 "$DATE_7A65E" "version $VERSION_81B03"
 
 ." ============================== 이름 ==============================
 .SH 이름
@@ -48,10 +48,10 @@ arkzip의 gui에는 일시정지 기능이 포함되어 있습니다. 그러나,
 .B 압축 해제 옵션들:
 .TP
 \fB\-c\fR, \fB\-\-codepage\fR 종류
-압축 해제에 사용할 코드 페이지를 지정합니다. 파일 목록만 지정된 코드 페이지로 처리됩니다. `CP + [코드페이지 번호]' 형식으로 사용 가능한 코드 페이지 목록에 존재하지 않는 코드 페이지를 지정 할 수 있습니다. auto는 기본 설정된 값을 사용합니다. 대소문자를 구분하지 않습니다.
+압축 해제에 사용할 코드 페이지를 지정합니다. 파일 목록만 지정된 코드 페이지로 처리됩니다. `auto'로 지정할 경우 알아서 인코딩을 파악해서 처리합니다.
 .TP
 \fB\-\-codepage-list
-사용 가능한 코드 페이지 목록을 출력합니다. 각 단락은 동일한 코드 페이지를 가리킵니다. 쉼표로 구분된 이름 중 각 줄의 첫번째 이름은 코드 페이지 번호를 의미하고, 두번째 이름 부터는 해당 코드페이지에 대한 별명을 의미합니다.
+사용 가능한 코드 페이지 목록을 출력합니다. 각 단락에 존재하는 이름은 동일한 코드 페이지에 대한 별칭입니다. 각 코드 페이지는 `/(빗금)'으로 구분되어져 있습니다.
 .TP
 \fB\-t\fR, \fB\-\-test
 압축파일을 메모리에서 압축 해제합니다. 이 옵션을 사용할 때는 목적지 주소를 적지 않습니다.
@@ -98,7 +98,7 @@ HEX로 인코딩된 암호를 입력 받습니다. 예를 들어, `-K 2b2f532a32
 .PP
 \fB4\fR	옵션과 관련된 기타 오류.
 .PP
-\fB5\fR	옵션에서 정의되지 않은 코드 페이지 지정.
+\fB5\fR	잘못된 코드 페이지를 지정함.
 .PP
 \fB6\fR	옵션에서 정의되지 않은 인터페이스 지정.
 .PP
@@ -283,321 +283,737 @@ HEX로 인코딩된 암호를 입력 받습니다. 예를 들어, `-K 2b2f532a32
 \fB96\fR	압축 파일의 경로에 문제가 있습니다.
 .PP
 \fB97\fR	현재 경로에 문제가 있습니다.
+.PP
+\fB98\fR	인코딩 변환 준비에 문제가 있습니다.
 
 ." ========================== 사용 가능한 코드 페이지 목록 ==========================
 .SH 사용 가능한 코드 페이지 목록
-쉼표로 구분된 이름은 해당 코드 페이지에 대한 별칭입니다. 각각의 단락은 동일한 코드 페이지의 이름이 나열된 공간이고, 쉼표로 구분된 각 단락의 첫번째 이름은 코드 페이지 번호를 의미한다. 두번째 이름 부터 해당 코드페이지에 대한 별칭을 의미한다.
+쉼표로 구분된 이름은 해당 코드 페이지에 대한 별칭입니다. 각 단락에 존재하는 이름은 동일한 코드 페이지에 대한 별칭입니다. 각 코드 페이지는 `/(빗금)'으로 구분되어져 있습니다.
 ." 아래 내용은 --codepage-list 옵션의 내용에 기반한다.
 .PP
-CP0, acp
+UTF-8 / ibm-1208 / ibm-1209 / ibm-5304 / ibm-5305 / ibm-13496 / ibm-13497 / ibm-17592 / ibm-17593 / windows-65001 / cp1208 / x-UTF_8J / unicode-1-1-utf-8 / unicode-2-0-utf-8
 .PP
-CP1, oemcp
+UTF-16 / ISO-10646-UCS-2 / ibm-1204 / ibm-1205 / unicode / csUnicode / ucs-2
 .PP
-CP2, maccp
+UTF-16BE / x-utf-16be / UnicodeBigUnmarked / ibm-1200 / ibm-1201 / ibm-13488 / ibm-13489 / ibm-17584 / ibm-17585 / ibm-21680 / ibm-21681 / ibm-25776 / ibm-25777 / ibm-29872 / ibm-29873 / ibm-61955 / ibm-61956 / windows-1201 / cp1200 / cp1201 / UTF16_BigEndian
 .PP
-CP37, ibm037
+UTF-16LE / x-utf-16le / UnicodeLittleUnmarked / ibm-1202 / ibm-1203 / ibm-13490 / ibm-13491 / ibm-17586 / ibm-17587 / ibm-21682 / ibm-21683 / ibm-25778 / ibm-25779 / ibm-29874 / ibm-29875 / UTF16_LittleEndian / windows-1200
 .PP
-CP437, ibm437
+UTF-32 / ISO-10646-UCS-4 / ibm-1236 / ibm-1237 / csUCS4 / ucs-4
 .PP
-CP500, ibm500
+UTF-32BE / UTF32_BigEndian / ibm-1232 / ibm-1233 / ibm-9424
 .PP
-CP708, asmo-708
+UTF-32LE / UTF32_LittleEndian / ibm-1234 / ibm-1235
 .PP
-CP709
+UTF16_PlatformEndian
 .PP
-CP710
+UTF16_OppositeEndian
 .PP
-CP720, dos-720
+UTF32_PlatformEndian
 .PP
-CP737, ibm737
+UTF32_OppositeEndian
 .PP
-CP775, ibm775
+UTF-16BE,version=1 / UnicodeBig
 .PP
-CP850, ibm850
+UTF-16LE,version=1 / UnicodeLittle / x-UTF-16LE-BOM
 .PP
-CP852, ibm852
+UTF-16,version=1
 .PP
-CP855, ibm855
+UTF-16,version=2
 .PP
-CP857, ibm857
+UTF-7 / windows-65000
 .PP
-CP858, ibm00858
+IMAP-mailbox-name
 .PP
-CP860, ibm860
+SCSU / ibm-1212 / ibm-1213
 .PP
-CP861, ibm861
+BOCU-1 / csBOCU-1 / ibm-1214 / ibm-1215
 .PP
-CP862, dos-862
+CESU-8 / ibm-9400
 .PP
-CP863, ibm863
+ISO-8859-1 / ibm-819 / IBM819 / cp819 / latin1 / 8859_1 / csISOLatin1 / iso-ir-100 / ISO_8859-1:1987 / l1 / 819
 .PP
-CP864, ibm864
+US-ASCII / ASCII / ANSI_X3.4-1968 / ANSI_X3.4-1986 / ISO_646.irv:1991 / iso_646.irv:1983 / ISO646-US / us / csASCII / iso-ir-6 / cp367 / ascii7 / 646 / windows-20127 / ibm-367 / IBM367
 .PP
-CP865, ibm865
+gb18030 / ibm-1392 / windows-54936 / GB18030
 .PP
-CP866, cp866
+ibm-912_P100-1995 / ibm-912 / ISO-8859-2 / ISO_8859-2:1987 / latin2 / csISOLatin2 / iso-ir-101 / l2 / 8859_2 / cp912 / 912 / windows-28592
 .PP
-CP869, ibm869
+ibm-913_P100-2000 / ibm-913 / ISO-8859-3 / ISO_8859-3:1988 / latin3 / csISOLatin3 / iso-ir-109 / l3 / 8859_3 / cp913 / 913 / windows-28593
 .PP
-CP870, ibm870
+ibm-914_P100-1995 / ibm-914 / ISO-8859-4 / latin4 / csISOLatin4 / iso-ir-110 / ISO_8859-4:1988 / l4 / 8859_4 / cp914 / 914 / windows-28594
 .PP
-CP874, windows-874
+ibm-915_P100-1995 / ibm-915 / ISO-8859-5 / cyrillic / csISOLatinCyrillic / iso-ir-144 / ISO_8859-5:1988 / 8859_5 / cp915 / 915 / windows-28595
 .PP
-CP875, cp875
+glibc-PT154-2.3.3 / PTCP154 / csPTCP154 / PT154 / CP154 / Cyrillic-Asian
 .PP
-CP932, shift_jis, shift-jis, jpn
+ibm-1089_P100-1995 / ibm-1089 / ISO-8859-6 / arabic / csISOLatinArabic / iso-ir-127 / ISO_8859-6:1987 / ECMA-114 / ASMO-708 / 8859_6 / cp1089 / 1089 / windows-28596 / ISO-8859-6-I / ISO-8859-6-E / x-ISO-8859-6S
 .PP
-CP936, gb2312
+ibm-9005_X110-2007 / ibm-9005 / ISO-8859-7 / greek / greek8 / ELOT_928 / ECMA-118 / csISOLatinGreek / iso-ir-126 / ISO_8859-7:1987 / windows-28597 / sun_eu_greek
 .PP
-CP949, uhc, kor
+ibm-813_P100-1995 / ibm-813 / ISO-8859-7 / greek / greek8 / ELOT_928 / ECMA-118 / csISOLatinGreek / iso-ir-126 / ISO_8859-7:1987 / 8859_7 / cp813 / 813
 .PP
-CP950, big5
+ibm-5012_P100-1999 / ibm-5012 / ISO-8859-8 / hebrew / csISOLatinHebrew / iso-ir-138 / ISO_8859-8:1988 / ISO-8859-8-I / ISO-8859-8-E / 8859_8 / windows-28598 / hebrew8
 .PP
-CP1026, ibm1026
+ibm-916_P100-1995 / ibm-916 / cp916 / 916
 .PP
-CP1047, ibm01047
+ibm-920_P100-1995 / ibm-920 / ISO-8859-9 / latin5 / csISOLatin5 / iso-ir-148 / ISO_8859-9:1989 / l5 / 8859_9 / cp920 / 920 / windows-28599 / ECMA-128 / turkish8 / turkish
 .PP
-CP1140, ibm01140
+iso-8859_10-1998 / ISO-8859-10 / iso-ir-157 / l6 / ISO_8859-10:1992 / csISOLatin6 / latin6
 .PP
-CP1141, ibm01141
+iso-8859_11-2001 / ISO-8859-11 / thai8 / x-iso-8859-11
 .PP
-CP1142, ibm01142
+ibm-921_P100-1995 / ibm-921 / ISO-8859-13 / 8859_13 / windows-28603 / cp921 / 921 / x-IBM921
 .PP
-CP1143, ibm01143
+iso-8859_14-1998 / ISO-8859-14 / iso-ir-199 / ISO_8859-14:1998 / latin8 / iso-celtic / l8
 .PP
-CP1144, ibm01144
+ibm-923_P100-1998 / ibm-923 / ISO-8859-15 / Latin-9 / l9 / 8859_15 / latin0 / csisolatin0 / csisolatin9 / iso8859_15_fdis / cp923 / 923 / windows-28605
 .PP
-CP1145, ibm01145
+ibm-942_P12A-1999 / ibm-942 / ibm-932 / cp932 / shift_jis78 / sjis78 / ibm-942_VSUB_VPUA / ibm-932_VSUB_VPUA / x-IBM942 / x-IBM942C
 .PP
-CP1146, ibm01146
+ibm-943_P15A-2003 / ibm-943 / Shift_JIS / MS_Kanji / csShiftJIS / windows-31j / csWindows31J / x-sjis / x-ms-cp932 / cp932 / windows-932 / cp943c / IBM-943C / ms932 / pck / sjis / ibm-943_VSUB_VPUA / x-MS932_0213 / x-JISAutoDetect / jpn
 .PP
-CP1147, ibm01147
+ibm-943_P130-1999 / ibm-943 / Shift_JIS / cp943 / 943 / ibm-943_VASCII_VSUB_VPUA / x-IBM943
 .PP
-CP1148, ibm01148
+ibm-33722_P12A_P12A-2004_U2 / ibm-33722 / ibm-5050 / EUC-JP / Extended_UNIX_Code_Packed_Format_for_Japanese / csEUCPkdFmtJapanese / X-EUC-JP / ibm-33722_VPUA / IBM-eucJP
 .PP
-CP1149, ibm01149
+windows-51932-2006 / windows-51932 / CP51932 / csCP51932
 .PP
-CP1200, utf-16, utf16, utf-16le, utf16le
+ibm-33722_P120-1999 / ibm-33722 / ibm-5050 / cp33722 / 33722 / ibm-33722_VASCII_VPUA / x-IBM33722 / x-IBM33722A / x-IBM33722C
 .PP
-CP1201, unicodefffe, utf-16be, utf16be
+ibm-954_P101-2007 / ibm-954 / EUC-JP / Extended_UNIX_Code_Packed_Format_for_Japanese / csEUCPkdFmtJapanese / X-EUC-JP / eucjis / ujis / x-IBM954 / x-IBM954C
 .PP
-CP1250, windows-1250
+aix-IBM_udcJP-4.3.6 / x-IBM-udcJP
 .PP
-CP1251, windows-1251
+java-euc_jp_linux-1.6_P / euc-jp-linux / x-EUC_JP_LINUX
 .PP
-CP1252, windows-1252
+java-sjis_0213-1.6_P / x-SJIS_0213
 .PP
-CP1253, windows-1253
+ibm-1373_P100-2002 / ibm-1373 / windows-950
 .PP
-CP1254, windows-1254
+windows-950-2000 / Big5 / csBig5 / windows-950 / x-windows-950 / x-big5
 .PP
-CP1255, windows-1255
+ibm-950_P110-1999 / ibm-950 / cp950 / 950 / x-IBM950
 .PP
-CP1256, windows-1256
+ibm-1375_P100-2007 / ibm-1375 / Big5-HKSCS / big5hk / HKSCS-BIG5
 .PP
-CP1257, windows-1257
+ibm-5471_P100-2006 / ibm-5471 / Big5-HKSCS / MS950_HKSCS / hkbig5 / big5-hkscs:unicode3.0 / x-MS950-HKSCS
 .PP
-CP1258, windows-1258
+solaris-zh_TW_big5-2.7 / Big5_Solaris / x-Big5-Solaris
 .PP
-CP1361, johab
+ibm-1386_P100-2001 / ibm-1386 / cp1386 / windows-936 / ibm-1386_VSUB_VPUA
 .PP
-CP10000, macintosh
+windows-936-2000 / GBK / CP936 / MS936 / windows-936
 .PP
-CP10001, x-mac-japanese
+ibm-1383_P110-1999 / ibm-1383 / GB2312 / csGB2312 / cp1383 / 1383 / EUC-CN / ibm-eucCN / hp15CN / ibm-1383_VPUA
 .PP
-CP10002, x-mac-chinesetrad
+ibm-5478_P100-1995 / ibm-5478 / GB_2312-80 / chinese / iso-ir-58 / csISO58GB231280 / gb2312-1980 / GB2312.1980-0
 .PP
-CP10003, x-mac-korean
+ibm-964_P110-1999 / ibm-964 / EUC-TW / ibm-eucTW / cns11643 / cp964 / 964 / ibm-964_VPUA / x-IBM964
 .PP
-CP10004, x-mac-arabic
+ibm-949_P110-1999 / ibm-949 / cp949 / 949 / ibm-949_VASCII_VSUB_VPUA / x-IBM949 / UHC / kor
 .PP
-CP10005, x-mac-hebrew
+ibm-949_P11A-1999 / ibm-949 / cp949c / ibm-949_VSUB_VPUA / x-IBM949C / IBM-949C
 .PP
-CP10006, x-mac-greek
+ibm-970_P110_P110-2006_U2 / ibm-970 / EUC-KR / KS_C_5601-1987 / windows-51949 / csEUCKR / ibm-eucKR / KSC_5601 / 5601 / cp970 / 970 / ibm-970_VPUA / x-IBM970
 .PP
-CP10007, x-mac-cyrillic
+ibm-971_P100-1995 / ibm-971 / ibm-971_VPUA / x-IBM971
 .PP
-CP10008, x-mac-chinesesimp
+ibm-1363_P11B-1998 / ibm-1363 / KS_C_5601-1987 / KS_C_5601-1989 / KSC_5601 / csKSC56011987 / korean / iso-ir-149 / cp1363 / 5601 / ksc / windows-949 / ibm-1363_VSUB_VPUA / x-IBM1363C
 .PP
-CP10010, x-mac-romanian
+ibm-1363_P110-1997 / ibm-1363 / ibm-1363_VASCII_VSUB_VPUA / x-IBM1363
 .PP
-CP10017, x-mac-ukrainian
+windows-949-2000 / windows-949 / KS_C_5601-1987 / KS_C_5601-1989 / KSC_5601 / csKSC56011987 / korean / iso-ir-149 / ms949 / x-KSC5601
 .PP
-CP10021, x-mac-thai
+windows-1361-2000 / ksc5601_1992 / ms1361 / johab / x-Johab
 .PP
-CP10029, x-mac-ce
+windows-874-2000 / TIS-620 / windows-874 / MS874 / x-windows-874
 .PP
-CP10079, x-mac-icelandic
+ibm-874_P100-1995 / ibm-874 / ibm-9066 / cp874 / TIS-620 / tis620.2533 / eucTH / x-IBM874
 .PP
-CP10081, x-mac-turkish
+ibm-1162_P100-1999 / ibm-1162
 .PP
-CP10082, x-mac-croatian
+windows-864-2000 / ibm-864s / cp864s / x-IBM864S
 .PP
-CP12000, utf-32, utf32, utf32le, utf-32le
+ibm-437_P100-1995 / ibm-437 / IBM437 / cp437 / 437 / csPC8CodePage437 / windows-437
 .PP
-CP12001, utf-32be, utf32be
+ibm-720_P100-1997 / ibm-720 / windows-720 / DOS-720 / x-IBM720
 .PP
-CP20000, x-chinese_cns
+ibm-737_P100-1997 / ibm-737 / IBM737 / cp737 / windows-737 / 737 / x-IBM737
 .PP
-CP20001, x-cp20001
+ibm-775_P100-1996 / ibm-775 / IBM775 / cp775 / csPC775Baltic / windows-775 / 775
 .PP
-CP20002, x_chinese-eten
+ibm-850_P100-1995 / ibm-850 / IBM850 / cp850 / 850 / csPC850Multilingual / windows-850
 .PP
-CP20003, x-cp20003
+ibm-851_P100-1995 / ibm-851 / IBM851 / cp851 / 851 / csPC851
 .PP
-CP20004, x-cp20004
+ibm-852_P100-1995 / ibm-852 / IBM852 / cp852 / 852 / csPCp852 / windows-852
 .PP
-CP20005, x-cp20005
+ibm-855_P100-1995 / ibm-855 / IBM855 / cp855 / 855 / csIBM855 / csPCp855 / windows-855
 .PP
-CP20105, x-ia5
+ibm-856_P100-1995 / ibm-856 / IBM856 / cp856 / 856 / x-IBM856
 .PP
-CP20106, x-ia5-german
+ibm-857_P100-1995 / ibm-857 / IBM857 / cp857 / 857 / csIBM857 / windows-857
 .PP
-CP20107, x-ia5-swedish
+ibm-858_P100-1997 / ibm-858 / IBM00858 / CCSID00858 / CP00858 / PC-Multilingual-850+euro / cp858 / windows-858
 .PP
-CP20108, x-ia5-norwegian
+ibm-860_P100-1995 / ibm-860 / IBM860 / cp860 / 860 / csIBM860
 .PP
-CP20127, us-ascii
+ibm-861_P100-1995 / ibm-861 / IBM861 / cp861 / 861 / cp-is / csIBM861 / windows-861
 .PP
-CP20261, x-cp20261
+ibm-862_P100-1995 / ibm-862 / IBM862 / cp862 / 862 / csPC862LatinHebrew / DOS-862 / windows-862
 .PP
-CP20269, x-cp20269
+ibm-863_P100-1995 / ibm-863 / IBM863 / cp863 / 863 / csIBM863
 .PP
-CP20273, ibm273
+ibm-864_X110-1999 / ibm-864 / IBM864 / cp864 / csIBM864
 .PP
-CP20277, ibm277
+ibm-865_P100-1995 / ibm-865 / IBM865 / cp865 / 865 / csIBM865
 .PP
-CP20278, ibm278
+ibm-866_P100-1995 / ibm-866 / IBM866 / cp866 / 866 / csIBM866 / windows-866
 .PP
-CP20280, ibm280
+ibm-867_P100-1998 / ibm-867 / x-IBM867
 .PP
-CP20284, ibm284
+ibm-868_P100-1995 / ibm-868 / IBM868 / CP868 / 868 / csIBM868 / cp-ar
 .PP
-CP20285, ibm285
+ibm-869_P100-1995 / ibm-869 / IBM869 / cp869 / 869 / cp-gr / csIBM869 / windows-869
 .PP
-CP20290, ibm290
+ibm-878_P100-1996 / ibm-878 / KOI8-R / koi8 / csKOI8R / windows-20866 / cp878
 .PP
-CP20297, ibm297
+ibm-901_P100-1999 / ibm-901
 .PP
-CP20420, ibm420
+ibm-902_P100-1999 / ibm-902
 .PP
-CP20423, ibm423
+ibm-922_P100-1999 / ibm-922 / IBM922 / cp922 / 922 / x-IBM922
 .PP
-CP20424, ibm424
+ibm-1168_P100-2002 / ibm-1168 / KOI8-U / windows-21866
 .PP
-CP20833, x-ebcdic-koreanextended
+ibm-4909_P100-1999 / ibm-4909
 .PP
-CP20838, ibm-thai
+ibm-5346_P100-1998 / ibm-5346 / windows-1250 / cp1250
 .PP
-CP20866, koi8-r
+ibm-5347_P100-1998 / ibm-5347 / windows-1251 / cp1251 / ANSI1251
 .PP
-CP20871, ibm871
+ibm-5348_P100-1997 / ibm-5348 / windows-1252 / cp1252
 .PP
-CP20880, ibm880
+ibm-5349_P100-1998 / ibm-5349 / windows-1253 / cp1253
 .PP
-CP20905, ibm905
+ibm-5350_P100-1998 / ibm-5350 / windows-1254 / cp1254
 .PP
-CP20924, ibm00924
+ibm-9447_P100-2002 / ibm-9447 / windows-1255 / cp1255
 .PP
-CP20932, euc-jp
+ibm-9448_X100-2005 / ibm-9448 / windows-1256 / cp1256 / x-windows-1256S
 .PP
-CP20936, x-cp20936
+ibm-9449_P100-2002 / ibm-9449 / windows-1257 / cp1257
 .PP
-CP20949, x-cp20949
+ibm-5354_P100-1998 / ibm-5354 / windows-1258 / cp1258
 .PP
-CP21025, cp1025
+ibm-1250_P100-1995 / ibm-1250 / windows-1250
 .PP
-CP21027
+ibm-1251_P100-1995 / ibm-1251 / windows-1251
 .PP
-CP21866, koi8-u
+ibm-1252_P100-2000 / ibm-1252 / windows-1252
 .PP
-CP28591, iso-8859-1
+ibm-1253_P100-1995 / ibm-1253 / windows-1253
 .PP
-CP28592, iso-8859-2
+ibm-1254_P100-1995 / ibm-1254 / windows-1254
 .PP
-CP28593, iso-8859-3
+ibm-1255_P100-1995 / ibm-1255
 .PP
-CP28594, iso-8859-4
+ibm-5351_P100-1998 / ibm-5351 / windows-1255
 .PP
-CP28595, iso-8859-5
+ibm-1256_P110-1997 / ibm-1256
 .PP
-CP28596, iso-8859-6
+ibm-5352_P100-1998 / ibm-5352 / windows-1256
 .PP
-CP28597, iso-8859-7
+ibm-1257_P100-1995 / ibm-1257
 .PP
-CP28598, iso-8859-8
+ibm-5353_P100-1998 / ibm-5353 / windows-1257
 .PP
-CP28599, iso-8859-9
+ibm-1258_P100-1997 / ibm-1258 / windows-1258
 .PP
-CP28603, iso-8859-13
+macos-0_2-10.2 / macintosh / mac / csMacintosh / windows-10000 / macroman / x-macroman
 .PP
-CP28605, iso-8859-15
+macos-6_2-10.4 / x-mac-greek / windows-10006 / macgr / x-MacGreek
 .PP
-CP29001, x-europa
+macos-7_3-10.2 / x-mac-cyrillic / windows-10007 / mac-cyrillic / maccy / x-MacCyrillic / x-MacUkraine
 .PP
-CP38598, iso-8859-8-i
+macos-21-10.5 / x-mac-thai / x-MacThai / MacThai
 .PP
-CP50220, iso-2022-jp
+macos-29-10.2 / x-mac-centraleurroman / windows-10029 / x-mac-ce / macce / maccentraleurope / x-MacCentralEurope
 .PP
-CP50221, csiso2022jp
+macos-33-10.5 / x-mac-symbol / x-MacSymbol / MacSymbol
 .PP
-CP50222, iso-2022-jp
+macos-34-10.2 / x-mac-dingbat / x-MacDingbat / MacDingbat
 .PP
-CP50225, iso-2022-kr
+macos-35-10.2 / x-mac-turkish / windows-10081 / mactr / x-MacTurkish
 .PP
-CP50227, x-cp50227
+macos-36_2-10.2 / x-mac-croatian / x-MacCroatian / MacCroatian
 .PP
-CP50229
+macos-37_5-10.2 / x-mac-iceland / x-MacIceland / MacIceland
 .PP
-CP50930
+macos-38_2-10.2 / x-mac-romania / x-MacRomania / MacRomania
 .PP
-CP50931
+macos-518-10.2 / x-mac-arabic / x-MacArabic / MacArabic
 .PP
-CP50933
+macos-1285-10.2 / x-mac-hebrew / x-MacHebrew / MacHebrew
 .PP
-CP50935
+ibm-1051_P100-1995 / ibm-1051 / hp-roman8 / roman8 / r8 / csHPRoman8
 .PP
-CP50936
+ibm-1276_P100-1995 / ibm-1276 / Adobe-Standard-Encoding / csAdobeStandardEncoding
 .PP
-CP50937
+ibm-1006_P100-1995 / ibm-1006 / IBM1006 / cp1006 / 1006 / x-IBM1006
 .PP
-CP50939
+ibm-1098_P100-1995 / ibm-1098 / IBM1098 / cp1098 / 1098 / x-IBM1098
 .PP
-CP51932, euc-jp
+ibm-1124_P100-1996 / ibm-1124 / cp1124 / 1124 / x-IBM1124
 .PP
-CP51936, euc-cn
+ibm-1125_P100-1997 / ibm-1125 / cp1125
 .PP
-CP51949, euc-kr
+ibm-1129_P100-1997 / ibm-1129
 .PP
-CP51950
+ibm-1131_P100-1997 / ibm-1131 / cp1131
 .PP
-CP52936, hz-gb-2312
+ibm-1133_P100-1997 / ibm-1133
 .PP
-CP54936, gb18030
+ISO_2022,locale=ja,version=0 / ISO-2022-JP / csISO2022JP / x-windows-iso2022jp / x-windows-50220
 .PP
-CP57002, x-iscii-de
+ISO_2022,locale=ja,version=1 / ISO-2022-JP-1 / JIS_Encoding / csJISEncoding / ibm-5054 / JIS / x-windows-50221
 .PP
-CP57003, x-iscii-be
+ISO_2022,locale=ja,version=2 / ISO-2022-JP-2 / csISO2022JP2
 .PP
-CP57004, x-iscii-ta
+ISO_2022,locale=ja,version=3 / JIS7
 .PP
-CP57005, x-iscii-te
+ISO_2022,locale=ja,version=4 / JIS8
 .PP
-CP57006, x-iscii-as
+ISO_2022,locale=ko,version=0 / ISO-2022-KR / csISO2022KR
 .PP
-CP57007, x-iscii-or
+ISO_2022,locale=ko,version=1 / ibm-25546
 .PP
-CP57008, x-iscii-ka
+ISO_2022,locale=zh,version=0 / ISO-2022-CN / csISO2022CN / x-ISO-2022-CN-GB
 .PP
-CP57009, x-iscii-ma
+ISO_2022,locale=zh,version=1 / ISO-2022-CN-EXT
 .PP
-CP57010, x-iscii-gu
+ISO_2022,locale=zh,version=2 / ISO-2022-CN-CNS / x-ISO-2022-CN-CNS
 .PP
-CP57011, x-iscii-pa
+HZ / HZ-GB-2312
 .PP
-CP65000, utf-7, utf7
+x11-compound-text / COMPOUND_TEXT / x-compound-text
 .PP
-CP65001, utf-8, utf8
+ISCII,version=0 / x-ISCII91 / x-iscii-de / windows-57002 / iscii-dev / ibm-4902
+.PP
+ISCII,version=1 / x-iscii-be / windows-57003 / iscii-bng / windows-57006 / x-iscii-as
+.PP
+ISCII,version=2 / x-iscii-pa / windows-57011 / iscii-gur
+.PP
+ISCII,version=3 / x-iscii-gu / windows-57010 / iscii-guj
+.PP
+ISCII,version=4 / x-iscii-or / windows-57007 / iscii-ori
+.PP
+ISCII,version=5 / x-iscii-ta / windows-57004 / iscii-tml
+.PP
+ISCII,version=6 / x-iscii-te / windows-57005 / iscii-tlg
+.PP
+ISCII,version=7 / x-iscii-ka / windows-57008 / iscii-knd
+.PP
+ISCII,version=8 / x-iscii-ma / windows-57009 / iscii-mlm
+.PP
+LMBCS-1 / lmbcs / ibm-65025
+.PP
+ibm-37_P100-1995 / ibm-37 / IBM037 / ibm-037 / ebcdic-cp-us / ebcdic-cp-ca / ebcdic-cp-wt / ebcdic-cp-nl / csIBM037 / cp037 / 037 / cpibm37 / cp37
+.PP
+ibm-273_P100-1995 / ibm-273 / IBM273 / CP273 / csIBM273 / ebcdic-de / 273
+.PP
+ibm-277_P100-1995 / ibm-277 / IBM277 / cp277 / EBCDIC-CP-DK / EBCDIC-CP-NO / csIBM277 / ebcdic-dk / 277
+.PP
+ibm-278_P100-1995 / ibm-278 / IBM278 / cp278 / ebcdic-cp-fi / ebcdic-cp-se / csIBM278 / ebcdic-sv / 278
+.PP
+ibm-280_P100-1995 / ibm-280 / IBM280 / CP280 / ebcdic-cp-it / csIBM280 / 280
+.PP
+ibm-284_P100-1995 / ibm-284 / IBM284 / CP284 / ebcdic-cp-es / csIBM284 / cpibm284 / 284
+.PP
+ibm-285_P100-1995 / ibm-285 / IBM285 / CP285 / ebcdic-cp-gb / csIBM285 / cpibm285 / ebcdic-gb / 285
+.PP
+ibm-290_P100-1995 / ibm-290 / IBM290 / cp290 / EBCDIC-JP-kana / csIBM290
+.PP
+ibm-297_P100-1995 / ibm-297 / IBM297 / cp297 / ebcdic-cp-fr / csIBM297 / cpibm297 / 297
+.PP
+ibm-420_X120-1999 / ibm-420 / IBM420 / cp420 / ebcdic-cp-ar1 / csIBM420 / 420
+.PP
+ibm-424_P100-1995 / ibm-424 / IBM424 / cp424 / ebcdic-cp-he / csIBM424 / 424
+.PP
+ibm-500_P100-1995 / ibm-500 / IBM500 / CP500 / ebcdic-cp-be / csIBM500 / ebcdic-cp-ch / 500
+.PP
+ibm-803_P100-1999 / ibm-803 / cp803
+.PP
+ibm-838_P100-1995 / ibm-838 / IBM838 / IBM-Thai / csIBMThai / cp838 / 838 / ibm-9030
+.PP
+ibm-870_P100-1995 / ibm-870 / IBM870 / CP870 / ebcdic-cp-roece / ebcdic-cp-yu / csIBM870
+.PP
+ibm-871_P100-1995 / ibm-871 / IBM871 / ebcdic-cp-is / csIBM871 / CP871 / ebcdic-is / 871
+.PP
+ibm-875_P100-1995 / ibm-875 / IBM875 / cp875 / 875 / x-IBM875
+.PP
+ibm-918_P100-1995 / ibm-918 / IBM918 / CP918 / ebcdic-cp-ar2 / csIBM918
+.PP
+ibm-930_P120-1999 / ibm-930 / ibm-5026 / IBM930 / cp930 / 930 / x-IBM930 / x-IBM930A
+.PP
+ibm-933_P110-1995 / ibm-933 / cp933 / 933 / x-IBM933
+.PP
+ibm-935_P110-1999 / ibm-935 / cp935 / 935 / x-IBM935
+.PP
+ibm-937_P110-1999 / ibm-937 / cp937 / 937 / x-IBM937
+.PP
+ibm-939_P120-1999 / ibm-939 / ibm-931 / ibm-5035 / IBM939 / cp939 / 939 / x-IBM939 / x-IBM939A
+.PP
+ibm-1025_P100-1995 / ibm-1025 / cp1025 / 1025 / x-IBM1025
+.PP
+ibm-1026_P100-1995 / ibm-1026 / IBM1026 / CP1026 / csIBM1026 / 1026
+.PP
+ibm-1047_P100-1995 / ibm-1047 / IBM1047 / cp1047 / 1047
+.PP
+ibm-1097_P100-1995 / ibm-1097 / cp1097 / 1097 / x-IBM1097
+.PP
+ibm-1112_P100-1995 / ibm-1112 / cp1112 / 1112 / x-IBM1112
+.PP
+ibm-1114_P100-2001 / ibm-1114 / x-IBM1114
+.PP
+ibm-1115_P100-1995 / ibm-1115 / x-IBM1115
+.PP
+ibm-1122_P100-1999 / ibm-1122 / cp1122 / 1122 / x-IBM1122
+.PP
+ibm-1123_P100-1995 / ibm-1123 / cp1123 / 1123 / x-IBM1123
+.PP
+ibm-1130_P100-1997 / ibm-1130
+.PP
+ibm-1132_P100-1998 / ibm-1132
+.PP
+ibm-1137_P100-1999 / ibm-1137
+.PP
+ibm-4517_P100-2005 / ibm-4517
+.PP
+ibm-1140_P100-1997 / ibm-1140 / IBM01140 / CCSID01140 / CP01140 / cp1140 / ebcdic-us-37+euro
+.PP
+ibm-1141_P100-1997 / ibm-1141 / IBM01141 / CCSID01141 / CP01141 / cp1141 / ebcdic-de-273+euro
+.PP
+ibm-1142_P100-1997 / ibm-1142 / IBM01142 / CCSID01142 / CP01142 / cp1142 / ebcdic-dk-277+euro / ebcdic-no-277+euro
+.PP
+ibm-1143_P100-1997 / ibm-1143 / IBM01143 / CCSID01143 / CP01143 / cp1143 / ebcdic-fi-278+euro / ebcdic-se-278+euro
+.PP
+ibm-1144_P100-1997 / ibm-1144 / IBM01144 / CCSID01144 / CP01144 / cp1144 / ebcdic-it-280+euro
+.PP
+ibm-1145_P100-1997 / ibm-1145 / IBM01145 / CCSID01145 / CP01145 / cp1145 / ebcdic-es-284+euro
+.PP
+ibm-1146_P100-1997 / ibm-1146 / IBM01146 / CCSID01146 / CP01146 / cp1146 / ebcdic-gb-285+euro
+.PP
+ibm-1147_P100-1997 / ibm-1147 / IBM01147 / CCSID01147 / CP01147 / cp1147 / ebcdic-fr-297+euro
+.PP
+ibm-1148_P100-1997 / ibm-1148 / IBM01148 / CCSID01148 / CP01148 / cp1148 / ebcdic-international-500+euro
+.PP
+ibm-1149_P100-1997 / ibm-1149 / IBM01149 / CCSID01149 / CP01149 / cp1149 / ebcdic-is-871+euro
+.PP
+ibm-1153_P100-1999 / ibm-1153 / IBM1153 / x-IBM1153
+.PP
+ibm-1154_P100-1999 / ibm-1154
+.PP
+ibm-1155_P100-1999 / ibm-1155
+.PP
+ibm-1156_P100-1999 / ibm-1156
+.PP
+ibm-1157_P100-1999 / ibm-1157
+.PP
+ibm-1158_P100-1999 / ibm-1158
+.PP
+ibm-1160_P100-1999 / ibm-1160
+.PP
+ibm-1164_P100-1999 / ibm-1164
+.PP
+ibm-1364_P110-2007 / ibm-1364 / x-IBM1364
+.PP
+ibm-1370_P100-1999 / ibm-1370 / x-IBM1370
+.PP
+ibm-1371_P100-1999 / ibm-1371 / x-IBM1371
+.PP
+ibm-1388_P103-2001 / ibm-1388 / ibm-9580 / x-IBM1388
+.PP
+ibm-1390_P110-2003 / ibm-1390 / x-IBM1390
+.PP
+ibm-1399_P110-2003 / ibm-1399 / x-IBM1399
+.PP
+ibm-5123_P100-1999 / ibm-5123
+.PP
+ibm-8482_P100-1999 / ibm-8482
+.PP
+ibm-16684_P110-2003 / ibm-16684 / ibm-20780
+.PP
+ibm-4899_P100-1998 / ibm-4899
+.PP
+ibm-4971_P100-1999 / ibm-4971
+.PP
+ibm-9067_X100-2005 / ibm-9067
+.PP
+ibm-12712_P100-1998 / ibm-12712 / ebcdic-he
+.PP
+ibm-16804_X110-1999 / ibm-16804 / ebcdic-ar
+.PP
+java-Cp1399A-1.6_P / x-IBM1399A
+.PP
+java-Cp420s-1.6_P / x-IBM420S
+.PP
+java-Cp1390A-1.6_P / x-IBM1390A
+.PP
+ibm-37_P100-1995,swaplfnl / ibm-37-s390
+.PP
+ibm-924_P100-1998,swaplfnl / ibm-924-s390 / IBM924_LF
+.PP
+ibm-1047_P100-1995,swaplfnl / ibm-1047-s390 / IBM1047_LF
+.PP
+ibm-1140_P100-1997,swaplfnl / ibm-1140-s390
+.PP
+ibm-1141_P100-1997,swaplfnl / ibm-1141-s390 / IBM1141_LF
+.PP
+ibm-1142_P100-1997,swaplfnl / ibm-1142-s390
+.PP
+ibm-1143_P100-1997,swaplfnl / ibm-1143-s390
+.PP
+ibm-1144_P100-1997,swaplfnl / ibm-1144-s390
+.PP
+ibm-1145_P100-1997,swaplfnl / ibm-1145-s390
+.PP
+ibm-1146_P100-1997,swaplfnl / ibm-1146-s390
+.PP
+ibm-1147_P100-1997,swaplfnl / ibm-1147-s390
+.PP
+ibm-1148_P100-1997,swaplfnl / ibm-1148-s390
+.PP
+ibm-1149_P100-1997,swaplfnl / ibm-1149-s390
+.PP
+ibm-1153_P100-1999,swaplfnl / ibm-1153-s390
+.PP
+ibm-12712_P100-1998,swaplfnl / ibm-12712-s390
+.PP
+ibm-16804_X110-1999,swaplfnl / ibm-16804-s390
+.PP
+ebcdic-xml-us
+.PP
+gsm-03.38-2000 / GSM0338
+.PP
+ibm-1004_P100-1995 / ibm-1004
+.PP
+ibm-1008_P100-1995 / ibm-1008
+.PP
+ibm-1009_P100-1995 / ibm-1009
+.PP
+ibm-1010_P100-1995 / ibm-1010 / NF_Z_62-010 / iso-ir-69 / ISO646-FR / fr / csISO69French
+.PP
+ibm-1011_P100-1995 / ibm-1011 / DIN_66003 / iso-ir-21 / de / ISO646-DE / csISO21German
+.PP
+ibm-1012_P100-1995 / ibm-1012 / IT / iso-ir-15 / ISO646-IT / csISO15Italian
+.PP
+ibm-1013_P100-1995 / ibm-1013 / BS_4730 / iso-ir-4 / ISO646-GB / gb / uk / csISO4UnitedKingdom
+.PP
+ibm-1014_P100-1995 / ibm-1014 / ES2 / iso-ir-85 / ISO646-ES2 / csISO85Spanish2
+.PP
+ibm-1015_P100-1995 / ibm-1015 / PT2 / iso-ir-84 / ISO646-PT2 / csISO84Portuguese2
+.PP
+ibm-1016_P100-1995 / ibm-1016 / NS_4551-1 / iso-ir-60 / ISO646-NO / no / csISO60DanishNorwegian / csISO60Norwegian1
+.PP
+ibm-1017_P100-1995 / ibm-1017
+.PP
+ibm-1018_P100-1995 / ibm-1018 / SEN_850200_B / iso-ir-10 / FI / ISO646-FI / ISO646-SE / se / csISO10Swedish
+.PP
+ibm-1019_P100-1995 / ibm-1019
+.PP
+ibm-1020_P100-2003 / ibm-1020 / CSA_Z243.4-1985-1 / iso-ir-121 / ISO646-CA / csa7-1 / ca / csISO121Canadian1
+.PP
+ibm-1021_P100-2003 / ibm-1021
+.PP
+ibm-1023_P100-2003 / ibm-1023 / ES / iso-ir-17 / ISO646-ES / csISO17Spanish
+.PP
+ibm-1027_P100-1995 / ibm-1027 / x-IBM1027
+.PP
+ibm-1041_P100-1995 / ibm-1041 / x-IBM1041
+.PP
+ibm-1043_P100-1995 / ibm-1043 / x-IBM1043
+.PP
+ibm-1046_X110-1999 / ibm-1046 / x-IBM1046 / x-IBM1046S
+.PP
+ibm-1088_P100-1995 / ibm-1088 / x-IBM1088
+.PP
+ibm-1100_P100-2003 / ibm-1100 / DEC-MCS / dec / csDECMCS
+.PP
+ibm-1101_P100-2003 / ibm-1101
+.PP
+ibm-1102_P100-2003 / ibm-1102
+.PP
+ibm-1103_P100-2003 / ibm-1103
+.PP
+ibm-1104_P100-2003 / ibm-1104 / NF_Z_62-010_1973 / iso-ir-25 / ISO646-FR1 / csISO25French
+.PP
+ibm-1105_P100-2003 / ibm-1105
+.PP
+ibm-1106_P100-2003 / ibm-1106
+.PP
+ibm-1107_P100-2003 / ibm-1107 / DS_2089 / ISO646-DK / dk / csISO646Danish
+.PP
+ibm-1127_P100-2004 / ibm-1127
+.PP
+ibm-1161_P100-1999 / ibm-1161
+.PP
+ibm-1163_P100-1999 / ibm-1163
+.PP
+ibm-1165_P101-2000 / ibm-1165
+.PP
+ibm-1166_P100-2002 / ibm-1166
+.PP
+ibm-1167_P100-2002 / ibm-1167 / KOI8-RU / x-KOI8_RU
+.PP
+ibm-1174_X100-2007 / ibm-1174 / KZ-1048 / STRK1048-2002 / RK1048 / csKZ1048
+.PP
+ibm-1277_P100-1995 / ibm-1277
+.PP
+ibm-13125_P100-1997 / ibm-13125
+.PP
+ibm-13140_P101-2000 / ibm-13140
+.PP
+ibm-13218_P100-1996 / ibm-13218
+.PP
+ibm-1350_P110-1997 / ibm-1350 / x-eucJP-Open / eucJP-Open
+.PP
+ibm-1351_P110-1997 / ibm-1351 / x-IBM1351
+.PP
+ibm-1362_P110-1999 / ibm-1362 / x-IBM1362
+.PP
+ibm-13676_P102-2001 / ibm-13676
+.PP
+ibm-1380_P100-1995 / ibm-1380 / x-IBM1380
+.PP
+ibm-1381_P110-1999 / ibm-1381 / cp1381 / 1381 / x-IBM1381
+.PP
+ibm-1382_P100-1995 / ibm-1382 / x-IBM1382
+.PP
+ibm-17221_P100-2001 / ibm-17221
+.PP
+ibm-17248_X110-1999 / ibm-17248
+.PP
+ibm-21344_P101-2000 / ibm-21344
+.PP
+ibm-21427_P100-1999 / ibm-21427
+.PP
+ibm-256_P100-1995 / ibm-256
+.PP
+ibm-259_P100-1995 / ibm-259 / IBM-Symbols / csIBMSymbols
+.PP
+ibm-274_P100-2000 / ibm-274 / IBM274 / EBCDIC-BE / CP274 / csIBM274
+.PP
+ibm-275_P100-1995 / ibm-275 / IBM275 / EBCDIC-BR / cp275 / csIBM275
+.PP
+ibm-286_P100-2003 / ibm-286 / EBCDIC-AT-DE-A / csEBCDICATDEA
+.PP
+ibm-293_P100-1995 / ibm-293
+.PP
+ibm-300_P120-2006 / ibm-300 / x-IBM300
+.PP
+ibm-301_P110-1997 / ibm-301 / x-IBM301
+.PP
+ibm-33058_P100-2000 / ibm-33058
+.PP
+ibm-425_P101-2000 / ibm-425
+.PP
+ibm-4930_P110-1999 / ibm-4930
+.PP
+ibm-4933_P100-2002 / ibm-4933
+.PP
+ibm-4948_P100-1995 / ibm-4948
+.PP
+ibm-4951_P100-1995 / ibm-4951
+.PP
+ibm-4952_P100-1995 / ibm-4952
+.PP
+ibm-4960_P100-1995 / ibm-4960
+.PP
+ibm-5039_P11A-1998 / ibm-5039
+.PP
+ibm-5048_P100-1995 / ibm-5048
+.PP
+ibm-5049_P100-1995 / ibm-5049
+.PP
+ibm-5067_P100-1995 / ibm-5067
+.PP
+ibm-5104_X110-1999 / ibm-5104
+.PP
+ibm-806_P100-1998 / ibm-806
+.PP
+ibm-808_P100-1999 / ibm-808 / x-IBM808
+.PP
+ibm-833_P100-1995 / ibm-833 / x-IBM833
+.PP
+ibm-834_P100-1995 / ibm-834 / x-IBM834
+.PP
+ibm-835_P100-1995 / ibm-835 / x-IBM835
+.PP
+ibm-836_P100-1995 / ibm-836 / x-IBM836
+.PP
+ibm-837_P100-1995 / ibm-837 / x-IBM837
+.PP
+ibm-848_P100-1999 / ibm-848
+.PP
+ibm-849_P100-1999 / ibm-849
+.PP
+ibm-859_P100-1999 / ibm-859 / x-IBM859
+.PP
+ibm-8612_P100-1995 / ibm-8612
+.PP
+ibm-872_P100-1999 / ibm-872
+.PP
+ibm-880_P100-1995 / ibm-880 / IBM880 / cp880 / EBCDIC-Cyrillic / csIBM880 / windows-20880
+.PP
+ibm-896_P100-1995 / ibm-896
+.PP
+ibm-897_P100-1995 / ibm-897 / JIS_X0201 / X0201 / csHalfWidthKatakana / x-IBM897
+.PP
+ibm-9027_P100-1999 / ibm-9027
+.PP
+ibm-9048_P100-1998 / ibm-9048
+.PP
+ibm-905_P100-1995 / ibm-905 / IBM905 / CP905 / ebcdic-cp-tr / csIBM905 / windows-20905
+.PP
+ibm-9056_P100-1995 / ibm-9056
+.PP
+ibm-9061_P100-1999 / ibm-9061
+.PP
+ibm-9145_P110-1997 / ibm-9145
+.PP
+ibm-9238_X110-1999 / ibm-9238
+.PP
+ibm-924_P100-1998 / ibm-924 / IBM00924 / CCSID00924 / CP00924 / ebcdic-Latin9--euro
+.PP
+ibm-926_P100-2000 / ibm-926
+.PP
+ibm-927_P100-1995 / ibm-927 / x-IBM927
+.PP
+ibm-928_P100-1995 / ibm-928
+.PP
+ibm-941_P13A-2001 / ibm-941
+.PP
+ibm-944_P100-1995 / ibm-944
+.PP
+ibm-946_P100-1995 / ibm-946
+.PP
+ibm-947_P100-1995 / ibm-947 / x-IBM947
+.PP
+ibm-948_P110-1999 / ibm-948 / x-IBM948
+.PP
+ibm-951_P100-1995 / ibm-951 / x-IBM951
+.PP
+ibm-952_P110-1997 / ibm-952 / x-JIS0208
+.PP
+ibm-953_P100-2000 / ibm-953 / JIS_X0212-1990
+.PP
+ibm-955_P110-1997 / ibm-955
+.PP
+ibm-9577_P100-2001 / ibm-9577 / ibm-1385 / x-IBM1385
+.PP
+iso-8859_16-2001 / ISO-8859-16 / iso-ir-226 / ISO_8859-16:2001 / latin10 / l10
 
 ." ============================== 라이브러리 버전 정보 ==============================
 .SH 라이브러리 버전 정보

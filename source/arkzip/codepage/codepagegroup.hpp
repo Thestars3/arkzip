@@ -13,26 +13,23 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-#ifndef UFP_HPP
-#define UFP_HPP
+#ifndef CODEPAGEGROUP_HPP
+#define CODEPAGEGROUP_HPP
 
 #include <QString>
-#include <QFileInfo>
+#include <QStringList>
 
-/*사용자 함수 묶음.\n
-  Qt 4.8.0에 기반한 함수들로 재작성됨.
-  */
-namespace ufp
+class CodepageGroup :
+        public QStringList
 {
-    QString makeUniqueDir(const QFileInfo &dir);
-    QString extractName(QString file);
-    QString generateUniqueName(const QString &orignalName, const QString &path);
+private:
+    QString converterName;   ///< 변환기 이름
 
-    enum ReplaceSystemCharOption {
-        RSC_ALL,      ///< 경로 구분자를 포함하여 치환합니다.
-        RSC_SAVE_PATH ///< 경로 구분자 '/'를 제외하고 치환합니다.
-    };
-    QString replaceSystemChar(QString string, ReplaceSystemCharOption option = RSC_ALL);
+public:
+    CodepageGroup(const QString &converterName);
+    CodepageGroup& alias(const QString &alias);
+    QString getConverterName();
+
 };
 
-#endif // UFP_HPP
+#endif // CODEPAGEGROUP_HPP

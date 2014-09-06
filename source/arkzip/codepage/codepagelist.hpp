@@ -13,26 +13,29 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-#ifndef UFP_HPP
-#define UFP_HPP
+#ifndef CODEPAGELIST_HPP
+#define CODEPAGELIST_HPP
 
-#include <QString>
-#include <QFileInfo>
+#include <QList>
+#include "codepagegroup.hpp"
 
-/*사용자 함수 묶음.\n
-  Qt 4.8.0에 기반한 함수들로 재작성됨.
+/** 사용가능한 코드페이지 목록.
+  참조 : <a href="http://demo.icu-project.org/icu-bin/convexp?ShowUnavailable=">Converter Explorer</a>
   */
-namespace ufp
+class CodepageList
+        : public QList<CodepageGroup*>
 {
-    QString makeUniqueDir(const QFileInfo &dir);
-    QString extractName(QString file);
-    QString generateUniqueName(const QString &orignalName, const QString &path);
+private:
+    CodepageGroup* ConverterName(const QString &converterName);
 
-    enum ReplaceSystemCharOption {
-        RSC_ALL,      ///< 경로 구분자를 포함하여 치환합니다.
-        RSC_SAVE_PATH ///< 경로 구분자 '/'를 제외하고 치환합니다.
-    };
-    QString replaceSystemChar(QString string, ReplaceSystemCharOption option = RSC_ALL);
+public:
+    CodepageList();
+    ~CodepageList();
+    CodepageGroup* findGroup(const QString &name);
+    bool contains(const QString &alias);
+    QString find(const QString &alias);
+    void print();
+
 };
 
-#endif // UFP_HPP
+#endif // CODEPAGELIST_HPP

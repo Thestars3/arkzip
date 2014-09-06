@@ -27,9 +27,7 @@ int main(
     QCoreApplication app(argc, argv);
 
     //옵션 객체의 처리 메소드가 수행되면 압축 해제를 수행할 프로그램과 이 프로그램은 exec됩니다.
-    {
     Option(argc, argv).process();
-    }
 
     //무언가 알수 없는 오류가 발생했습니다.
     return 13;

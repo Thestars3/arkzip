@@ -31,19 +31,59 @@ QString ufp::makeUniqueDir(
     }
 }
 
-/** 파일 정보 객체로 부터 파일명을 추출해냅니다.\n
-  예를 들어, `../asd/.qwe.tar.bz2'가 인자로 주어진 다면 반환값은 `.qwe' 입니다.
-  @return 파일 명
+/** 윈도우 및 리눅스에서 사용불가능한 문자, 문제가 생길 소지가 높은 문자들을 대체문자로 치환합니다.
+  @return 치환된 문자열
   */
-QString ufp::extractName(
-        const QFileInfo file ///< 파일 정보 객체
+QString ufp::replaceSystemChar(
+        QString string,                ///< 치환할 문자열
+        ReplaceSystemCharOption option ///< 옵션
         )
 {
-    QString name = file.baseName();
-    if (file.fileName().at(0) == QString::fromUtf8(".").at(0) ){
-        name = QString::fromUtf8(".%1").arg(name);
+    struct TrStruct {
+        QString from;
+        QString to;
+    };
+
+    QList<TrStruct> trList = {
+      {"?", "？"},
+      {":", "："},
+      {"*", "＊"},
+      {"\"", "＂"},
+      {"<", "〈"},
+      {">", "〉"},
+      {"|", "│"},
+      {"\\", "＼"},
+      {"'", "＇"},
+      {"$", "＄"},
+      {"!", "！"}
+    };
+
+    if ( option == RSC_ALL ) {
+        trList.push_back({"/", "／"});
     }
-    return name;
+
+    foreach (TrStruct tr, trList) {
+        string.replace(tr.from, tr.to);
+    }
+
+    return string;
+}
+
+/** 파일 경로로 부터 확장자를 제외한 파일명을 추출해냅니다.\n
+  qt에서 지원하는 QFileInfo::baseName()이 앞에 있는 .을 기준으로 파일명과 확장자를 분리함에 따라 생기는 문제(.asd asd.zip -> '(없음)')를 해결하기 위해 만들어졌습니다.\n
+  예를 들어, `../asd/.qwe.tar.bz2'가 인자로 주어진 다면 반환값은 `.qwe.tar' 입니다.
+  @return 파일명
+  */
+QString ufp::extractName(
+        QString code ///< 파일 정보 객체
+        )
+{
+    code = QFileInfo(code).fileName();
+    QRegExp rx("^(.*)\\.[A-Za-z0-9]+$");
+    if ( rx.indexIn(code) != -1 ) {
+        code = rx.cap(1);
+    }
+    return code;
 }
 
 /** 해당 경로에서 유일한 이름을 만들어 냅니다.\n
@@ -80,7 +120,7 @@ QString ufp::generateUniqueName(
     //파일명과 확장자를 추출
     QString fileName;
     QFileInfo orignalFileInfo(orignalName);
-    QString fileExtension = orignalFileInfo.completeSuffix();
+    QString fileExtension = orignalFileInfo.suffix();
     bool spliteExtension; // true : 확장자 나누기, false : 확장자 나누지 않기
     if ( fileExtension.isEmpty() ){
         fileName = orignalFileInfo.fileName();

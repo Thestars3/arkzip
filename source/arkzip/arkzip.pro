@@ -20,16 +20,19 @@ CONFIG   -= app_bundle
 
 HEADERS  += \
 	option.hpp \
-    codepagegroup.hpp \
-    codepagelist.hpp
+	codepage/codepagegroup.hpp \
+	codepage/codepagelist.hpp
 
 SOURCES  += \
 	main.cpp \
     option.cpp \
-    codepagegroup.cpp \
-    codepagelist.cpp
+	codepage/codepagegroup.cpp \
+	codepage/codepagelist.cpp
 
-LIBS     += -l:libboost_program_options-mt.a
+LIBS     += \
+	-l:libboost_program_options-mt.a \
+	-licuuc \
+	-licudata
 
 DEFINES  += \
 	DF_020C2DC2A183E03DEBCECB21F1B1DB380=\\\"$$join(ARK_CUI_PROGRAM_PATH, \\\x20)\\\" \

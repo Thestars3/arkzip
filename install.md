@@ -11,7 +11,7 @@ github의 저장소에서 relrease된 패키지 파일을 다운받아 설치하
 
 1. *컴파일에 필요한 패키지를 설치.*
 
-	`sudo apt-get install libqt4-dev libboost-program-options-dev fakeroot`
+	`sudo apt-get install libqt4-dev libboost-program-options-dev fakeroot libicu-dev`
 
 2. *소스 파일이 있는 폴더로 이동(이 파일이 위치한 폴더에서)*
 

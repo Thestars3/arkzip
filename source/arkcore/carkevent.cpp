@@ -6,6 +6,7 @@
 #include "report.hpp"
 #include "arkerrconverter.hpp"
 #include "pause.hpp"
+#include "codeconv.hpp"
 
 /** @brief 객체를 초기화합니다.
   */
@@ -40,10 +41,9 @@ void CArkEvent::OnOpening(
 /** @brief 분할 압축된 파일의 압축을 해제할때, 파일의 압축 해제 처리가 다음 분할압축된 파일로 넘어간 경우 호출됩니다.
   */
 void CArkEvent::OnMultiVolumeFileChanged(
-        LPCWSTR szPathFileName      ///< [in] 대상 분할 압축파일의 경로명 입니다.
+        LPCWSTR /*szPathFileName*/      ///< [in] 대상 분할 압축파일의 경로명 입니다.
         )
 {
-    Q_UNUSED(szPathFileName);
 }
 
 /** @brief 개별 파일아이템(파일, 폴더)의 압축을 해제할때 호출됩니다.
@@ -55,7 +55,7 @@ void CArkEvent::OnStartFile(
         int /*index*/
         )
 {
-    Report::getInstance()->setExtractFileStart( QString::fromWCharArray(pFileItem->fileNameW) );
+    Report::getInstance()->setExtractFileStart( CodeConv::getInstance()->toQString(pFileItem) );
 }
 
 /** @brief 파일의 압축 해제가 진행될때 호출됩니다.
@@ -115,7 +115,7 @@ void CArkEvent::OnError(
     //기타 오류는 critical 메시지를 발생시킵니다.
     Report::getInstance()->setDecompressError(
                 decompress->getCurrentFilePath(),
-                QString::fromWCharArray(pFileItem->fileNameW),
+                CodeConv::getInstance()->toQString(pFileItem),
                 ArkErrConverter::getInstance()->getMessage(nErr)
                 );
 }
@@ -201,7 +201,7 @@ void CArkEvent::OnAskPassword(
         //암호 설정을 건너뜁니다.
 
         //오류 메시지를 설정
-        Report::getInstance()->reportSkipLockFile( QString::fromWCharArray(pFileItem->fileNameW) );
+        Report::getInstance()->reportSkipLockFile( CodeConv::getInstance()->toQString(pFileItem) );
 
         //암호 설정을 하지 않음.
         ret = ARK_PASSWORD_RET_CANCEL;

@@ -8,6 +8,7 @@
 #include "ufp/ufp.hpp"
 #include "arkerrconverter.hpp"
 #include "pause.hpp"
+#include "codeconv.hpp"
 
 // 네임스페이스 재정의
 namespace po = boost::program_options;
@@ -167,8 +168,8 @@ void Decompress::processOption()
                 };
     }
 
+    //암호 옵션을 처리합니다.
     if ( optionVm.count("key") ){
-        //암호 옵션을 처리합니다.
         QString s = QString::fromUtf8( optionVm["key"].as<std::string>().c_str() );
         setPassword(s);
     }
@@ -186,17 +187,72 @@ void Decompress::processOption()
     }
 
     //코드 페이지 옵션을 처리합니다.
+    std::function<void()> extractAll;
     {
-        QString codepage = QString::fromStdString(optionVm["codepage"].as<std::string>());
-        struct SArkCodepage arkCodepage;
-        //auto의 경우 SArkCodepage가 초기화되면서 설정된 값을 사용하므로, 따로 설정할 필요가 없음.
-        if ( codepage != "auto" ) {
-            int n = codepage.toInt();
-            arkCodepage.fileName = n;
-            arkCodepage.comment = n;
-            //arkCodepage.password = n;
+        QString converter = QString::fromStdString(optionVm["codepage"].as<std::string>());
+        if ( converter == "auto" ) {
+            qDebug("yes auto");
+            //압축해제 작업 지정
+            extractAll =
+                    [this]
+                {
+                    arkLib->ExtractAllTo((LPCSTR)".");
+                };
         }
-        arkLib->SetCodePage(arkCodepage);
+        else {
+        qDebug("no auto");
+            //컨버터 설정
+            if ( ! CodeConv::getInstance()->setCodepage(converter) ) {
+                QTextStream stderr(::stderr);
+                stderr << QString::fromUtf8("인코딩 변환 준비에 문제가 있습니다.") << endl
+                       << flush;
+                ::exit(98);
+            }
+
+            //압축해제 작업 지정
+            extractAll =
+                    [this]
+                {
+                    int count = arkLib->GetFileItemCount();
+                    QDir pwd = QDir::current();
+                    for (int i = 0; i < count; i++) {
+                        const SArkFileItem *info = arkLib->GetFileItem(i);
+                        QString filePath = CodeConv::getInstance()->toQString(info);
+                        QFileInfo fileInfo(ufp::replaceSystemChar(filePath, ufp::RSC_SAVE_PATH));
+                        if ( info->IsFolder() ) {
+                            pwd.mkpath(fileInfo.filePath());
+                            Report::getInstance()->setExtractFileStart(filePath);
+                        }
+                        else {
+                            QFileInfo uniquePath;
+                            bool duplicated = fileInfo.exists();
+                            if ( duplicated ) {
+                                QString filePath = fileInfo.path();
+                                QString fileName = ufp::generateUniqueName(fileInfo.fileName(), filePath);
+                                uniquePath = QFileInfo(filePath + "/" + fileName);
+                            }
+                            else {
+                                uniquePath = fileInfo;
+                            }
+                            arkLib->ExtractOneAs(i, uniquePath.filePath().toStdWString().c_str(), NULL);
+                            if ( duplicated ) {
+                                Report::getInstance()->setNewName(uniquePath.fileName());
+                            }
+                        }
+                    }
+                };
+        }
+
+//        //ARK라이브러리 코드페이지 지정은 정상작동 안됨.
+//        struct SArkCodepage arkCodepage;
+//        //auto의 경우 SArkCodepage가 초기화되면서 설정된 값을 사용하므로, 따로 설정할 필요가 없음.
+//        if ( codepage != "auto" ) {
+//            int n = codepage.toInt();
+//            arkCodepage.fileName = n;
+//            arkCodepage.comment = n;
+//            //arkCodepage.password = n;
+//        }
+//        arkLib->SetCodePage(arkCodepage);
     }
 
     //분할 모드
@@ -231,7 +287,7 @@ void Decompress::processOption()
                 {
                     return getParentDir(filePath);
                 };
-    }
+    }  
 
     //테스트 모드
     if ( optionVm.count("test") ){
@@ -258,23 +314,29 @@ void Decompress::processOption()
         }
 
         decompress =
-                [this] (
+                [this, extractAll] (
                     const QString &filePath //파일 경로
                     )
                 {
                     QString dirPath = getSaveDirPath_(filePath);
                     setSeperatedExtractPath(dirPath);
+
+                    //압축 해제 경로로 이동
                     int e = chdir(dirPath.toUtf8().constData());
                     if ( e == -1 ) {
                         Report::getInstance()->setWarning(trUtf8("압축 파일의 경로에 문제가 있습니다."));
                         exitcode = 96;
                         return;
                     }
-                    arkLib->ExtractAllTo(".");
+
+                    extractAll(); //압축 해제
+
+                    //경로 복구
                     e = chdir(homePath.toUtf8().constData());
                     if ( e == -1 ) {
                         Report::getInstance()->setWarning(trUtf8("현재 경로에 문제가 있습니다."));
                         exitcode = 97;
+                        return;
                     }
                 };
     }
@@ -656,7 +718,7 @@ void Decompress::loadLibrary()
         QString m = ArkErrConverter::getInstance()->getMessage(nErr);
         qWarning("Error : %s", qPrintable(m));
 
-        exit(16);
+        ::exit(16);
     }
 }
 

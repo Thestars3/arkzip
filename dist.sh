@@ -28,7 +28,7 @@ function copyFiles(){
 	cp License.txt AUTHORS COPYING changelog.md dist/usr/share/doc/arkzip
 	
 	mkdir -p dist/usr/share/doc/arkzip
-	sed "s/\$VERSION/$VERSION/" resource/arkzip.1 > dist/usr/share/doc/arkzip/arkzip.1
+	sed "s/\$VERSION_81B03/$VERSION/; s/\$DATE_7A65E/$(date +%F)/" resource/arkzip.1 > dist/usr/share/doc/arkzip/arkzip.1
 	gzip -q1 dist/usr/share/doc/arkzip/arkzip.1
 	
 	mkdir -p dist/usr/share/man/man1
@@ -82,7 +82,7 @@ function makeControlFile(){
 	Section: utils
 	Priority: optional
 	breaks: arkzip
-	depends: libqt4-core(>=4:4.8.1), libstdc++6
+	depends: libqt4-core(>=4:4.8.1), libstdc++6, libicu48
 	Architecture: amd64
 	Maintainer: 별님 <w7dn1ng75r@gmail.com>
 	Homepage: https://github.com/Thestars3/arkzip/

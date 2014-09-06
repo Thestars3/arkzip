@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <QObject>
 #include <QTextStream>
 #include <boost/program_options.hpp>
-#include "codepagelist.hpp"
+#include "codepage/codepagelist.hpp"
 
 /** 옵션을 처리합니다.
   */

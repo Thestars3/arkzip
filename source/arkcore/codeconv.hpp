@@ -13,26 +13,29 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-#ifndef UFP_HPP
-#define UFP_HPP
+#ifndef CODECONV_HPP
+#define CODECONV_HPP
 
 #include <QString>
-#include <QFileInfo>
+#include <functional>
 
-/*사용자 함수 묶음.\n
-  Qt 4.8.0에 기반한 함수들로 재작성됨.
+/** 코드페이지 변환기.
+  코드페이지 문제 해결을 위해 만들어졌습니다.
   */
-namespace ufp
+class CodeConv
 {
-    QString makeUniqueDir(const QFileInfo &dir);
-    QString extractName(QString file);
-    QString generateUniqueName(const QString &orignalName, const QString &path);
+private:
+    CodeConv();
+    struct UConverter *conv;                                              ///< 변환기
+    std::function<QString(const struct SArkFileItem *pFileItem)> convert; ///< 변환 명령
+    static CodeConv *singleton;                                           ///< 싱글톤
 
-    enum ReplaceSystemCharOption {
-        RSC_ALL,      ///< 경로 구분자를 포함하여 치환합니다.
-        RSC_SAVE_PATH ///< 경로 구분자 '/'를 제외하고 치환합니다.
-    };
-    QString replaceSystemChar(QString string, ReplaceSystemCharOption option = RSC_ALL);
+
+public:
+    static CodeConv* getInstance();
+    QString toQString(const struct SArkFileItem *pFileItem);
+    bool setCodepage(const QString &codepageName);
+
 };
 
-#endif // UFP_HPP
+#endif // CODECONV_HPP

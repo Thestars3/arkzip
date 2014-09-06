@@ -21,7 +21,8 @@ HEADERS  += \
 	decompress.hpp \
 	ufp/ufp.hpp \
 	ufp/failmakedirexception.hpp \
-	arkerrconverter.hpp
+	arkerrconverter.hpp \
+    codeconv.hpp
 
 SOURCES  += \
 	pause.cpp \
@@ -30,7 +31,8 @@ SOURCES  += \
 	decompress.cpp \
 	ufp/ufp.cpp \
 	ufp/failmakedirexception.cpp \
-    arkerrconverter.cpp
+    arkerrconverter.cpp \
+    codeconv.cpp
 
 DEFINES  += \
 	_FILE_OFFSET_BITS=64 \
