@@ -1,6 +1,6 @@
 #include <stdexcept>
+#include <QTextCodec>
 #include <QTextStream>
-#include <unicode/ucnv.h>
 #include "codepagelist.hpp"
 
 /** 새로운 코드페이지 그룹을 생성합니다.
@@ -38,19 +38,19 @@ bool CodepageList::contains(
         }
     }
 
-    //icu 검사
-    UErrorCode status = U_ZERO_ERROR;
-    ucnv_countAliases(alias.toUtf8().constData(), &status);
-    if ( U_SUCCESS(status) ) {
+    //QTextCodec
+    QTextCodec *codec = QTextCodec::codecForName(alias.toUtf8().constData());
+    if ( codec != nullptr ) {
         return true;
     }
 
+    //오류
     return false;
 }
 
 /** 해당 별칭에 대한 변환기 이름을 반환합니다.
   @return 변환기 이름
-  @throw 코드 페이지 번호가 존재하지 않으면 런타임 오류를 던집니다.
+  @throw 해당 변환기가 존재하지 않으면 런타임 오류를 던집니다.
   */
 QString CodepageList::find(
         const QString &alias  ///< 별칭
@@ -64,13 +64,13 @@ QString CodepageList::find(
         }
     }
 
-    //icu
-    UErrorCode status = U_ZERO_ERROR;
-    const char *name = ucnv_getAlias(alias.toUtf8().constData(), 0, &status);
-    if ( U_SUCCESS(status) && name != nullptr ) {
-        return QString::fromUtf8(name);
+    //QTextCodec
+    QTextCodec *codec = QTextCodec::codecForName(alias.toUtf8().constData());
+    if ( codec != nullptr ) {
+        return codec->name();
     }
 
+    //오류
     throw std::runtime_error("해당 별칭에 대한 변환기 이름을 찾을수 없습니다.");
 }
 
@@ -79,34 +79,29 @@ QString CodepageList::find(
 void CodepageList::print()
 {
     QTextStream stdout(::stdout);
-    UErrorCode err = U_ZERO_ERROR;
-    UEnumeration *allNamesEnum = ucnv_openAllNames(&err);
-    const char *name;
-    while ( (name = uenum_next(allNamesEnum, NULL, &err)) ) {
-        //icu 정의
-        uint16_t count = ucnv_countAliases(name, &err);
-        const char **aliases = (const char **)malloc(count * sizeof(const char *));
-        ucnv_getAliases(name, aliases, &err);
-        for (int n = 0; n < count; n++) {
-            stdout << aliases[n] << flush;
-            if ( n < count - 1 ) {
-                stdout << " / " << flush;
-            }
+
+    foreach (QByteArray codecName, QTextCodec::availableCodecs()) {
+        //QTextCodec
+        stdout << codecName
+               << flush;
+        QTextCodec *codec = QTextCodec::codecForName(codecName);
+        foreach (QByteArray alias, codec->aliases()) {
+            stdout << " / " << alias
+                   << flush;
         }
-        ::free(aliases);
 
         //사용자 정의
-        CodepageGroup *g = this->findGroup(name);
+        CodepageGroup *g = this->findGroup(codecName);
         if ( g != nullptr ) {
-            foreach (QString var, *g) {
-                stdout << " / " << var << flush;
+            foreach (QString alias, *g) {
+                stdout << " / " << alias << flush;
             }
         }
 
         //마무리
-        stdout << endl << flush;
+        stdout << endl
+               << flush;
     }
-    uenum_close(allNamesEnum);
 }
 
 /** 변환기 이름에 해당하는 코드페이지 그룹을 반환합니다.
@@ -130,6 +125,6 @@ CodepageGroup* CodepageList::findGroup(
   */
 CodepageList::CodepageList()
 {
-    ConverterName("ibm-949_P110-1999")->alias("UHC").alias("kor");
-    ConverterName("ibm-943_P15A-2003")->alias("jpn");
+    ConverterName("cp949")->alias("UHC").alias("kor");
+    ConverterName("cp932")->alias("jpn");
 }

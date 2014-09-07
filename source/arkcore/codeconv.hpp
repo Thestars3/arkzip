@@ -20,16 +20,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <functional>
 
 /** 코드페이지 변환기.
-  코드페이지 문제 해결을 위해 만들어졌습니다.
+  코드페이지 문제(ARK 라이브러리 코드 페이지 지정 무시 현상)의 해결을 위해 만들어졌습니다.
   */
 class CodeConv
 {
 private:
     CodeConv();
-    struct UConverter *conv;                                              ///< 변환기
+    class QTextCodec *conv;                                               ///< 변환기
     std::function<QString(const struct SArkFileItem *pFileItem)> convert; ///< 변환 명령
     static CodeConv *singleton;                                           ///< 싱글톤
-
 
 public:
     static CodeConv* getInstance();

@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "codepagegroup.hpp"
 
 /** 사용가능한 코드페이지 목록.
-  참조 : <a href="http://demo.icu-project.org/icu-bin/convexp?ShowUnavailable=">Converter Explorer</a>
   */
 class CodepageList
         : public QList<CodepageGroup*>

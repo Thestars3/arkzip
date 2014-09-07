@@ -30,12 +30,10 @@ SOURCES  += \
 	codepage/codepagelist.cpp
 
 LIBS     += \
-	-l:libboost_program_options-mt.a \
-	-licuuc \
-	-licudata
+	-l:libboost_program_options-mt.a
 
 DEFINES  += \
-	DF_020C2DC2A183E03DEBCECB21F1B1DB380=\\\"$$join(ARK_CUI_PROGRAM_PATH, \\\x20)\\\" \
-	DF_48887DE835299C0AD335491A223436213=\\\"$$join(ARK_GUI_PROGRAM_PATH, \\\x20)\\\"
+	DF_020C2DC2A183E03DEBCECB21F1B1DB380=\\\"$$join(ARK_CUI_PROGRAM_PATH, \\\\x20)\\\" \
+	DF_48887DE835299C0AD335491A223436213=\\\"$$join(ARK_GUI_PROGRAM_PATH, \\\\x20)\\\"
 
 QMAKE_CXXFLAGS += -std=c++0x
