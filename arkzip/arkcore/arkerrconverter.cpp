@@ -103,7 +103,7 @@ ArkErrConverter::ArkErrConverter() :
                 );
     arkErrHash.insert(
                 ARKERR_WRITE_FAIL,
-                trUtf8("파일 쓰다가 실패했습니다.")
+                trUtf8("파일 쓰기가 실패했습니다.")
                 );
     arkErrHash.insert(
                 ARKERR_CANT_OPEN_DEST_FILE,
@@ -275,7 +275,7 @@ ArkErrConverter::ArkErrConverter() :
                 );
     arkErrHash.insert(
                 ARKERR_ENCRYPTED_BOND_FILE,
-                trUtf8("압축 해제 불가능합니다. 이 파일은 암호화된 bond 파일입니다.")
+                trUtf8("이 파일은 암호화된 bond 파일로 압축 해제가 불가능한 파일입니다.")
                 );
     arkErrHash.insert(
                 ARKERR_7ZERR_BROKEN_ARCHIVE,

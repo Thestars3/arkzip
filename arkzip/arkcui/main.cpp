@@ -30,6 +30,7 @@ int main(
 #ifdef DEBUG
     // 디버깅용 HDP 플러그인 위치 설정
     QCoreApplication::addLibraryPath(QString::fromUtf8(_HDP_IMAGE_PLUGIN_PATH));
+
 #endif
 
     //decompress의 부모를 어플리케이션으로 지정하여 어플리케이션이 종료되었을때 삭제되도록 합니다.

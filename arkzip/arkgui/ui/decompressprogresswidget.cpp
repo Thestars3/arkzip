@@ -42,8 +42,8 @@ DecompressProgressWidget::DecompressProgressWidget(
         ReportGui *report = dynamic_cast<ReportGui*>(Report::getInstance());
         connect(report, SIGNAL( changeCurrentPercent(int) ), ui->partProgress, SLOT( setValue(int) ));
         connect(report, SIGNAL( changeTotalPercent(int) ), ui->totalProgress, SLOT( setValue(int) ));
-        connect(report, SIGNAL( setArchiveInfoSignal(QString) ), ui->archaiveFileName, SLOT( setPlainText(const QString&) ));
-        connect(report, SIGNAL( setExtractFileNameSignal(QString) ), ui->extractFileName, SLOT( setPlainText(const QString&) ));
+        connect(report, SIGNAL( setArchiveInfoSignal(QString) ), this, SLOT( setArchaiveFileName(const QString&) ));
+        connect(report, SIGNAL( setExtractFileNameSignal(QString) ), this, SLOT( setExtractFileName(const QString&) ));
         connect(report, SIGNAL( appendMessage(QString) ), ui->infoBrowser, SLOT( append(QString) ));
     }
 
@@ -62,6 +62,22 @@ DecompressProgressWidget::DecompressProgressWidget(
     // < -- 트레이 아이콘 설정 -- >
     tray = new TrayIcon(this);
     tray->show();
+}
+
+void DecompressProgressWidget::setArchaiveFileName(
+        const QString &archiveFileName
+        )
+{
+    ui->archaiveFileName->setPlainText(archiveFileName);
+    QTimer::singleShot(0, this, SLOT(shrink()));
+}
+
+void DecompressProgressWidget::setExtractFileName(
+        const QString &extractFileName
+        )
+{
+    ui->extractFileName->setPlainText(extractFileName);
+    QTimer::singleShot(0, this, SLOT(shrink()));
 }
 
 void DecompressProgressWidget::getPassword(
@@ -119,7 +135,6 @@ void DecompressProgressWidget::shrink()
     else {
         resize(this->geometry().width(), oldWinHeight);
     }
-    //adjustSize();
 }
 
 /** 에러 메시지 숨김/보이기 상태를 토글합니다.
@@ -156,8 +171,6 @@ void DecompressProgressWidget::toggleShowErrorInfo()
   */
 void DecompressProgressWidget::toggleShow()
 {
-    //창 숨김 상태를 토글합니다.
-
     //숨김 상태인 경우
     if ( this->isHidden() ){
         this->show();

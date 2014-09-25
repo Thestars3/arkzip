@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <QIcon>
 #include <QWidget>
 
+class TrayIcon;
+
 namespace Ui {
 class DecompressProgressWidget;
 }
@@ -26,20 +28,17 @@ class DecompressProgressWidget :
         public QWidget
 {
     Q_OBJECT
-    
+
+private:
+    void closeEvent(QCloseEvent*);
+    Ui::DecompressProgressWidget *ui;   ///< ui 정보
+    TrayIcon *tray;                     ///< 트레이 아이콘
+    int oldWinHeight;                   ///< 작업 로그 보이기를 수행할시, 복구될 창의 높이
+
 public:
     explicit DecompressProgressWidget(QWidget *parent = 0);
     ~DecompressProgressWidget();
     
-private:
-    Ui::DecompressProgressWidget *ui;   ///< ui 정보
-    class TrayIcon *tray;               ///< 트레이 아이콘
-    int oldWinHeight;                   ///< 작업 로그 보이기를 수행할시, 복구될 창의 높이
-
-private:
-    void closeEvent(QCloseEvent*);
-
-public:
     QIcon pauseIcon;   ///< 일시정지 아이콘
     QString pauseText; ///< 일시정지 텍스트
     QIcon playIcon;    ///< 시작 아이콘
@@ -50,6 +49,8 @@ public:
     QIcon arrowDown;   ///< 아래 화살표
 
 public slots:
+    void setArchaiveFileName(const QString &archiveFileName);
+    void setExtractFileName(const QString &extractFileName);
     void togglePause();
     void toggleShow();
     void toggleShowErrorInfo();

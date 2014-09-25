@@ -27,11 +27,11 @@ function copyFiles(){
 	mkdir -p dist/usr/lib/arkzip/ArkLibrary
 	cp ArkLibrary/{ArkLicense.txt,ArkLibrary64.so} dist/usr/lib/arkzip/ArkLibrary
 	
-	mkdir -p dist/usr/lib/libunhv3
-	cp -H libunhv3/libunhv3/Release/libunhv3.so dist/usr/lib/libunhv3
+	mkdir -p dist/usr/lib/arkzip
+	cp -H libunhv3/libunhv3/Release/libunhv3.so dist/usr/lib/arkzip
 	
-	mkdir -p dist/usr/lib/qt4/plugins
-	cp libunhv3/hdp_image_plugin/Release/libhdp_image.so dist/usr/lib/qt4/plugins
+	mkdir -p dist/usr/lib/qt4/plugins/imageformats
+	cp libunhv3/hdp_image_plugin/Release/libhdp_image.so dist/usr/lib/qt4/plugins/imageformats
 	
 	mkdir -p dist/usr/share/doc/arkzip
 	cp License.txt AUTHORS COPYING changelog.md dist/usr/share/doc/arkzip

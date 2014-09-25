@@ -1,3 +1,4 @@
+#include <QTimer>
 #include <QColor>
 #include <QFrame>
 #include <QPalette>
@@ -34,14 +35,20 @@ void QWrapLabel::setPlainText(
         )
 {
     QTextEdit::setPlainText(text);
+    QTimer::singleShot(0, this, SLOT(shrink()));
+}
+
+void QWrapLabel::shrink()
+{
+    this->setMinimumHeight(document()->size().height());
 }
 
 void QWrapLabel::resizeEvent(
         QResizeEvent *event
         )
 {
-    this->setMinimumHeight(document()->size().height());
     QTextEdit::resizeEvent(event);
+    QTimer::singleShot(0, this, SLOT(shrink()));
 }
 
 QSize QWrapLabel::minimumSizeHint() const

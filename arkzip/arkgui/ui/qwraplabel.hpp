@@ -37,6 +37,7 @@ public:
     virtual void resizeEvent(QResizeEvent *event);
 
 public slots:
+    void shrink();
     void setPlainText(const QString &text);
 
 };
