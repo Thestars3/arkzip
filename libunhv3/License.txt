@@ -1,0 +1,9 @@
+
+* Qt : https://qt-project.org/products/licensing
+
+	LGPL 2.1
+
+* jxrlib : jxrlib/COPYING
+
+	New BSD License (BSD)
+

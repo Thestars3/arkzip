@@ -13,11 +13,13 @@ ArkLibrary/*.hpp.gch
 ArkLibrary/*.chm
 /*.deb
 /dist
+/sync
+/memo.txt
+/.hidden
 
 #특정 파일 무시
 Makefile
-/sync
-/memo.txt
+Makefile.*
 
 #특정 파일들을 무시하지 않음.
 !.gitignore

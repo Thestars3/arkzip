@@ -1,3 +1,3 @@
 [submodule "libunhv3"]
 	path = libunhv3
-	url = https://github.com/Thestars3/libunhv3.git
+	url = git://github.com/Thestars3/libunhv3.git

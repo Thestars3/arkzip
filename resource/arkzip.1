@@ -90,7 +90,7 @@ HEX로 인코딩된 암호를 입력 받습니다. 예를 들어, `-K 2b2f532a32
 .PP
 \fB0\fR	오류 없음.
 .PP
-\fB1\fR	없는 옵션을 사용한 경우.
+\fB1\fR	알 수 없는 오류.
 .PP
 \fB2\fR	옵션 값의 오류가 발생한 경우.
 .PP
@@ -114,7 +114,7 @@ HEX로 인코딩된 암호를 입력 받습니다. 예를 들어, `-K 2b2f532a32
 .PP
 \fB12\fR	작업 도중 강제 중단됨. gui에서 중지 명령등으로 인해 발생됨.
 .PP
-\fB13\fR	옵션 처리 프로세서에서 알 수 없는 문제가 발생했음.
+\fB13\fR	없는 옵션을 사용한 경우.
 .PP
 \fB14\fR	압축 파일에 대한 분할된 폴더를 생성하는데 실패했음.
 .PP
@@ -278,7 +278,7 @@ HEX로 인코딩된 암호를 입력 받습니다. 예를 들어, `-K 2b2f532a32
 .PP
 \fB94\fR	라이브러리를 로드하지 않았거나 로드하는데 실패하였습니다.
 .PP
-\fB95\fR	압축 해제에 관련된 기타 오류.
+\fB95\fR	<사용하지 않음>
 .PP
 \fB96\fR	압축 파일의 경로에 문제가 있습니다.
 .PP
@@ -297,19 +297,7 @@ UTF-8
 .PP
 ISO-8859-1 / latin1 / CP819 / IBM819 / iso-ir-100 / csISOLatin1
 .PP
-latin1 / latin1 / CP819 / IBM819 / iso-ir-100 / csISOLatin1
-.PP
-CP819 / latin1 / CP819 / IBM819 / iso-ir-100 / csISOLatin1
-.PP
-IBM819 / latin1 / CP819 / IBM819 / iso-ir-100 / csISOLatin1
-.PP
-iso-ir-100 / latin1 / CP819 / IBM819 / iso-ir-100 / csISOLatin1
-.PP
-csISOLatin1 / latin1 / CP819 / IBM819 / iso-ir-100 / csISOLatin1
-.PP
 ISO-8859-15 / latin9
-.PP
-latin9 / latin9
 .PP
 UTF-32LE
 .PP
@@ -327,183 +315,63 @@ mulelao-1
 .PP
 roman8 / hp-roman8 / csHPRoman8
 .PP
-hp-roman8 / hp-roman8 / csHPRoman8
-.PP
-csHPRoman8 / hp-roman8 / csHPRoman8
-.PP
 TIS-620 / ISO 8859-11
-.PP
-ISO 8859-11 / ISO 8859-11
 .PP
 WINSAMI2 / WS2
 .PP
-WS2 / WS2
-.PP
 Apple Roman / macintosh / MacRoman
-.PP
-macintosh / macintosh / MacRoman
-.PP
-MacRoman / macintosh / MacRoman
 .PP
 windows-1258 / CP1258
 .PP
-CP1258 / CP1258
-.PP
 windows-1257 / CP1257
-.PP
-CP1257 / CP1257
 .PP
 windows-1256 / CP1256
 .PP
-CP1256 / CP1256
-.PP
 windows-1255 / CP1255
-.PP
-CP1255 / CP1255
 .PP
 windows-1254 / CP1254
 .PP
-CP1254 / CP1254
-.PP
 windows-1253 / CP1253
-.PP
-CP1253 / CP1253
 .PP
 windows-1252 / CP1252
 .PP
-CP1252 / CP1252
-.PP
 windows-1251 / CP1251
-.PP
-CP1251 / CP1251
 .PP
 windows-1250 / CP1250
 .PP
-CP1250 / CP1250
-.PP
 IBM866 / CP866 / csIBM866
-.PP
-CP866 / CP866 / csIBM866
-.PP
-csIBM866 / CP866 / csIBM866
 .PP
 IBM874 / CP874
 .PP
-CP874 / CP874
-.PP
 IBM850 / CP850 / csPC850Multilingual
-.PP
-CP850 / CP850 / csPC850Multilingual
-.PP
-csPC850Multilingual / CP850 / csPC850Multilingual
 .PP
 ISO-8859-16 / iso-ir-226 / latin10
 .PP
-iso-ir-226 / iso-ir-226 / latin10
-.PP
-latin10 / iso-ir-226 / latin10
-.PP
 ISO-8859-14 / iso-ir-199 / latin8 / iso-celtic
-.PP
-iso-ir-199 / iso-ir-199 / latin8 / iso-celtic
-.PP
-latin8 / iso-ir-199 / latin8 / iso-celtic
-.PP
-iso-celtic / iso-ir-199 / latin8 / iso-celtic
 .PP
 ISO-8859-13
 .PP
 ISO-8859-10 / iso-ir-157 / latin6 / ISO-8859-10:1992 / csISOLatin6
 .PP
-iso-ir-157 / iso-ir-157 / latin6 / ISO-8859-10:1992 / csISOLatin6
-.PP
-latin6 / iso-ir-157 / latin6 / ISO-8859-10:1992 / csISOLatin6
-.PP
-ISO-8859-10:1992 / iso-ir-157 / latin6 / ISO-8859-10:1992 / csISOLatin6
-.PP
-csISOLatin6 / iso-ir-157 / latin6 / ISO-8859-10:1992 / csISOLatin6
-.PP
 ISO-8859-9 / iso-ir-148 / latin5 / csISOLatin5
-.PP
-iso-ir-148 / iso-ir-148 / latin5 / csISOLatin5
-.PP
-latin5 / iso-ir-148 / latin5 / csISOLatin5
-.PP
-csISOLatin5 / iso-ir-148 / latin5 / csISOLatin5
 .PP
 ISO-8859-8 / ISO 8859-8-I / iso-ir-138 / hebrew / csISOLatinHebrew
 .PP
-ISO 8859-8-I / ISO 8859-8-I / iso-ir-138 / hebrew / csISOLatinHebrew
-.PP
-iso-ir-138 / ISO 8859-8-I / iso-ir-138 / hebrew / csISOLatinHebrew
-.PP
-hebrew / ISO 8859-8-I / iso-ir-138 / hebrew / csISOLatinHebrew
-.PP
-csISOLatinHebrew / ISO 8859-8-I / iso-ir-138 / hebrew / csISOLatinHebrew
-.PP
 ISO-8859-7 / ECMA-118 / greek / iso-ir-126 / csISOLatinGreek
-.PP
-ECMA-118 / ECMA-118 / greek / iso-ir-126 / csISOLatinGreek
-.PP
-greek / ECMA-118 / greek / iso-ir-126 / csISOLatinGreek
-.PP
-iso-ir-126 / ECMA-118 / greek / iso-ir-126 / csISOLatinGreek
-.PP
-csISOLatinGreek / ECMA-118 / greek / iso-ir-126 / csISOLatinGreek
 .PP
 ISO-8859-6 / ISO-8859-6-I / ECMA-114 / ASMO-708 / arabic / iso-ir-127 / csISOLatinArabic
 .PP
-ISO-8859-6-I / ISO-8859-6-I / ECMA-114 / ASMO-708 / arabic / iso-ir-127 / csISOLatinArabic
-.PP
-ECMA-114 / ISO-8859-6-I / ECMA-114 / ASMO-708 / arabic / iso-ir-127 / csISOLatinArabic
-.PP
-ASMO-708 / ISO-8859-6-I / ECMA-114 / ASMO-708 / arabic / iso-ir-127 / csISOLatinArabic
-.PP
-arabic / ISO-8859-6-I / ECMA-114 / ASMO-708 / arabic / iso-ir-127 / csISOLatinArabic
-.PP
-iso-ir-127 / ISO-8859-6-I / ECMA-114 / ASMO-708 / arabic / iso-ir-127 / csISOLatinArabic
-.PP
-csISOLatinArabic / ISO-8859-6-I / ECMA-114 / ASMO-708 / arabic / iso-ir-127 / csISOLatinArabic
-.PP
 ISO-8859-5 / cyrillic / iso-ir-144 / csISOLatinCyrillic
-.PP
-cyrillic / cyrillic / iso-ir-144 / csISOLatinCyrillic
-.PP
-iso-ir-144 / cyrillic / iso-ir-144 / csISOLatinCyrillic
-.PP
-csISOLatinCyrillic / cyrillic / iso-ir-144 / csISOLatinCyrillic
 .PP
 ISO-8859-4 / latin4 / iso-ir-110 / csISOLatin4
 .PP
-latin4 / latin4 / iso-ir-110 / csISOLatin4
-.PP
-iso-ir-110 / latin4 / iso-ir-110 / csISOLatin4
-.PP
-csISOLatin4 / latin4 / iso-ir-110 / csISOLatin4
-.PP
 ISO-8859-3 / latin3 / iso-ir-109 / csISOLatin3
-.PP
-latin3 / latin3 / iso-ir-109 / csISOLatin3
-.PP
-iso-ir-109 / latin3 / iso-ir-109 / csISOLatin3
-.PP
-csISOLatin3 / latin3 / iso-ir-109 / csISOLatin3
 .PP
 ISO-8859-2 / latin2 / iso-ir-101 / csISOLatin2
 .PP
-latin2 / latin2 / iso-ir-101 / csISOLatin2
-.PP
-iso-ir-101 / latin2 / iso-ir-101 / csISOLatin2
-.PP
-csISOLatin2 / latin2 / iso-ir-101 / csISOLatin2
-.PP
 KOI8-U / KOI8-RU
 .PP
-KOI8-RU / KOI8-RU
-.PP
 KOI8-R / csKOI8R
-.PP
-csKOI8R / csKOI8R
 .PP
 Iscii-Mlm
 .PP
@@ -535,27 +403,15 @@ gb2312.1980-0
 .PP
 gbk-0
 .PP
-CP936 / CP936 / MS936 / windows-936
-.PP
-MS936 / CP936 / MS936 / windows-936
-.PP
-windows-936 / CP936 / MS936 / windows-936
-.PP
 EUC-JP
 .PP
 ISO-2022-JP / JIS7
 .PP
-Shift_JIS / SJIS / MS_Kanji
+Shift_JIS / SJIS / MS_Kanji / jpn
 .PP
 jisx0201*-0
 .PP
 jisx0208*-0
-.PP
-JIS7 / JIS7
-.PP
-SJIS / SJIS / MS_Kanji
-.PP
-MS_Kanji / SJIS / MS_Kanji
 .PP
 EUC-KR
 .PP
@@ -570,10 +426,6 @@ Big5-HKSCS
 big5-0
 .PP
 big5hkscs-0
-.PP
-Big5-ETen / Big5-ETen / CP950
-.PP
-CP950 / Big5-ETen / CP950
 
 ." ============================== 라이브러리 버전 정보 ==============================
 .SH 라이브러리 버전 정보
