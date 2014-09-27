@@ -35,7 +35,7 @@ class Decompress :
 
 public:
     explicit Decompress(QObject *parent = 0);
-    ~Decompress();
+    virtual ~Decompress();
     QString getSaveDirPath() const;
     void setPassword(const QString&);
     QString getCurrentFilePath() const;

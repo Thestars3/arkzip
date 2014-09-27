@@ -28,12 +28,17 @@ class Option :
         public QObject
 {
 public:
-    Option(int&, char*[]);
+    Option(int &argc, char *argv[]);
     void process();
 
 private:
-    int argc;                                                             ///< 인자 수
-    char **argv;                                                          ///< 인자 배열
+    boost::program_options::variables_map analyze();
+    void printHelp();
+    void printVersionPage();
+    void exec(const std::string&, QVector<std::string>);
+
+    int argc_;                                                           ///< 인자 수
+    char **argv_;                                                        ///< 인자 배열
     boost::program_options::options_description desc;                     ///< 전체 옵션 정의
     boost::program_options::options_description visibleDesc;              ///< 보여줄 옵션들
     boost::program_options::positional_options_description positional;    ///< 옵션 위치
@@ -41,11 +46,6 @@ private:
     CodepageList codepageList;                                            ///< 코드 페이지 목록
     const static std::string ARKZIP_CUI_PATH;                             ///< arkcui 실행 파일 경로
     const static std::string ARKZIP_GUI_PATH;                             ///< arkgui 실행 파일 경로
-
-private:
-    boost::program_options::variables_map analyze();
-    void printHelp();
-    void exec(const std::string&, QVector<std::string>);
 
 };
 

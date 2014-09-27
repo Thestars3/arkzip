@@ -37,7 +37,7 @@ private:
 
 public:
     explicit DecompressProgressWidget(QWidget *parent = 0);
-    ~DecompressProgressWidget();
+    virtual ~DecompressProgressWidget();
     
     QIcon pauseIcon;   ///< 일시정지 아이콘
     QString pauseText; ///< 일시정지 텍스트

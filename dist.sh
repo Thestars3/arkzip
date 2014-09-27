@@ -21,14 +21,14 @@ function copyFiles(){
 	cp arkzip/arkcui/Release/arkcui arkzip/arkgui/Release/arkgui dist/usr/share/arkzip
 	strip dist/usr/share/arkzip/{arkcui,arkgui}
 	
-	mkdir -p dist/usr/lib/arkzip
-	cp -H arkzip/arkcore/Release/libarkcore.so dist/usr/lib/arkzip
+	mkdir -p dist/usr/lib
+	cp -H arkzip/arkcore/Release/libarkcore.so dist/usr/lib
 	
 	mkdir -p dist/usr/lib/arkzip/ArkLibrary
 	cp ArkLibrary/{ArkLicense.txt,ArkLibrary64.so} dist/usr/lib/arkzip/ArkLibrary
 	
-	mkdir -p dist/usr/lib/arkzip
-	cp -H libunhv3/libunhv3/Release/libunhv3.so dist/usr/lib/arkzip
+	mkdir -p dist/usr/lib
+	cp -H libunhv3/libunhv3/Release/libunhv3.so dist/usr/lib
 	
 	mkdir -p dist/usr/lib/qt4/plugins/imageformats
 	cp libunhv3/hdp_image_plugin/Release/libhdp_image.so dist/usr/lib/qt4/plugins/imageformats

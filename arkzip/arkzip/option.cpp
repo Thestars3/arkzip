@@ -20,8 +20,8 @@ Option::Option(
     stderr(::stderr)
 {
     // < -- 멤버변수 초기화 -- >
-    this->argc = argc;
-    this->argv = argv;
+    argc_ = argc;
+    argv_ = argv;
 
     // < -- 옵션, 설명 정의. -- >
 
@@ -40,6 +40,7 @@ Option::Option(
         po::options_description generalOptionDesc(qPrintable(trUtf8("일반 옵션들")));
         generalOptionDesc.add_options()
                 ("help,h", qPrintable(trUtf8("이 페이지를 출력하고 끝냅니다.")))
+                ("version", qPrintable(trUtf8("버전 페이지를 출력하고 끝냅니다.")))
                 ("interface,i", po::value<std::string>()->default_value("cui"), qPrintable(trUtf8("인터페이스를 지정합니다.\n"
                                                                                                   "gui : \tGUI로 사용자와 상호 작용합니다.\n"
                                                                                                   "cui : \tCUI로 사용자와 상호 작용합니다.\n"
@@ -95,7 +96,7 @@ po::variables_map Option::analyze()
     po::variables_map vm;
 
     try {
-        po::command_line_parser options(argc, argv);
+        po::command_line_parser options(argc_, argv_);
         options.options(desc);
         options.positional(positional);
         options.style(po::command_line_style::default_style | po::command_line_style::allow_sticky);
@@ -105,22 +106,22 @@ po::variables_map Option::analyze()
     // 없는 옵션을 사용한 경우
     catch(po::unknown_option &e) {
         std::cout << e.what() << std::endl;
-        exit(95);
+        std::exit(95);
     }
     // 옵션 값의 오류가 발생한 경우
     catch(po::invalid_option_value &e) {
         std::cout << e.what() << std::endl;
-        exit(2);
+        std::exit(2);
     }
     // 옵션 값이 없을 경우
     catch(po::invalid_command_line_syntax &e) {
         std::cout << e.what() << std::endl;
-        exit(3);
+        std::exit(3);
     }
     // 이외의 예외 발생
     catch(std::exception &e) {
         std::cout << e.what() << std::endl;
-        exit(4);
+        std::exit(4);
     }
 
     return vm;
@@ -131,11 +132,20 @@ po::variables_map Option::analyze()
 void Option::printHelp()
 {
     QTextStream stdout(::stdout);
-    stdout << trUtf8("사용법 : %1 [옵션...] [대상...]").arg(QString::fromUtf8(argv[0])) << endl
+    stdout << trUtf8("사용법 : %1 [옵션...] [대상...]").arg(QString::fromUtf8(argv_[0])) << endl
            << trUtf8("  Ark Library를 사용한 압축파일 압축해제 프로그램. 이 프로그램은 다음 형식을 압축해제할수 있습니다.") << QString::fromUtf8(" zip, alz, egg, tar, bh, 7z, wim, rar, arj, cab, lzh, gz, bz2, iso, img, xz, z, lzma, j2j, hv3.") << endl
            << trUtf8("  중복 파일이 발견되면 사용자에게 묻지 않고 새로운 이름을 지정합니다.") << endl
            << flush;
     visibleDesc.print(std::cout);
+}
+
+/** 페이지 페이지를 표준출력으로 출력합니다.
+  */
+void Option::printVersionPage()
+{
+    QTextStream stdout(::stdout);
+    stdout << "arkzip version " << _ARKZIP_VERSION_INFO << endl
+           << flush;
 }
 
 /** 옵션 처리.
@@ -149,10 +159,16 @@ void Option::process()
     QVector<std::string> args; // 실행될 프로그램의 인자 목록
     std::string program; // 실행될 프로그램
 
+    //버전 페이지 출력
+    if ( vm.count("version") ) {
+        printVersionPage();
+        std::exit(0);
+    }
+
     //사용 가능한 코드 페이지 옵션 목록 보기
     if ( vm.count("codepage-list") ) {
         codepageList.print();
-        exit(0);
+        std::exit(0);
     }
 
     //코드 페이지 옵션을 처리합니다.
@@ -173,7 +189,7 @@ void Option::process()
         else {
             stderr << trUtf8("정의되지 않은 코드 페이지입니다.") << endl
                    << flush;
-            exit(5);
+            std::exit(5);
         }
 
         args.push_back(converter.toUtf8().constData()); // 변환기 이름을 넘겨주도록 함. auto는 예외.
@@ -218,7 +234,7 @@ void Option::process()
         else {
             stderr << trUtf8("정의되지 않은 인터페이스입니다.") << endl
                    << flush;
-            exit(6);
+            std::exit(6);
         }
     }
 
@@ -243,7 +259,7 @@ void Option::process()
         if ( ! QDir(QString::fromUtf8(saveDir.c_str())).exists() ){
             stderr << trUtf8("압축을 풀 경로에 문제가 있습니다.") << endl
                    << flush;
-            exit(7);
+            std::exit(7);
         }
         args.push_back(saveDir);
     }
@@ -268,7 +284,7 @@ void Option::process()
         //--key 옵션과 --hex-key 옵션의 충돌을 처리합니다.
         stderr << trUtf8("--key와 --hex-key를 함께 사용할수 없습니다.") << endl
                << flush;
-        exit(8);
+        std::exit(8);
     }
 
     if ( vm.count("skip-pass") ) {
@@ -285,12 +301,12 @@ void Option::process()
             if ( ! fileInfo.exists() ){
                 stderr << trUtf8("압축 해제 대상으로 지정된 `%1' 파일을 찾을수 없습니다!").arg(fileQstr) << endl
                        << flush;
-                exit(9);
+                std::exit(9);
             }
             if ( ! fileInfo.isFile() ) {
                 stderr << trUtf8("압축 해제 대상으로 지정된 `%1'는 파일이 아닙니다.").arg(fileQstr) << endl
                        << flush;
-                exit(10);
+                std::exit(10);
             }
         }
         args.push_back("--");
@@ -299,7 +315,7 @@ void Option::process()
 
     if( files.size() == 0 || vm.count("help") ) {
         printHelp();
-        exit(0);
+        std::exit(0);
     }
 
     exec(program, args);
@@ -317,7 +333,7 @@ void Option::exec(
     int argc = args.size();
     char *argv[ argc + 1 ];
     argv[argc] = NULL;
-    for(int i = 0; i < argc; i++){
+    for (int i = 0; i < argc; i++){
         argv[i] = const_cast<char*>(args[i].c_str());
     }
 
@@ -328,6 +344,6 @@ void Option::exec(
     if ( e == -1 ){
         stderr << trUtf8("프로세서를 대치하던 중 오류가 발생했습니다.") << endl
                << flush;
-        exit(11);
+        std::exit(11);
     }
 }

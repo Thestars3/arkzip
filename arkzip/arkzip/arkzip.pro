@@ -34,6 +34,7 @@ DEFINES  += \
 	_ARK_CUI_PROGRAM_PATH="'\"$$ARK_CUI_PROGRAM_PATH\"'" \
 	_ARK_GUI_PROGRAM_PATH="'\"$$ARK_GUI_PROGRAM_PATH\"'" \
 	_ARKCORE_DIR_PATH="'\"$$PROJECT_DIR_PATH/arkcore/$$DESTDIR\"'" \
-	_LIBUNHV3_DIR_PATH="'\"$$ROOT_PATH/libunhv3/libunhv3/$$DESTDIR\"'"
+	_LIBUNHV3_DIR_PATH="'\"$$ROOT_PATH/libunhv3/libunhv3/$$DESTDIR\"'" \
+	_ARKZIP_VERSION_INFO="'\"$$system(cat "'$${ROOT_PATH}/version'")\"'"
 
 QMAKE_CXXFLAGS += -std=c++0x

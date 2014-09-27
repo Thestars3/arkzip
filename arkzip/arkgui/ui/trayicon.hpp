@@ -19,13 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <QSystemTrayIcon>
 
 class QAction;
+class DecompressProgressWidget;
 
 class TrayIcon :
         public QSystemTrayIcon
 {
 public:
     explicit TrayIcon(QObject *parent = 0);
-    ~TrayIcon();
+    virtual ~TrayIcon();
 
 public:
     QMenu *menu;                 ///< 메뉴
@@ -34,7 +35,7 @@ public:
     QAction *actionClose;        ///< 닫기 버튼
 
 private:
-    class DecompressProgressWidget *decompressProgressWidget;
+    DecompressProgressWidget *decompressProgressWidget;
 
 };
 

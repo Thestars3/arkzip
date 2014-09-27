@@ -204,7 +204,7 @@ void Decompress::processOption()
                 QTextStream stderr(::stderr);
                 stderr << QString::fromUtf8("인코딩 변환 준비에 문제가 있습니다.") << endl
                        << flush;
-                ::exit(98);
+                std::exit(98);
             }
 
             //압축해제 작업 지정
@@ -824,7 +824,7 @@ void Decompress::loadLibrary()
         QString m = ArkErrConverter::getInstance()->getMessage(nErr);
         qWarning("Error : %s", qPrintable(m));
 
-        ::exit(16);
+        std::exit(16);
     }
 }
 

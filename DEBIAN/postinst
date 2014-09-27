@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ldconfig /usr/lib/arkzip
+ldconfig /usr/lib
 
 update-icon-caches /usr/share/icons/hicolor
 
