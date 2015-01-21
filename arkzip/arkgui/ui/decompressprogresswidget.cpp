@@ -1,3 +1,5 @@
+#include <QDesktopServices>
+#include <QFileInfo>
 #include <QTimer>
 #include <QCloseEvent>
 #include <QInputDialog>
@@ -26,6 +28,9 @@ DecompressProgressWidget::DecompressProgressWidget(
 
     //infoBrowser에 출력되는 메시지가 박스 경계에서 줄바꿈 되도록 함.
     ui->infoBrowser->setWordWrapMode(QTextOption::WrapAnywhere);
+
+    //infoBrowser에서 링크를 클릭시 열리도록 설정
+    connect(ui->infoBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(openExternalDir(QUrl)));
 
     // < -- 버튼 설정 -- >
     pauseIcon = QIcon::fromTheme(QString::fromUtf8("media-playback-pause"));
@@ -62,6 +67,20 @@ DecompressProgressWidget::DecompressProgressWidget(
     // < -- 트레이 아이콘 설정 -- >
     tray = new TrayIcon(this);
     tray->show();
+}
+
+/** 로컬 폴더를 외부 어플리케이션을 사용하여 엽니다.\n
+디렉토리가 아니라면 열지 않습니다.
+  */
+void DecompressProgressWidget::openExternalDir(
+        QUrl dirUrl
+        )
+{
+    if ( ! QFileInfo(dirUrl.toLocalFile()).isDir() )
+    {
+        return;
+    }
+    QDesktopServices::openUrl(dirUrl);
 }
 
 void DecompressProgressWidget::setArchaiveFileName(

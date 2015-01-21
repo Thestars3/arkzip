@@ -1,3 +1,4 @@
+#include <QUrl>
 #include "pause.hpp"
 #include "decompress.hpp"
 #include "reportgui.hpp"
@@ -142,7 +143,10 @@ void ReportGui::setExtractPath(
         QString path ///< 경로
         )
 {
-    QString s = trUtf8("전체 저장 경로는 <b><a href=\"%1\">%1</a></b>입니다.").arg(path);
+    QString s = trUtf8("전체 저장 경로는 <b><a href=\"file://%1\">%2</a></b>입니다.").arg(
+                QUrl::toPercentEncoding(path, "/"),
+                path
+                );
     emit appendMessage(s);
 }
 
@@ -152,7 +156,11 @@ void ReportGui::setSeperatedExtractPath(
         QString path ///< 경로
         )
 {
-    QString s = trUtf8("<b>%1</b>의 저장 경로는 <b><a href=\"%2\">%2</a></b>입니다.").arg(currentFileName, path);
+    QString s = trUtf8("<b>%1</b>의 저장 경로는 <b><a href=\"file://%2\">%3</a></b>입니다.").arg(
+                currentFileName,
+                QUrl::toPercentEncoding(path, "/"),
+                path
+                );
     emit appendMessage(s);
 }
 
@@ -184,6 +192,10 @@ void ReportGui::setMakeFailSeperatedFolder(
         const QString &defaultSavePath  ///< 기본 저장 위치
         )
 {
-    QString errorMesg = trUtf8("압축 파일 %1에 대한 분할된 폴더를 생성하는데 실패했습니다. 기본 위치(%2)에 저장합니다.").arg(archiveFilePath, defaultSavePath);
+    QString errorMesg = trUtf8("압축 파일 %1에 대한 분할된 폴더를 생성하는데 실패했습니다. 기본 위치(<a href=\"file://%2\">%3</a>)에 저장합니다.").arg(
+                archiveFilePath,
+                QUrl::toPercentEncoding(defaultSavePath, "/"),
+                defaultSavePath
+                );
     setWarning(errorMesg);
 }

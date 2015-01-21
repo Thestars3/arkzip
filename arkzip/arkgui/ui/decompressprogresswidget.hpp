@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #pragma once
 
 #include <QIcon>
+#include <QUrl>
 #include <QWidget>
 
 class TrayIcon;
@@ -49,6 +50,7 @@ public:
     QIcon arrowDown;   ///< 아래 화살표
 
 public slots:
+    void openExternalDir(QUrl dirUrl);
     void setArchaiveFileName(const QString &archiveFileName);
     void setExtractFileName(const QString &extractFileName);
     void togglePause();
