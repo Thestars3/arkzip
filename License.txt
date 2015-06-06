@@ -44,3 +44,7 @@
 	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 	DEALINGS IN THE SOFTWARE.
 
+* libunhv3 : https://github.com/Thestars3/libunhv3/blob/master/COPYING
+	
+	LGPL v3
+

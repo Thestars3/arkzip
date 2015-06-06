@@ -49,6 +49,10 @@ public:
     QIcon arrowUp;     ///< 위 화살표
     QIcon arrowDown;   ///< 아래 화살표
 
+signals:
+    void needShrink();
+    void closed();
+
 public slots:
     void openExternalDir(QUrl dirUrl);
     void setArchaiveFileName(const QString &archiveFileName);

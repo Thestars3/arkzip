@@ -36,6 +36,9 @@ public:
     virtual QSize sizeHint() const;
     virtual void resizeEvent(QResizeEvent *event);
 
+signals:
+    void needShrink();
+
 public slots:
     void shrink();
     void setPlainText(const QString &text);

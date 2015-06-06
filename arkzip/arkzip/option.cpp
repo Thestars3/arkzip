@@ -6,7 +6,6 @@
 namespace po = boost::program_options;
 
 const std::string Option::ARKZIP_CUI_PATH = _ARK_CUI_PROGRAM_PATH;
-
 const std::string Option::ARKZIP_GUI_PATH = _ARK_GUI_PROGRAM_PATH;
 
 /** 객체 할당
@@ -144,12 +143,13 @@ void Option::printHelp()
 void Option::printVersionPage()
 {
     QTextStream stdout(::stdout);
+    // 버전 정보 변경시, 매크로를 정의하고 있는 arkzip.pro 파일을 업데이트하여 version파일로 부터 변경된 정보를 업데이트시키고, 이 소스파일에 매크로를 업데이트 시키기 위하여 재컴파일 해야 할 필요가 있음.
     stdout << "arkzip version " << _ARKZIP_VERSION_INFO << endl
            << flush;
 }
 
 /** 옵션 처리.
-  @note 호출될 하위 프로그램과 이 프로그램의 옵션은 긴 옵션만을 기준으로 두 프로그램의 옵션을 일치시킨다. ex) `arkzip -O .'이라면 `arkcui -O .'도 가능하나 반드시 `arkcui --out-dir .'식으로 맞춰줘야 한다.
+  @note 호출될 하위 프로그램과 이 프로그램의 옵션은 긴 옵션만을 기준으로 두 프로그램의 옵션을 일치시킨다. ex) `arkzip -O .'이라면 `arkcui -O .'도 가능하나 보다 명확한 데이터 전달을 위하여 반드시 `arkcui --out-dir .'식으로 맞춘다.
   */
 void Option::process()
 {

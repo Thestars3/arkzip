@@ -1,6 +1,5 @@
 #include <QDesktopServices>
 #include <QFileInfo>
-#include <QTimer>
 #include <QCloseEvent>
 #include <QInputDialog>
 #include <QSystemTrayIcon>
@@ -23,14 +22,9 @@ DecompressProgressWidget::DecompressProgressWidget(
 
     //이곳에 추가적인 초기화 명령을 입력합니다.
 
-    //암호 설정 시그널이 발생되면 진행창에서 암호 입력 창을 띄우도록 한다.
-    QObject::connect(dynamic_cast<ReportGui*>(Report::getInstance()), SIGNAL(getPasswordSignal(QString*)), this, SLOT(getPassword(QString*)));
-
-    //infoBrowser에 출력되는 메시지가 박스 경계에서 줄바꿈 되도록 함.
-    ui->infoBrowser->setWordWrapMode(QTextOption::WrapAnywhere);
-
-    //infoBrowser에서 링크를 클릭시 열리도록 설정
-    connect(ui->infoBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(openExternalDir(QUrl)));
+    QObject::connect(dynamic_cast<ReportGui*>(Report::getInstance()), SIGNAL(getPasswordSignal(QString*)), this, SLOT(getPassword(QString*))); //암호 설정 시그널이 발생되면 진행창에서 암호 입력 창을 띄우도록 한다.
+    ui->infoBrowser->setWordWrapMode(QTextOption::WrapAnywhere); //infoBrowser에 출력되는 메시지가 박스 경계에서 줄바꿈 되도록 함.
+    connect(ui->infoBrowser, SIGNAL(anchorClicked(QUrl)), this, SLOT(openExternalDir(QUrl))); //infoBrowser에서 링크를 클릭시 열리도록 설정
 
     // < -- 버튼 설정 -- >
     pauseIcon = QIcon::fromTheme(QString::fromUtf8("media-playback-pause"));
@@ -67,6 +61,9 @@ DecompressProgressWidget::DecompressProgressWidget(
     // < -- 트레이 아이콘 설정 -- >
     tray = new TrayIcon(this);
     tray->show();
+
+    connect(this, SIGNAL( needShrink() ), this, SLOT( shrink() ));
+    connect(this, SIGNAL( closed() ), QApplication::instance(), SLOT( quit() ));
 }
 
 /** 로컬 폴더를 외부 어플리케이션을 사용하여 엽니다.\n
@@ -88,7 +85,7 @@ void DecompressProgressWidget::setArchaiveFileName(
         )
 {
     ui->archaiveFileName->setPlainText(archiveFileName);
-    QTimer::singleShot(0, this, SLOT(shrink()));
+    emit needShrink();
 }
 
 void DecompressProgressWidget::setExtractFileName(
@@ -96,7 +93,7 @@ void DecompressProgressWidget::setExtractFileName(
         )
 {
     ui->extractFileName->setPlainText(extractFileName);
-    QTimer::singleShot(0, this, SLOT(shrink()));
+    emit needShrink();
 }
 
 void DecompressProgressWidget::getPassword(
@@ -106,19 +103,15 @@ void DecompressProgressWidget::getPassword(
     QInputDialog inputDialog;
 
     //트레이 아이콘 일부 기능을 비활성화 시킴.
-    {
-        tray->actionShow->setEnabled(false);
-        tray->actionPauseToggle->setEnabled(false);
-    }
+    tray->actionShow->setEnabled(false);
+    tray->actionPauseToggle->setEnabled(false);
 
     //입력 대화창 설정
-    {
-        inputDialog.setInputMode(QInputDialog::TextInput);
-        inputDialog.setTextEchoMode(QLineEdit::PasswordEchoOnEdit);
-        inputDialog.setWindowTitle( trUtf8("암호가 필요합니다.") );
-        inputDialog.setLabelText( trUtf8("암호는?") );
-        inputDialog.setModal(true);
-    }
+    inputDialog.setInputMode(QInputDialog::TextInput);
+    inputDialog.setTextEchoMode(QLineEdit::PasswordEchoOnEdit);
+    inputDialog.setWindowTitle( trUtf8("암호가 필요합니다.") );
+    inputDialog.setLabelText( trUtf8("암호는?") );
+    inputDialog.setModal(true);
 
     //모달 대화창을 띄움.
     int s = inputDialog.exec();
@@ -135,10 +128,8 @@ void DecompressProgressWidget::getPassword(
     }
 
     //트레이 아이콘 일부 기능을 활성화 시킴.
-    {
-        tray->actionShow->setEnabled(true);
-        tray->actionPauseToggle->setEnabled(true);
-    }
+    tray->actionShow->setEnabled(true);
+    tray->actionPauseToggle->setEnabled(true);
 
     //압축 해제 쓰레드 재개.
     Pause::getInstance()->resume();
@@ -162,17 +153,14 @@ void DecompressProgressWidget::toggleShowErrorInfo()
 {
     //만약 오류 내용이 숨김 상태라면
     if ( ui->infoBrowser->isHidden() ){
-        {
-            int h = height();
-            if ( h != minimumHeight() ) {
-                oldWinHeight = h;
-            }
+        int h = height();
+        if ( h != minimumHeight() ) {
+            oldWinHeight = h;
         }
         ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Ignored, QSizePolicy::Ignored);
         ui->infoBrowser->show();
         ui->toggleShowErrorInfo->setIcon(arrowUp);
         ui->toggleShowErrorInfo->setText(trUtf8("작업 내역 숨기기"));
-        QTimer::singleShot(0, this, SLOT(shrink()));
     }
     //만약 오류 내용이 보기 상태라면
     else {
@@ -183,7 +171,7 @@ void DecompressProgressWidget::toggleShowErrorInfo()
         ui->toggleShowErrorInfo->setText(trUtf8("작업 내역 보이기"));
     }
 
-    QTimer::singleShot(0, this, SLOT(shrink()));
+    emit needShrink();
 }
 
 /** 창 숨김 상태를 토글합니다.
@@ -239,7 +227,7 @@ void DecompressProgressWidget::closeEvent(
         )
 {
     e->accept();
-    QTimer::singleShot(0, QApplication::instance(), SLOT(quit()));
+    emit closed();
 }
 
 /** 압축 해제가 종료되면 호출되는 메소드.

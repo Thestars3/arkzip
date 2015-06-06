@@ -99,6 +99,7 @@ function makeControlFile(){
 	 alz, egg를 비롯한 다양한 압축 형식을 압축 해제 할 수 있습니다. 다음은 이 프로그램이 지원하는 압축 해제 가능 형식의 목록입니다.
 	 zip, alz, egg, tar, bh, 7z, wim, rar, arj, cab, lzh, gz, bz2, iso, img, xz, z, lzma, j2j, hv3.
 	 이 프로그램은 또한 한국어로 인코딩된 압축 파일을 압축 해제 할 수 있습니다.
+	 hv3 형식의 포멧은 libunhv3 라이브러리를 통해 복호화합니다.
 	EOF
 }
 

@@ -51,19 +51,19 @@ GUI로 작업현황(진행율, 오류내역, 압축 해제 파일 경로, 저장
 
 test.egg파일을 현재경로에 압축해제 하기.
 
-	ex) `arkzip test.egg -O .`
+	arkzip test.egg -O .
 
 test.alz파일을 gui로 현재경로에 압축해제 하기.
 
-	ex) `arkzip -i gui test.alz`
+	arkzip -i gui test.alz
 	
 test.egg파일을 코드 페이지 kor로 지정하고, 압축 파일명으로된 폴더에 저장위치를 해당 압축 파일이 위치한 경로로 하여 gui로 압축 해제하기.
 
-	ex) `arkzip --link -s -c kor /home/$(whoami)/test/test2/test3/test.egg`
+	arkzip --link -s -c kor /home/$(whoami)/test/test2/test3/test.egg
 
 test1.zip, test2.zip파일의 암호를 지정하여 test폴더에 압축해제 하기.
 
-	ex) `arkzip test1.zip test2.7z -O test -k password`
+	arkzip test1.zip test2.7z -O test -k password
     
 ## 수정사항
 

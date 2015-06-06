@@ -1,4 +1,3 @@
-#include <QTimer>
 #include <QColor>
 #include <QFrame>
 #include <QPalette>
@@ -25,6 +24,8 @@ QWrapLabel::QWrapLabel(
     // 줄바꿈 설정 및 크기 설정
     this->setLineWrapMode(QTextEdit::WidgetWidth);
     this->setWordWrapMode(QTextOption::WrapAnywhere);
+
+    connect(this, SIGNAL( needShrink() ), this, SLOT( shrink() ));
 }
 
 /** 평문 텍스트를 설정합니다.\n
@@ -35,7 +36,7 @@ void QWrapLabel::setPlainText(
         )
 {
     QTextEdit::setPlainText(text);
-    QTimer::singleShot(0, this, SLOT(shrink()));
+    emit needShrink();
 }
 
 void QWrapLabel::shrink()
@@ -48,7 +49,7 @@ void QWrapLabel::resizeEvent(
         )
 {
     QTextEdit::resizeEvent(event);
-    QTimer::singleShot(0, this, SLOT(shrink()));
+    emit needShrink();
 }
 
 QSize QWrapLabel::minimumSizeHint() const
