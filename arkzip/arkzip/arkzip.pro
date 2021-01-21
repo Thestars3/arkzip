@@ -19,7 +19,7 @@ SOURCES  += \
 	main.cpp \
     option.cpp
 LIBS     += \
-	-l:libboost_program_options-mt.a
+	-l:libboost_program_options.a
 DEFINES  += \
 	_ARK_CUI_PROGRAM_PATH="'\"$$ARK_CUI_PROGRAM_PATH\"'" \
 	_ARK_GUI_PROGRAM_PATH="'\"$$ARK_GUI_PROGRAM_PATH\"'" \
