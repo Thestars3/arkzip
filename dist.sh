@@ -91,7 +91,7 @@ function makeControlFile(){
 	Section: utils
 	Priority: optional
 	breaks: arkzip
-	depends: libqt4-core(>=4:4.8.1), libstdc++6
+	depends: libqtcore4, libstdc++6
 	Architecture: amd64
 	Maintainer: 별님 <w7dn1ng75r@gmail.com>
 	Homepage: https://github.com/Thestars3/arkzip/
