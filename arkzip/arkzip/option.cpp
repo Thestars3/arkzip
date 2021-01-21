@@ -104,22 +104,22 @@ po::variables_map Option::analyze()
     }
     // 없는 옵션을 사용한 경우
     catch(po::unknown_option &e) {
-        std::cout << e.what() << std::endl;
+        //std::cout << e.what() << std::endl;
         std::exit(95);
     }
     // 옵션 값의 오류가 발생한 경우
     catch(po::invalid_option_value &e) {
-        std::cout << e.what() << std::endl;
+        //std::cout << e.what() << std::endl;
         std::exit(2);
     }
     // 옵션 값이 없을 경우
     catch(po::invalid_command_line_syntax &e) {
-        std::cout << e.what() << std::endl;
+        //std::cout << e.what() << std::endl;
         std::exit(3);
     }
     // 이외의 예외 발생
     catch(std::exception &e) {
-        std::cout << e.what() << std::endl;
+        //std::cout << e.what() << std::endl;
         std::exit(4);
     }
 
