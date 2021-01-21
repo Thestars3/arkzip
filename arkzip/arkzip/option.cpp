@@ -135,7 +135,7 @@ void Option::printHelp()
            << trUtf8("  Ark Library를 사용한 압축파일 압축해제 프로그램. 이 프로그램은 다음 형식을 압축해제할수 있습니다.") << QString::fromUtf8(" zip, alz, egg, tar, bh, 7z, wim, rar, arj, cab, lzh, gz, bz2, iso, img, xz, z, lzma, j2j, hv3.") << endl
            << trUtf8("  중복 파일이 발견되면 사용자에게 묻지 않고 새로운 이름을 지정합니다.") << endl
            << flush;
-    visibleDesc.print(std::cout);
+    //visibleDesc.print(std::cout);
 }
 
 /** 페이지 페이지를 표준출력으로 출력합니다.
