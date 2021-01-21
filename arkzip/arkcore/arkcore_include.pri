@@ -6,7 +6,7 @@
 
 LIBS        += \
 	-L'$$PWD/$$DESTDIR' -larkcore \
-	-l:libboost_program_options-mt.a
+	-l:libboost_program_options.a
 
 INCLUDEPATH *= $$PWD
 
